@@ -1,0 +1,109 @@
+/* Global Styles */
+
+@charset "UTF-8";
+
+@font-face {
+  font-family: "NeueHaasText";
+  src: url("/assets/fonts/NeueHaasGrotText-55Roman.otf");
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+@font-face {
+  font-family: "NeueHaasDisplay";
+  src: url("/assets/fonts/NeueHaasGrotDisp-55Roman.otf");
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+
+* {
+  scrollbar-width: none;
+  appearance: none;
+  -webkit-appearance: none;
+  -ms-overflow-style: none;
+  overflow: -moz-scrollbars-none;
+
+  box-sizing: border-box;
+}
+
+*::-webkit-scrollbar {
+  scrollbar-width: none;
+  -webkit-appearance: none;
+  -ms-overflow-style: none;
+  overflow: -moz-scrollbars-none;
+  width: 0;
+  height: 0;
+}
+
+:root {
+  --font-size-100: 12px;
+  --font-size-200: 18px;
+  --font-size-300: 26px;
+  --font-size-400: 42px;
+  --font-size-500: clamp(1.875rem, 1.3393rem + 2.6786vi, 5.625rem);
+
+  --line-height-100: 1.15;
+  --line-height-200: 1.15;
+  --line-height-300: 1.15;
+  --line-height-400: 1.15;
+  --line-height-500: 1.15;
+
+  --font-weight-text: NeueHaasText;
+  --font-weight-display: FoundersMedium;
+
+  --text-color: #000;
+  --background-color: #fff;
+
+  --margin: 10px;
+
+  --header-height: 30px;
+
+  --opening-transition-duration: 1s;
+  --transition-duration: 0.5s;
+
+  --box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+}
+
+body {
+  font-family: var(--font-weight-text);
+  background: var(--background-color);
+  color: var(--text-color);
+
+  font-size: var(--font-size-200);
+  line-height: var(--line-height-200);
+
+  box-sizing: border-box;
+  font-synthesis: none;
+  text-rendering: optimizelegibility;
+  -webkit-font-smoothing: antialiased;
+  font-size: 16px;
+
+  margin: 0;
+  padding: 0;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+li {
+  text-decoration: none;
+  padding: 0;
+  margin: 0;
+}
+
+.button {
+  background: red;
+  border-radius: var(--margin);
+
+  display: flex;
+  justify-content: center; /* Center horizontally */
+  align-items: center; /* Center vertically */
+
+  padding: 0px 5px;
+}
+.button:hover {
+  /* ... */
+}

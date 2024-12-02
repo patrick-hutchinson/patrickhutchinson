@@ -1,0 +1,18 @@
+section.openingSection {
+  width: 100%;
+  height: auto;
+}
+
+section.openingSection video,
+section.openingSection img {
+  width: 100%;
+  height: auto;
+
+  cursor: auto;
+  border-radius: 0px;
+  display: block;
+  object-fit: cover;
+  background-color: rgba(0, 0, 0, 0);
+  object-position: 50% 50%;
+  /* margin: -10px; */
+}

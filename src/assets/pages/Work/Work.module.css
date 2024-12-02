@@ -1,0 +1,9 @@
+.mediaDisplay {
+  width: 100%;
+  height: auto;
+}
+
+.mediaDisplay * {
+  width: 100%;
+  height: auto;
+}
