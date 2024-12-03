@@ -26,9 +26,26 @@ export default function About() {
       .catch(console.error);
   }, []);
 
+  let [projects, setProjects] = useState();
+  useEffect(() => {
+    sanityClient
+      .fetch(
+        `*[_type=="project"]{
+      coverimage,
+      thumbnail
+  }`
+      )
+      .then((data) => setProjects(data))
+      .catch(console.error);
+  }, []);
+
   // Handle loading or error state
   if (!aboutData || aboutData.length === 0) {
     return <p>Error Loading Component</p>;
+  }
+
+  if (!projects || projects.length === 0) {
+    return <p>Error Loading Component</p>; // Or some other loading state or message
   }
 
   // Animation variants
@@ -51,7 +68,7 @@ export default function About() {
 
   return (
     <section className={styles.aboutSection}>
-      <ImageTrail />
+      <ImageTrail projects={projects} />
       <motion.div
         ref={ref}
         initial="hidden"

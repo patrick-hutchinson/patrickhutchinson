@@ -4,7 +4,9 @@ import styles from "./ImageTrail.module.css";
 import { getPointerPos, getMouseDistance, getNewPosition, lerp } from "./utils/utils";
 import ImageComponent from "./utils/ImageComponent";
 
-const ImageTrail = () => {
+import { getFileSrc } from "/src/assets/utils/getFileSrc";
+
+const ImageTrail = ({ projects }) => {
   const containerRef = useRef(null); // Reference to the container div
   const imagesRef = useRef([]); // Use a ref to store images
   const mousePos = useRef({ x: 0, y: 0 }); // Mouse position
@@ -15,7 +17,7 @@ const ImageTrail = () => {
   const threshold = 200; // Distance to trigger the next image
   const visibleImagesTotal = 5; // Max visible images at a time
   const animationRefs = useRef([]); // Store GSAP animations for cleanup
-  let imgPosition = 0;
+  const imgPositionRef = useRef(0);
 
   useEffect(() => {
     const handlePointerMove = (ev) => {
@@ -62,8 +64,8 @@ const ImageTrail = () => {
   const showNextImage = () => {
     setZIndexVal((prev) => prev + 1);
 
-    imgPosition = imgPosition < imagesRef.current.length - 1 ? imgPosition + 1 : 0;
-    const img = imagesRef.current[imgPosition];
+    imgPositionRef.current = imgPositionRef.current < imagesRef.current.length - 1 ? imgPositionRef.current + 1 : 0;
+    const img = imagesRef.current[imgPositionRef.current];
 
     setVisibleImagesCount((prev) => prev + 1);
 
@@ -98,11 +100,16 @@ const ImageTrail = () => {
         );
 
       animationRefs.current.push(animation);
+    }
+  };
 
-      if (visibleImagesCount >= visibleImagesTotal) {
-        const lastInQueue = getNewPosition(imgPosition, visibleImagesTotal, imagesRef.current);
-        const lastImage = imagesRef.current[lastInQueue];
+  useEffect(() => {
+    if (visibleImagesCount > visibleImagesTotal) {
+      const lastInQueue = getNewPosition(imgPositionRef.current, visibleImagesTotal, imagesRef.current);
+      const lastImage = imagesRef.current[lastInQueue];
 
+      if (lastImage) {
+        console.log("There's a last image");
         gsap.to(lastImage, {
           duration: 0.4,
           ease: "power4",
@@ -111,27 +118,31 @@ const ImageTrail = () => {
         });
       }
     }
-  };
+  }, [visibleImagesCount]);
 
   const onImageActivated = () => {
     // Handle activation logic if needed
   };
 
   const onImageDeactivated = () => {
+    console.log("deactivating image!");
     setVisibleImagesCount((prev) => prev - 1);
   };
 
   return (
     <div ref={containerRef} className="content">
-      {Array.from({ length: 7 }).map((_, index) => (
-        <ImageComponent
-          key={index}
-          imgSrc={`/assets/media/p0${index + 1}.png`}
-          ref={(el) => {
-            if (el) imagesRef.current[index] = el;
-          }}
-        />
-      ))}
+      {projects.map((project, index) => {
+        console.log(getFileSrc(project.thumbnail)); // Log the value here
+        return (
+          <ImageComponent
+            key={index}
+            imgSrc={getFileSrc(project.thumbnail)}
+            ref={(el) => {
+              if (el) imagesRef.current[index] = el;
+            }}
+          />
+        );
+      })}
     </div>
   );
 };
