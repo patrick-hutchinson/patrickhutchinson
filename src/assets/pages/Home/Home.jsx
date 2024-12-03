@@ -8,7 +8,7 @@ import Opening from "../Opening/Opening";
 export default function Home() {
   return (
     <>
-      <Opening />
+      {/* <Opening /> */}
       <About />
       <Work />
     </>

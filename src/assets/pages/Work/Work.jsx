@@ -36,7 +36,7 @@ export default function Work() {
   return (
     <section className={styles.work}>
       <h1>Work</h1>
-      <MediaDisplay />
+      {/* <MediaDisplay /> */}
       {/* {!isMobile && <ProjectNavigation projects={projects} />} */}
     </section>
   );

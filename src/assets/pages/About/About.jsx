@@ -3,6 +3,8 @@ import { motion, useInView } from "framer-motion";
 import sanityClient from "/src/client.js";
 import { PortableText } from "@portabletext/react";
 
+import ImageTrail from "../Work/components/ImageTrail/ImageTrail";
+
 import styles from "./About.module.css";
 
 export default function About() {
@@ -49,6 +51,7 @@ export default function About() {
 
   return (
     <section className={styles.aboutSection}>
+      <ImageTrail />
       <motion.div
         ref={ref}
         initial="hidden"

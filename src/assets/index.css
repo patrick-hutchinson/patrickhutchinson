@@ -41,7 +41,7 @@
   --font-size-200: 18px;
   --font-size-300: 26px;
   --font-size-400: 42px;
-  --font-size-500: clamp(1.875rem, 1.3393rem + 2.6786vi, 5.625rem);
+  --font-size-500: clamp(1.675rem, 1.3393rem + 2.6786vi, 3.625rem);
 
   --line-height-100: 1.15;
   --line-height-200: 1.15;

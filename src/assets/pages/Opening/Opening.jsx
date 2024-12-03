@@ -6,10 +6,10 @@ import styles from "./Opening.module.css";
 export default function Opening() {
   return (
     <section className={styles.openingSection}>
-      <video autoPlay muted playsInline loop>
+      {/* <video autoPlay muted playsInline loop>
         <source src="assets/media/opening.mp4" alt="" />
-      </video>
-      {/* <img src="assets/media/logo.gif" alt="" /> */}
+      </video> */}
+      <img src="assets/media/opening.jpg" alt="" />
     </section>
   );
 }
