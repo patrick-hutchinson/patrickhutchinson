@@ -8,17 +8,28 @@ import ProjectNavigation from "./components/ProjectNavigation/ProjectNavigation"
 import { GlobalStateContext } from "../../context/GlobalStateContext";
 import { renderMedia } from "../../utils/renderMedia";
 
+import ProjectsListView from "./components/ProjectsListView/ProjectsListView";
+import CarousellView from "./components/CarousellView/CarousellView";
+
 import sanityClient from "/src/client.js";
 
 export default function Work() {
+  let workSectionRef = useRef();
   const { isMobile } = useContext(GlobalStateContext);
+
+  let [view, setView] = useState("List View");
 
   let [projects, setProjects] = useState();
   useEffect(() => {
     sanityClient
       .fetch(
         `*[_type=="project"]{
-      coverimage,
+      name,
+      thumbnail,
+      year,
+      url,
+      categories,
+      creditsInhouse
   }`
       )
       .then((data) => setProjects(data))
@@ -29,15 +40,25 @@ export default function Work() {
     return <p>Error Loading Component</p>; // Or some other loading state or message
   }
 
-  let MediaDisplay = () => {
-    return <div className={styles.mediaDisplay}>{projects.map((project) => renderMedia(project.coverimage))}</div>;
+  let ViewMenu = () => {
+    return (
+      <ul>
+        <li onClick={(e) => handleView(e.currentTarget)}>3D View</li>
+        <li onClick={(e) => handleView(e.currentTarget)}>List View</li>
+      </ul>
+    );
   };
 
+  function handleView(target) {
+    setView(target.textContent);
+  }
+
   return (
-    <section className={styles.work}>
-      <h1>Work</h1>
-      {/* <MediaDisplay /> */}
-      {/* {!isMobile && <ProjectNavigation projects={projects} />} */}
+    <section className={styles.workSection} ref={workSectionRef}>
+      {/* <h1>Work</h1> */}
+      {/* <ViewMenu /> */}
+      {view == "List View" && <ProjectsListView projects={projects} />}
+      {view == "3D View" && <CarousellView projects={projects} />}
     </section>
   );
 }

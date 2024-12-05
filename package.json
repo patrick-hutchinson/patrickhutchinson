@@ -20,7 +20,8 @@
     "ogl": "^1.0.9",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "react-router-dom": "^7.0.1"
+    "react-router-dom": "^7.0.1",
+    "three": "^0.171.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.8.0",

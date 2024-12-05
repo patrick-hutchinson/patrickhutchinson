@@ -16,6 +16,13 @@
   font-style: normal;
   font-display: block;
 }
+@font-face {
+  font-family: "NeueHaasDisplay-Thin";
+  src: url("/assets/fonts/NeueHaasGrotDisp-45.otf");
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
 
 * {
   scrollbar-width: none;
@@ -43,6 +50,8 @@
   --font-size-400: 42px;
   --font-size-500: clamp(1.675rem, 1.3393rem + 2.6786vi, 3rem);
 
+  --h8: clamp(1.25rem, 0rem + 4vi, 8rem);
+
   --line-height-100: 1.15;
   --line-height-200: 1.15;
   --line-height-300: 1.15;
@@ -60,7 +69,7 @@
   --header-height: 30px;
 
   --opening-transition-duration: 1s;
-  --transition-duration: 0.5s;
+  --transition-duration: 0.3s;
 
   --box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
 }
@@ -90,6 +99,13 @@ ul {
 }
 li {
   text-decoration: none;
+  padding: 0;
+  margin: 0;
+}
+
+h1 {
+  font-size: var(--font-size-500);
+  line-height: var(--line-height-500);
   padding: 0;
   margin: 0;
 }

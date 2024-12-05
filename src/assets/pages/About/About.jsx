@@ -8,6 +8,7 @@ import ImageTrail from "../Work/components/ImageTrail/ImageTrail";
 import styles from "./About.module.css";
 
 export default function About() {
+  let aboutRef = useRef(null);
   const [aboutData, setAboutData] = useState();
   const ref = useRef(null); // Reference for the element to observe
 
@@ -67,8 +68,8 @@ export default function About() {
   const words = text.split(" ");
 
   return (
-    <section className={styles.aboutSection}>
-      <ImageTrail projects={projects} />
+    <section className={styles.aboutSection} ref={aboutRef}>
+      <ImageTrail projects={projects} aboutRef={aboutRef} />
       <motion.div
         ref={ref}
         initial="hidden"

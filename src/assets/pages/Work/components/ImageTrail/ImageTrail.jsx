@@ -2,11 +2,10 @@ import React, { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import styles from "./ImageTrail.module.css";
 import { getPointerPos, getMouseDistance, getNewPosition, lerp } from "./utils/utils";
-import ImageComponent from "./utils/ImageComponent";
 
 import { getFileSrc } from "/src/assets/utils/getFileSrc";
 
-const ImageTrail = ({ projects }) => {
+const ImageTrail = ({ projects, aboutRef }) => {
   const containerRef = useRef(null); // Reference to the container div
   const imagesRef = useRef([]); // Use a ref to store images
   const mousePos = useRef({ x: 0, y: 0 }); // Mouse position
@@ -19,7 +18,11 @@ const ImageTrail = ({ projects }) => {
   const animationRefs = useRef([]); // Store GSAP animations for cleanup
   const imgPositionRef = useRef(0);
 
+  const isIdle = useRef(true);
+
   useEffect(() => {
+    if (!aboutRef?.current) return;
+
     const handlePointerMove = (ev) => {
       if (ev.touches) {
         mousePos.current = getPointerPos(ev.touches[0]);
@@ -28,19 +31,19 @@ const ImageTrail = ({ projects }) => {
       }
     };
 
-    window.addEventListener("mousemove", handlePointerMove);
-    window.addEventListener("touchmove", handlePointerMove);
+    aboutRef.current.addEventListener("mousemove", handlePointerMove);
+    aboutRef.current.addEventListener("touchmove", handlePointerMove);
 
     return () => {
-      window.removeEventListener("mousemove", handlePointerMove);
-      window.removeEventListener("touchmove", handlePointerMove);
+      aboutRef.current.removeEventListener("mousemove", handlePointerMove);
+      aboutRef.current.removeEventListener("touchmove", handlePointerMove);
     };
   }, []);
 
   useEffect(() => {
     const container = containerRef.current;
     if (container) {
-      const imageElements = Array.from(container.querySelectorAll(".content__img"));
+      const imageElements = Array.from(container.querySelectorAll(`.${styles["content__img"]}`));
       imagesRef.current = imageElements;
 
       const render = () => {
@@ -50,6 +53,7 @@ const ImageTrail = ({ projects }) => {
         cacheMousePos.current.y = lerp(cacheMousePos.current.y || mousePos.current.y, mousePos.current.y, 0.3);
 
         if (distance > threshold) {
+          setZIndexVal((prev) => prev + 1);
           showNextImage();
           lastMousePos.current = { ...mousePos.current };
         }
@@ -71,7 +75,7 @@ const ImageTrail = ({ projects }) => {
 
     if (img) {
       const rect = img.getBoundingClientRect();
-      const scaleValue = gsap.utils.random(0.8, 1.2);
+      const scaleValue = gsap.utils.random(0.9, 1.1);
 
       const animation = gsap
         .timeline({
@@ -101,48 +105,53 @@ const ImageTrail = ({ projects }) => {
 
       animationRefs.current.push(animation);
     }
-  };
 
-  useEffect(() => {
     if (visibleImagesCount > visibleImagesTotal) {
       const lastInQueue = getNewPosition(imgPositionRef.current, visibleImagesTotal, imagesRef.current);
       const lastImage = imagesRef.current[lastInQueue];
 
       if (lastImage) {
-        console.log("There's a last image");
         gsap.to(lastImage, {
           duration: 0.4,
           ease: "power4",
           opacity: 0,
           scale: 0.7,
+          onComplete: () => {
+            if (visibleImagesCount <= 0) {
+              isIdle = true;
+            }
+          },
         });
       }
     }
-  }, [visibleImagesCount]);
-
-  const onImageActivated = () => {
-    // Handle activation logic if needed
   };
 
-  const onImageDeactivated = () => {
-    console.log("deactivating image!");
-    setVisibleImagesCount((prev) => prev - 1);
+  let onImageActivated = () => {
+    setVisibleImagesCount((prev) => prev + 1);
+    if (isIdle.current) isIdle.current = false; // or setIsIdle(false);
+  };
+
+  let onImageDeactivated = () => {
+    setVisibleImagesCount((prev) => {
+      const newCount = prev - 1;
+      if (newCount <= 0) isIdle.current = true; // or setIsIdle(true);
+      return newCount;
+    });
   };
 
   return (
     <div ref={containerRef} className="content">
-      {projects.map((project, index) => {
-        console.log(getFileSrc(project.thumbnail)); // Log the value here
-        return (
-          <ImageComponent
-            key={index}
-            imgSrc={getFileSrc(project.thumbnail)}
-            ref={(el) => {
-              if (el) imagesRef.current[index] = el;
-            }}
-          />
-        );
-      })}
+      {projects.map((project, index) => (
+        <div
+          key={index}
+          className={styles["content__img"]}
+          ref={(el) => {
+            if (el) imagesRef.current[index] = el;
+          }}
+        >
+          <img className={styles["content__img-inner"]} src={getFileSrc(project.thumbnail)} alt="" />
+        </div>
+      ))}
     </div>
   );
 };
