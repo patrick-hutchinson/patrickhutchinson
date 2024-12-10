@@ -56,7 +56,7 @@ export default function Work() {
   return (
     <section className={styles.workSection} ref={workSectionRef}>
       {/* <h1>Work</h1> */}
-      {/* <ViewMenu /> */}
+      <ViewMenu />
       {view == "List View" && <ProjectsListView projects={projects} />}
       {view == "3D View" && <CarousellView projects={projects} />}
     </section>

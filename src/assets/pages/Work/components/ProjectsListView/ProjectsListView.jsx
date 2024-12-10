@@ -12,14 +12,20 @@ export default function ProjectsListView({ projects }) {
   // Creation of li and scale assignment happen simulaneously, in order to keep generating li's until the container is full
   // Optimally determined by const
 
+  const creditsMapping = [
+    { key: "clients", title: "Client" },
+    { key: "directors", title: "Direction" },
+    { key: "creativedirectors", title: "Creative Director" },
+    { key: "clientdirectors", title: "Client Director" },
+    { key: "designers", title: "Designer" },
+    { key: "artists3D", title: "3D Artist" },
+    { key: "photographers", title: "Photography" },
+  ];
+
   useEffect(() => {
     let container = containerRef.current;
     let containerHeight = container.getBoundingClientRect().height;
     let totalHeight = 0; // Accumulate height for each item
-
-    container.addEventListener("mousemove", handleMouseMove());
-
-    function handleMouseMove() {}
 
     container.querySelectorAll(`.${styles.projectListItem}`).forEach((projectListItem, index) => {
       let randomScale = Math.random() * (1 - 0.1) + 0.1; // Random value between 0.1 and 1
@@ -39,16 +45,6 @@ export default function ProjectsListView({ projects }) {
       console.log(containerHeight, containerHeight - totalHeight, "minusHeight");
     });
   }, []);
-
-  const creditsMapping = [
-    { key: "clients", title: "Client" },
-    { key: "directors", title: "Direction" },
-    { key: "creativedirectors", title: "Creative Director" },
-    { key: "clientdirectors", title: "Client Director" },
-    { key: "designers", title: "Designer" },
-    { key: "artists3D", title: "3D Artist" },
-    { key: "photographers", title: "Photography" },
-  ];
 
   let ListItem = ({ project }) => {
     return (
