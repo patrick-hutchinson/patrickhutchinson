@@ -1,12 +1,16 @@
 import React, { useState, useRef, useEffect, useMemo } from "react";
+import { Link } from "react-router-dom";
 
 import styles from "./ProjectsListView.module.css";
 import { renderMedia } from "assets/utils/renderMedia";
 
 import { creditsMapping } from "assets/context/creditsMapping";
 
+import gsap from "gsap";
+
 export default function ProjectsListView({ projects }) {
   const containerRef = useRef();
+  const projectsRef = useRef([]);
   const [maxProjects, setMaxProjects] = useState(50); // Max number of projects to display
 
   // Memoize repeated projects to avoid recalculation on each render
@@ -16,82 +20,64 @@ export default function ProjectsListView({ projects }) {
   );
 
   useEffect(() => {
-    const containerHeight = containerRef.current.getBoundingClientRect().height;
-    const desiredHeight = containerHeight / maxProjects;
+    projectsRef.current.forEach((li, liIndex, liArray) => {
+      containerRef.current.addEventListener("mousemove", (e) => {
+        window.requestAnimationFrame(() => {
+          const rect = li.getBoundingClientRect();
+          const centerY = rect.top + rect.height / 2;
+          const distance = Math.abs(e.clientY - centerY);
 
-    const listItemHeight = document.querySelector(`.${styles.projectListItem}`).getBoundingClientRect().height;
-    const listItemScaleFactor = 1 / (listItemHeight / desiredHeight);
-  }, [maxProjects]);
+          const maxDistance = 100; // The maximum distance at which the scaling effect starts to minimize
 
-  // Use requestAnimationFrame to limit the number of calculations per frame
-  const handleMouseMove = (e) => {
-    window.requestAnimationFrame(() => {
-      containerRef.current.querySelectorAll(`.${styles.projectListItem}`).forEach((listItem) => {
-        const rect = listItem.getBoundingClientRect();
+          let scale = Math.exp(-distance / maxDistance);
+          scale = Math.max(scale, 0.05);
 
-        const centerY = rect.top + rect.height / 2;
-        const distance = Math.abs(e.clientY - centerY);
+          li.style.transform = `scale(${scale})`;
+          li.style.height = `${100 * scale}px`;
 
-        const maxDistance = 20; // The maximum distance at which the scaling effect starts to minimize
-
-        // Exponential decay scale calculation: the scale decreases more rapidly with distance
-        let scale = Math.exp(-distance / maxDistance);
-
-        // Ensure the scale doesn't go below 0.0864
-        scale = Math.max(scale, 0.0864);
-
-        // Apply the scale to the listItem
-        listItem.style.transform = `scale(${scale})`;
+          // width could also be adjusted dynamically
+          // li.style.width = `${(1 + scale) * 100}%`;
+        });
       });
     });
-  };
-
-  useEffect(() => {
-    const handle = (e) => handleMouseMove(e);
-    containerRef.current.addEventListener("mousemove", handle);
-    return () => containerRef.current.removeEventListener("mousemove", handle);
   }, []);
 
   // ListItem Component
-  const ListItem = ({ project, index }) => {
-    const listItemStyles = {
-      base: {
-        transform: "scale(0.0864)",
-        top: `${index * 6.35}px`,
-      },
-    };
-    return (
-      <li className={styles.projectListItem} key={index} style={{ ...listItemStyles.base }}>
-        {renderMedia(project.thumbnail)}
-        <h4>{project.year}</h4>
-        <div className={styles.projectTitle}>{project.name}</div>
-        <ul>
-          {project.categories?.map((category, i) => (
-            <li key={i}>{category}</li>
-          ))}
-        </ul>
-        <ul className={styles["credits-inhouse"]}>
-          {project.creditsInhouse &&
-            creditsMapping.map(
-              ({ key, title }) =>
-                project.creditsInhouse[key] && (
-                  <li className={`${styles.credit}`} key={key}>
-                    {title}: <br />
-                    {project.creditsInhouse[key].join(", ")}
-                    <br />
-                    <br />
-                  </li>
-                )
-            )}
-        </ul>
-      </li>
-    );
-  };
 
   return (
     <ul className={styles.projectList} ref={containerRef}>
       {repeatedProjects.map((project, index) => (
-        <ListItem project={project} index={index} key={index} />
+        <Link to={project?.slug?.current}>
+          <li
+            className={styles.projectListItem}
+            key={index}
+            index={index}
+            ref={(el) => (projectsRef.current[index] = el)}
+          >
+            {renderMedia(project.thumbnail)}
+            <h4>{project.year}</h4>
+            <div className={styles.projectTitle}>{project.name}</div>
+            <ul>
+              {project.categories?.map((category, i) => (
+                <li key={i}>{category}</li>
+              ))}
+            </ul>
+            <ul className={styles["credits-inhouse"]}>
+              {project.creditsInhouse &&
+                creditsMapping.map(
+                  ({ key, title }) =>
+                    project.creditsInhouse[key] && (
+                      <li className={`${styles.credit}`} key={key}>
+                        {title}: <br />
+                        {project.creditsInhouse[key].join(", ")}
+                        <br />
+                        <br />
+                      </li>
+                    )
+                )}
+            </ul>
+          </li>
+        </Link>
       ))}
     </ul>
   );

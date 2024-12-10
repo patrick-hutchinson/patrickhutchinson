@@ -1,6 +1,6 @@
 .projectList {
   position: relative;
-  height: 100vh;
+  height: 100%;
 }
 
 .projectListItem {
@@ -10,9 +10,11 @@
   width: 100%;
   align-items: center;
 
-  transform-origin: top left;
-  position: absolute;
-  height: 100px;
+  transform-origin: center middle;
+  /* position: absolute; */
+  height: 10px;
+  transform: scale(0.1);
+  text-align: center;
 }
 
 .projectListItem img,
@@ -28,6 +30,10 @@
   font-family: "NeueHaasDisplay-Thin";
   white-space: nowrap;
 }
+
+/* .projectListItem:hover {
+  filter: invert(1);
+} */
 
 /* .marker {
   height: 100px;

@@ -10,7 +10,7 @@ export default function Home() {
     <>
       {/* <Opening /> */}
       {/* <About /> */}
-      <Work />x
+      <Work />
     </>
   );
 }

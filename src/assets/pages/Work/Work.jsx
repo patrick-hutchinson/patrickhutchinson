@@ -29,7 +29,8 @@ export default function Work() {
       year,
       url,
       categories,
-      creditsInhouse
+      creditsInhouse,
+      slug
   }`
       )
       .then((data) => setProjects(data))
