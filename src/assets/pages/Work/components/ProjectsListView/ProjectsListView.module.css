@@ -9,18 +9,18 @@
   grid-template-columns: minmax(100px, 12vw) 40px 40% auto auto;
   width: 100%;
   align-items: center;
-  /* margin-top: var(--margin); */
-  /* padding-bottom: var(--margin); */
 
   transform-origin: top left;
   position: absolute;
+  height: 100px;
 }
 
 .projectListItem img,
 .projectListItem video {
-  width: 100%;
-  height: 100%;
+  width: auto;
+  height: 100px;
   object-fit: cover;
+  width: 140px;
 }
 
 .projectTitle {

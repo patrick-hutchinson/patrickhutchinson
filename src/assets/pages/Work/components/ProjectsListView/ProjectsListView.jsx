@@ -1,62 +1,74 @@
-import React from "react";
-import { useEffect, useState, useRef } from "react";
+import React, { useState, useRef, useEffect, useMemo } from "react";
 
 import styles from "./ProjectsListView.module.css";
 import { renderMedia } from "assets/utils/renderMedia";
 
+import { creditsMapping } from "assets/context/creditsMapping";
+
 export default function ProjectsListView({ projects }) {
-  let containerRef = useRef();
+  const containerRef = useRef();
+  const [maxProjects, setMaxProjects] = useState(50); // Max number of projects to display
 
-  // TO DO:
-
-  // Creation of li and scale assignment happen simulaneously, in order to keep generating li's until the container is full
-  // Optimally determined by const
-
-  const creditsMapping = [
-    { key: "clients", title: "Client" },
-    { key: "directors", title: "Direction" },
-    { key: "creativedirectors", title: "Creative Director" },
-    { key: "clientdirectors", title: "Client Director" },
-    { key: "designers", title: "Designer" },
-    { key: "artists3D", title: "3D Artist" },
-    { key: "photographers", title: "Photography" },
-  ];
+  // Memoize repeated projects to avoid recalculation on each render
+  const repeatedProjects = useMemo(
+    () => Array.from({ length: maxProjects }, (_, index) => projects[index % projects.length]),
+    [projects, maxProjects]
+  );
 
   useEffect(() => {
-    let container = containerRef.current;
-    let containerHeight = container.getBoundingClientRect().height;
-    let totalHeight = 0; // Accumulate height for each item
+    const containerHeight = containerRef.current.getBoundingClientRect().height;
+    const desiredHeight = containerHeight / maxProjects;
 
-    container.querySelectorAll(`.${styles.projectListItem}`).forEach((projectListItem, index) => {
-      let randomScale = Math.random() * (1 - 0.1) + 0.1; // Random value between 0.1 and 1
-      projectListItem.style.transform = `scale(${randomScale})`; // Apply the random scale
+    const listItemHeight = document.querySelector(`.${styles.projectListItem}`).getBoundingClientRect().height;
+    const listItemScaleFactor = 1 / (listItemHeight / desiredHeight);
+  }, [maxProjects]);
 
-      const originalHeight = projectListItem.offsetHeight;
-      const scaledHeight = originalHeight * randomScale;
+  // Use requestAnimationFrame to limit the number of calculations per frame
+  const handleMouseMove = (e) => {
+    window.requestAnimationFrame(() => {
+      containerRef.current.querySelectorAll(`.${styles.projectListItem}`).forEach((listItem) => {
+        const rect = listItem.getBoundingClientRect();
 
-      if (index === 0) {
-        projectListItem.style.top = "0px";
-      } else {
-        projectListItem.style.top = `${totalHeight}px`;
-      }
+        const centerY = rect.top + rect.height / 2;
+        const distance = Math.abs(e.clientY - centerY);
 
-      totalHeight += scaledHeight;
+        const maxDistance = 20; // The maximum distance at which the scaling effect starts to minimize
 
-      console.log(containerHeight, containerHeight - totalHeight, "minusHeight");
+        // Exponential decay scale calculation: the scale decreases more rapidly with distance
+        let scale = Math.exp(-distance / maxDistance);
+
+        // Ensure the scale doesn't go below 0.0864
+        scale = Math.max(scale, 0.0864);
+
+        // Apply the scale to the listItem
+        listItem.style.transform = `scale(${scale})`;
+      });
     });
+  };
+
+  useEffect(() => {
+    const handle = (e) => handleMouseMove(e);
+    containerRef.current.addEventListener("mousemove", handle);
+    return () => containerRef.current.removeEventListener("mousemove", handle);
   }, []);
 
-  let ListItem = ({ project }) => {
+  // ListItem Component
+  const ListItem = ({ project, index }) => {
+    const listItemStyles = {
+      base: {
+        transform: "scale(0.0864)",
+        top: `${index * 6.35}px`,
+      },
+    };
     return (
-      <li className={styles.projectListItem}>
-        {/* <div className={styles.marker}></div> */}
+      <li className={styles.projectListItem} key={index} style={{ ...listItemStyles.base }}>
         {renderMedia(project.thumbnail)}
         <h4>{project.year}</h4>
         <div className={styles.projectTitle}>{project.name}</div>
         <ul>
-          {project.categories?.map((category, index) => {
-            return <li key={index}>{category}</li>;
-          })}
+          {project.categories?.map((category, i) => (
+            <li key={i}>{category}</li>
+          ))}
         </ul>
         <ul className={styles["credits-inhouse"]}>
           {project.creditsInhouse &&
@@ -78,9 +90,9 @@ export default function ProjectsListView({ projects }) {
 
   return (
     <ul className={styles.projectList} ref={containerRef}>
-      {projects.map((project, index) => {
-        return <ListItem project={project} key={index} />;
-      })}
+      {repeatedProjects.map((project, index) => (
+        <ListItem project={project} index={index} key={index} />
+      ))}
     </ul>
   );
 }
