@@ -3,21 +3,19 @@ import { useEffect, useState, useRef, useContext } from "react";
 
 import styles from "./Work.module.css";
 
-import ProjectNavigation from "./components/ProjectNavigation/ProjectNavigation";
-
 import { GlobalStateContext } from "../../context/GlobalStateContext";
-import { renderMedia } from "../../utils/renderMedia";
 
-import ProjectsListView from "./components/ProjectsListView/ProjectsListView";
-import CarousellView from "./components/CarousellView/CarousellView";
+import ViewList from "./components/Views/ViewList/ViewList";
+import View3D from "./components/Views/View3D/View3D";
+
+import Filtering from "./components/Filtering/Filtering";
+import ViewMenu from "./components/ViewMenu/ViewMenu";
 
 import sanityClient from "/src/client.js";
 
 export default function Work() {
-  let workSectionRef = useRef();
   const { isMobile } = useContext(GlobalStateContext);
-
-  let [view, setView] = useState("List View");
+  let [currentView, setCurrentView] = useState("List View");
 
   let [projects, setProjects] = useState();
   useEffect(() => {
@@ -29,7 +27,7 @@ export default function Work() {
       year,
       url,
       categories,
-      creditsInhouse,
+      credits,
       slug
   }`
       )
@@ -37,29 +35,17 @@ export default function Work() {
       .catch(console.error);
   }, []);
 
+  // Early return if Projects is undefined
   if (!projects || projects.length === 0) {
     return <p>Error Loading Component</p>; // Or some other loading state or message
   }
 
-  let ViewMenu = () => {
-    return (
-      <ul>
-        <li onClick={(e) => handleView(e.currentTarget)}>3D View</li>
-        <li onClick={(e) => handleView(e.currentTarget)}>List View</li>
-      </ul>
-    );
-  };
-
-  function handleView(target) {
-    setView(target.textContent);
-  }
-
   return (
-    <section className={styles.workSection} ref={workSectionRef}>
-      {/* <h1>Work</h1> */}
-      <ViewMenu />
-      {view == "List View" && <ProjectsListView projects={projects} />}
-      {view == "3D View" && <CarousellView projects={projects} />}
+    <section className={styles.workSection}>
+      <ViewMenu currentView={currentView} setCurrentView={setCurrentView} />
+      <Filtering />
+      {currentView == "List View" && <ViewList projects={projects} />}
+      {currentView == "3D View" && <View3D projects={projects} />}
     </section>
   );
 }

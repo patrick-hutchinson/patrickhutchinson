@@ -1,0 +1,4 @@
+.viewMenu {
+  display: flex;
+  flex-direction: row;
+}

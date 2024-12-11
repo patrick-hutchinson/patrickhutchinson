@@ -1,0 +1,17 @@
+footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  font-size: var(--font-size-100);
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: var(--margin) !important;
+  align-items: center;
+  box-sizing: border-box;
+  height: 40px;
+}
+
+.externalLink {
+  cursor: ne-resize;
+}

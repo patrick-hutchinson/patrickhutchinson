@@ -3,7 +3,7 @@ import { motion, useInView } from "framer-motion";
 import sanityClient from "/src/client.js";
 import { PortableText } from "@portabletext/react";
 
-import ImageTrail from "../Work/components/ImageTrail/ImageTrail";
+import ImageTrail from "./components/ImageTrail/ImageTrail";
 
 import styles from "./About.module.css";
 

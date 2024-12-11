@@ -29,9 +29,12 @@ export default function Header() {
       </div>
 
       <div className={styles.menuContainer}>
-        <div className={`${styles.menuButton} button`} onClick={toggleMenu}>
-          MENU
-        </div>
+        <button className={`${styles.externalLink} button`} onClick={toggleMenu}>
+          <div className="button-front">MENU</div>
+          <div className="button-back">
+            <div className="button-back-inner"></div>
+          </div>
+        </button>
         {isVisible && <Menu />}
       </div>
     </header>
