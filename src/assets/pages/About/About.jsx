@@ -69,7 +69,7 @@ export default function About() {
 
   return (
     <section className={styles.aboutSection} ref={aboutRef}>
-      <ImageTrail projects={projects} aboutRef={aboutRef} />
+      {/* <ImageTrail projects={projects} aboutRef={aboutRef} /> */}
       <motion.div
         ref={ref}
         initial="hidden"

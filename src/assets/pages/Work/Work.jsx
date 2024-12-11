@@ -1,21 +1,23 @@
 import React from "react";
 import { useEffect, useState, useRef, useContext } from "react";
 
-import styles from "./Work.module.css";
+import sanityClient from "/src/client.js";
 
 import { GlobalStateContext } from "../../context/GlobalStateContext";
 
 import ViewList from "./components/Views/ViewList/ViewList";
 import View3D from "./components/Views/View3D/View3D";
-
 import Filtering from "./components/Filtering/Filtering";
 import ViewMenu from "./components/ViewMenu/ViewMenu";
 
-import sanityClient from "/src/client.js";
+import styles from "./Work.module.css";
 
 export default function Work() {
   const { isMobile } = useContext(GlobalStateContext);
-  let [currentView, setCurrentView] = useState("List View");
+  let [currentView, setCurrentView] = useState("3D View");
+
+  let [filters, setFilters] = useState(["WebDesign", "Development", "InteractionDesign", "MotionDesign", "Poster", "TypeDesign"]);
+  let [activeFilters, setActiveFilters] = useState(filters);
 
   let [projects, setProjects] = useState();
   useEffect(() => {
@@ -24,7 +26,7 @@ export default function Work() {
         `*[_type=="project"]{
       name,
       thumbnail,
-      year,
+      year, 
       url,
       categories,
       credits,
@@ -40,12 +42,17 @@ export default function Work() {
     return <p>Error Loading Component</p>; // Or some other loading state or message
   }
 
+  const filteredProjects = projects.filter((project) => {
+    // Check if any category of the project is in the activeFilters
+    return project.categories?.some((category) => activeFilters.includes(category));
+  });
+
   return (
     <section className={styles.workSection}>
       <ViewMenu currentView={currentView} setCurrentView={setCurrentView} />
-      <Filtering />
-      {currentView == "List View" && <ViewList projects={projects} />}
-      {currentView == "3D View" && <View3D projects={projects} />}
+      <Filtering filters={filters} activeFilters={activeFilters} setActiveFilters={setActiveFilters} />
+      {currentView == "List View" && <ViewList projects={filteredProjects} />}
+      {currentView == "3D View" && <View3D projects={filteredProjects} />}
     </section>
   );
 }

@@ -5,7 +5,7 @@ import { getPointerPos, getMouseDistance, getNewPosition, lerp } from "./utils/u
 
 import { getFileSrc } from "/src/assets/utils/getFileSrc";
 
-const ImageTrail = ({ projects, aboutRef }) => {
+const ImageTrail = ({ projects, parentRef }) => {
   const containerRef = useRef(null); // Reference to the container div
   const imagesRef = useRef([]); // Use a ref to store images
   const mousePos = useRef({ x: 0, y: 0 }); // Mouse position
@@ -21,7 +21,7 @@ const ImageTrail = ({ projects, aboutRef }) => {
   const isIdle = useRef(true);
 
   useEffect(() => {
-    if (!aboutRef?.current) return;
+    if (!parentRef?.current) return;
 
     const handlePointerMove = (ev) => {
       if (ev.touches) {
@@ -31,12 +31,12 @@ const ImageTrail = ({ projects, aboutRef }) => {
       }
     };
 
-    aboutRef.current.addEventListener("mousemove", handlePointerMove);
-    aboutRef.current.addEventListener("touchmove", handlePointerMove);
+    parentRef.current.addEventListener("mousemove", handlePointerMove);
+    parentRef.current.addEventListener("touchmove", handlePointerMove);
 
     return () => {
-      aboutRef.current.removeEventListener("mousemove", handlePointerMove);
-      aboutRef.current.removeEventListener("touchmove", handlePointerMove);
+      parentRef.current.removeEventListener("mousemove", handlePointerMove);
+      parentRef.current.removeEventListener("touchmove", handlePointerMove);
     };
   }, []);
 

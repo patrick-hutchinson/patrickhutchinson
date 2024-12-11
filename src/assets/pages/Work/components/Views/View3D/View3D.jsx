@@ -1,117 +1,81 @@
-import { getFileSrc } from "assets/utils/getFileSrc";
 import React, { useEffect, useRef } from "react";
-import * as THREE from "three";
 
-export default function CarousellView({ projects }) {
-  const mountRef = useRef(null);
+import { renderMedia } from "assets/utils/renderMedia";
 
-  // Use refs for mutable variables
-  const isDragging = useRef(false);
-  const startMouseX = useRef(0);
-  const startRotationY = useRef(0);
-  const velocity = useRef(0);
+import ImageTrail from "assets/pages/About/components/ImageTrail/ImageTrail";
+
+import styles from "./View3D.module.css";
+
+export default function View3D({ projects }) {
+  let parentRef = useRef();
+  let projectsRef = useRef([]);
+  let Thumbnail = ({ project, index }) => {
+    // Generate a random left value between 0 and (window.innerWidth - 300px)
+    const randomLeft = Math.random() * (window.innerWidth - 300);
+    const randomTop = Math.random() * (window.innerHeight - 300);
+
+    // Externalize the dynamic styles to a constant
+    const styleSheet = {
+      left: `${randomLeft}px`,
+      top: `${randomTop}px`,
+      position: "absolute", // Ensure it can be positioned freely
+    };
+
+    return (
+      <div
+        className={styles.projectPreview} // Apply external CSS
+        key={index}
+        index={index}
+        ref={(el) => (projectsRef.current[index] = el)}
+        style={styleSheet} // Apply the dynamic styles here
+      >
+        {renderMedia(project.thumbnail)}
+      </div>
+    );
+  };
 
   useEffect(() => {
-    // Scene setup
-    const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(35, window.innerWidth / (window.innerHeight / 2), 0.1, 1000);
-    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-    renderer.setSize(window.innerWidth, window.innerHeight / 2);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2)); // Cap at 2 for performance
-    mountRef.current.appendChild(renderer.domElement);
+    let constrain = 50;
+    let mouseOverContainer = parentRef.current;
+    let thumbnailImages = projectsRef.current;
 
-    // Camera position
-    camera.position.z = 4;
+    function thumbnailTransforms(x, y, el) {
+      let box = el.getBoundingClientRect();
+      let calcX = -(y - box.y - box.height / 2) / constrain;
+      let calcY = (x - box.x - box.width / 2) / constrain;
 
-    // Add lights
-    // const ambientLight = new THREE.AmbientLight(0xffffff, 1.2);
-    // scene.add(ambientLight);
+      return "perspective(100px) " + "rotateX(" + calcX + "deg) " + "rotateY(" + calcY + "deg)";
+    }
 
-    // Geometry and materials for the project thumbnails
-    const planes = [];
-    const radius = 1.7; // Distance from the center to the farthest edge of the planes
-    const angleIncrement = (2 * Math.PI) / projects.length; // Angle between each plane
+    function transformThumbnailElement(el, xyEl) {
+      el.style.transform = thumbnailTransforms.apply(null, xyEl);
+    }
 
-    projects.forEach((project, index) => {
-      const textureLoader = new THREE.TextureLoader();
-      const texture = textureLoader.load(getFileSrc(project.thumbnail)); // Adjust the path to your image file
+    mouseOverContainer.addEventListener("mousemove", (e) => {
+      let xy = [e.clientX, e.clientY];
 
-      const material = new THREE.MeshBasicMaterial({
-        map: texture,
-        side: THREE.DoubleSide,
+      thumbnailImages.forEach(function (thumbnailImage) {
+        let position = xy.concat([thumbnailImage]);
+        window.requestAnimationFrame(function () {
+          transformThumbnailElement(thumbnailImage, position);
+        });
       });
-      const geometry = new THREE.PlaneGeometry(1.5, 1); // Landscape dimensions (wider than tall)
-      const plane = new THREE.Mesh(geometry, material);
-
-      const angle = index * angleIncrement;
-      const planeWidth = geometry.parameters.width / 2; // Half the width of the plane
-      const offsetX = Math.cos(angle) * planeWidth; // Offset to align the left edge
-      const offsetZ = Math.sin(angle) * planeWidth;
-
-      plane.position.set(Math.cos(angle) * radius - offsetX, 0, Math.sin(angle) * radius - offsetZ);
-      plane.rotation.y = -angle;
-
-      scene.add(plane);
-      planes.push(plane);
     });
-
-    // Event Handlers
-    const onMouseDown = (event) => {
-      isDragging.current = true;
-      startMouseX.current = event.clientX;
-      startRotationY.current = scene.rotation.y; // Capture the current rotation
-    };
-
-    const onMouseMove = (event) => {
-      if (isDragging.current) {
-        const deltaX = (event.clientX - startMouseX.current) * 0.001; // Adjust sensitivity
-        scene.rotation.y = startRotationY.current + deltaX; // Apply the delta to the captured rotation
-        velocity.current = deltaX; // Save velocity for inertia
-      }
-    };
-
-    const onMouseUp = () => {
-      isDragging.current = false;
-    };
-
-    // Add Event Listeners
-    window.addEventListener("mousedown", onMouseDown);
-    window.addEventListener("mousemove", onMouseMove);
-    window.addEventListener("mouseup", onMouseUp);
-
-    const handleResize = () => {
-      camera.aspect = window.innerWidth / (window.innerHeight / 2);
-      camera.updateProjectionMatrix();
-      renderer.setSize(window.innerWidth, window.innerHeight / 2);
-      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-    };
-
-    window.addEventListener("resize", handleResize);
-
-    // Animation loop
-    const animate = () => {
-      requestAnimationFrame(animate);
-
-      if (!isDragging.current) {
-        velocity.current *= 0.99; // Gradually reduce velocity
-        scene.rotation.y += velocity.current; // Apply velocity to rotation
-      }
-
-      renderer.render(scene, camera);
-    };
-
-    animate();
-
-    // Clean up on unmount
-    return () => {
-      window.removeEventListener("resize", handleResize);
-      window.removeEventListener("mousedown", onMouseDown);
-      window.removeEventListener("mousemove", onMouseMove);
-      window.removeEventListener("mouseup", onMouseUp);
-      renderer.dispose();
-      mountRef.current.removeChild(renderer.domElement);
-    };
   }, [projects]);
 
-  return <div ref={mountRef} style={{ width: "100%", height: "50vh" }} />;
+  // Early return if data is undefined or empty
+  if (!projects || projects.length === 0) {
+    return <p>Error Loading Component</p>; // Or some other loading state or message
+  }
+
+  return (
+    <div className={styles.view3D} ref={parentRef}>
+      {/* <ImageTrail projects={projects} parentRef={parentRef} /> */}
+      <div className={styles["view3D-container"]}>
+        {projects.map((project, index) => {
+          return <Thumbnail project={project} index={index} key={index} />;
+        })}
+      </div>
+    </div>
+  );
 }

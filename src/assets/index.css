@@ -148,6 +148,7 @@ footer {
   position: relative;
   z-index: 100;
   /* color: #000; */
+  transition: color 0.2s ease-in-out;
 }
 
 .button .button-back {
@@ -160,6 +161,7 @@ footer {
 
   filter: blur(10px);
   opacity: 0;
+  transition: opacity 0.2s ease-in-out;
 }
 
 .button .button-back-inner {
@@ -180,15 +182,6 @@ footer {
   z-index: -1;
 }
 
-@keyframes spin {
-  0% {
-    transform: rotate(0deg) scale(3);
-  }
-  100% {
-    transform: rotate(1turn) scale(3);
-  }
-}
-
 .button:hover .button-back,
 .button.active .button-back {
   opacity: 1;
@@ -198,6 +191,48 @@ footer {
   color: #fff;
 }
 
-.button:hover {
-  /* ... */
+.activeIndicator {
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  background: #fff;
+  position: relative;
+  display: inline-block;
+  right: -5px;
+  z-index: 10;
+  top: 1px;
+  overflow: hidden;
+  filter: blur(1px);
+  transition: 0.2s transform ease-in-out;
+  transform: scale(0);
+}
+.activeIndicator.active {
+  transform: scale(1);
+}
+.activeIndicator-inner {
+  background: conic-gradient(from 0deg, #e66465, #4d9f0c, #e66465);
+  filter: saturate(6) blur(6px);
+  animation: spin-alt 10s linear infinite;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  height: 100%;
+  width: 100%;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg) scale(3);
+  }
+  100% {
+    transform: rotate(1turn) scale(3);
+  }
+}
+@keyframes spin-alt {
+  0% {
+    transform: rotate(0deg) scale(1);
+  }
+  100% {
+    transform: rotate(1turn) scale(1);
+  }
 }

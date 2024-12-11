@@ -2,20 +2,30 @@
   position: relative;
   height: 80vh;
   overflow-y: hidden;
+  /* width: 80vw;
+  left: 50%;
+  transform: translateX(-50%);
+  box-shadow: var(--box-shadow);
+  border-radius: 10px;
+  padding: 20px;
+  box-sizing: border-box; */
 }
 
 .projectListItem {
-  /* margin-bottom: var(--margin);  */
   display: grid;
-  grid-template-columns: minmax(100px, 12vw) 40px 40% auto auto;
-  width: 100%;
+  grid-template-columns: 140px 40px 50% auto auto;
+
   align-items: center;
 
-  transform-origin: middle center;
-  /* position: absolute; */
-  height: 10px;
-  transform: scale(0.1);
+  transform-origin: top left;
+
   text-align: center;
+  /* box-shadow: var(--box-shadow); */
+
+  height: 100px;
+  width: 100%;
+  transform: scale(0.05);
+  /* background-color: blue; */
 }
 
 .projectListItem img,
@@ -34,6 +44,23 @@
 
 .projectListItem:hover {
   color: #ccc;
+}
+
+.categories {
+  display: flex;
+  flex-direction: row;
+  white-space: wrap;
+}
+
+.credit {
+  display: flex;
+  flex-direction: row;
+}
+
+.line {
+  height: 1px;
+  width: 100vw;
+  background: #eee;
 }
 
 /* .marker {
