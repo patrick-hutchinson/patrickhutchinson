@@ -23,6 +23,9 @@ function ListView({ projects }) {
   // Scaling Effect
   useEffect(() => {
     const minScale = 0.05;
+    const hoverZoneHeight = 200; // Total height of the hover zone (7.5 pixels above and below)
+    const hoverZoneOffset = hoverZoneHeight / 2;
+
     // Initialize scales for each project
     targetScales.current = projectsRef.current.map(() => ({ scale: minScale, height: 5 }));
 
@@ -30,7 +33,18 @@ function ListView({ projects }) {
       projectsRef.current.forEach((li, liIndex) => {
         const rect = li.getBoundingClientRect();
         const centerY = rect.top + rect.height / 2;
-        const distance = Math.abs(mousePosition.current.y - centerY);
+
+        // Define the hover zone
+        const hoverZoneTop = centerY - hoverZoneOffset;
+        const hoverZoneBottom = centerY + hoverZoneOffset;
+
+        // Calculate distance to the hover zone
+        let distance = 0;
+        if (mousePosition.current.y < hoverZoneTop) {
+          distance = hoverZoneTop - mousePosition.current.y;
+        } else if (mousePosition.current.y > hoverZoneBottom) {
+          distance = mousePosition.current.y - hoverZoneBottom;
+        }
 
         const maxDistance = 50; // Max distance for scaling effect
         const scale = Math.max(Math.exp(-distance / maxDistance), minScale);
@@ -38,7 +52,6 @@ function ListView({ projects }) {
         // Smoothly transition to target scale/height using GSAP
         gsap.to(li, {
           scale: scale,
-          // width: `${containerRef.current.getBoundingClientRect().width / scale}px`, // Adjust width to compensate for scaling
           height: `${100 * scale}px`,
           duration: 0.3,
           ease: "power2.out",

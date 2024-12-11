@@ -79,7 +79,8 @@ export default function Filtering({ filters, activeFilters, setActiveFilters }) 
       </button>
 
       <ul className={styles.filterWrapper}>
-        <li onClick={(e) => handleAllFilter(e)}>
+        {/* Add "All" filter to the filtersRef array at index 0 */}
+        <li onClick={(e) => handleAllFilter(e)} ref={(el) => (filtersRef.current[0] = el)}>
           <span className={`${allSelected ? "active" : ""} activeIndicator`}>
             <div className="activeIndicator-inner"></div>
           </span>
@@ -88,7 +89,12 @@ export default function Filtering({ filters, activeFilters, setActiveFilters }) 
         </li>
         {filters.map((filter, index) => {
           return (
-            <li key={index} onClick={(e) => handleFiltering(e, filter)} ref={(el) => (filtersRef.current[index] = el)}>
+            // Adjust the index to account for "All" filter at index 0
+            <li
+              key={index}
+              onClick={(e) => handleFiltering(e, filter)}
+              ref={(el) => (filtersRef.current[index + 1] = el)} // Store other filters starting from index 1
+            >
               <span className={`${activeFilters.includes(filter) && !allSelected ? "active" : ""} activeIndicator`}>
                 <div className="activeIndicator-inner"></div>
               </span>

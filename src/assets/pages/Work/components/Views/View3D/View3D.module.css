@@ -1,5 +1,5 @@
 :root {
-  --thumbnailWidth: 15vw;
+  --thumbnailWidth: 5vw;
 }
 
 .view3D {
@@ -14,13 +14,15 @@
   overflow: hidden;
   border-radius: var(--margin);
   /* position: absolute; */
-  transition: box-shadow 0.3s ease-in-out, width 0.3s ease-in-out, height 0.3s ease-in-out;
+
   box-shadow: none;
 }
 
-.projectPreview:hover {
-  box-shadow: var(--box-shadow);
-  --thumbnailWidth: 20vw;
+.projectWrapper {
+  transition: transform 0.3s ease;
+}
+.projectWrapper:hover {
+  transform: scale(1.5);
 }
 
 .projectPreview img {
@@ -33,5 +35,4 @@
 
   object-fit: cover;
   overflow: hidden;
-  transition: width 0.3s ease-in-out, height 0.3s ease-in-out;
 }
