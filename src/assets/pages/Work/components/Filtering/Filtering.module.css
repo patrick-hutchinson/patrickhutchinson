@@ -2,5 +2,9 @@
 .filterWrapper {
   display: flex;
   flex-direction: row;
-  gap: 10px;
+  gap: var(--margin);
+  align-items: center;
+}
+.filterMenu {
+  margin-top: calc(-1 * var(--margin));
 }

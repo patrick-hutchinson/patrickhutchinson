@@ -9,11 +9,11 @@ import Footer from "./Footer/Footer";
 export default function Layout() {
   return (
     // <ReactLenis root>
-    <div>
+    <>
       <Header />
       <Outlet />
       <Footer />
-    </div>
+    </>
     // </ReactLenis>
   );
 }

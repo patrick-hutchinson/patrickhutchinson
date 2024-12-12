@@ -4,7 +4,7 @@ import { useEffect, useState, useRef } from "react";
 import styles from "./ViewMenu.module.css";
 
 export default function ViewMenu({ currentView, setCurrentView }) {
-  let views = ["3D View", "List View"];
+  let views = ["Grid View", "List View"];
 
   function toggleView(target) {
     setCurrentView(target);

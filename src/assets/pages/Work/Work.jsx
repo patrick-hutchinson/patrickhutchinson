@@ -6,7 +6,7 @@ import sanityClient from "/src/client.js";
 import { GlobalStateContext } from "../../context/GlobalStateContext";
 
 import ViewList from "./components/Views/ViewList/ViewList";
-import View3D from "./components/Views/View3D/View3D";
+import ViewGrid from "./components/Views/ViewGrid/ViewGrid";
 import Filtering from "./components/Filtering/Filtering";
 import ViewMenu from "./components/ViewMenu/ViewMenu";
 
@@ -14,7 +14,7 @@ import styles from "./Work.module.css";
 
 export default function Work() {
   const { isMobile } = useContext(GlobalStateContext);
-  let [currentView, setCurrentView] = useState("3D View");
+  let [currentView, setCurrentView] = useState("Grid View");
 
   let [filters, setFilters] = useState(["WebDesign", "Development", "InteractionDesign", "MotionDesign", "Poster", "TypeDesign"]);
   let [activeFilters, setActiveFilters] = useState(filters);
@@ -52,7 +52,7 @@ export default function Work() {
       <ViewMenu currentView={currentView} setCurrentView={setCurrentView} />
       <Filtering filters={filters} activeFilters={activeFilters} setActiveFilters={setActiveFilters} />
       {currentView == "List View" && <ViewList projects={filteredProjects} />}
-      {currentView == "3D View" && <View3D projects={filteredProjects} />}
+      {currentView == "Grid View" && <ViewGrid projects={filteredProjects} />}
     </section>
   );
 }

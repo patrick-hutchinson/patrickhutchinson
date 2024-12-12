@@ -1,9 +1,4 @@
-.mediaDisplay {
-  width: 100%;
-  height: auto;
-}
-
-.mediaDisplay * {
-  width: 100%;
-  height: auto;
+section.workSection {
+  height: 100vh;
+  overflow-y: hidden;
 }
