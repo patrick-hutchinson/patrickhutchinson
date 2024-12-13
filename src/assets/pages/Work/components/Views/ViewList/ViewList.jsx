@@ -6,6 +6,9 @@ import { renderMedia } from "assets/utils/renderMedia";
 
 import { creditsMapping } from "assets/context/creditsMapping";
 
+import { formatMonth } from "assets/utils/formatMonth";
+import { formatYear } from "assets/utils/formatYear";
+
 import { gsap } from "gsap";
 
 function ListView({ projects }) {
@@ -78,30 +81,29 @@ function ListView({ projects }) {
   // ListItem Component
   let ListItem = ({ project, index }) => {
     return (
-      <>
-        <li className={styles.projectListItem} key={index} index={index} ref={(el) => (projectsRef.current[index] = el)}>
-          {renderMedia(project.thumbnail)}
-          <h4>{project.year}</h4>
-          <div className={styles.projectTitle}>{project.name}</div>
-          <ul className={styles.categories}>
-            {project.categories?.map((category, index) => (
-              <li key={index}>{category}, </li>
-            ))}
-          </ul>
-          <ul className={styles.credits}>
-            {project.credits &&
-              creditsMapping.map(
-                ({ key, title }) =>
-                  project.credits[key] && (
-                    <li className={`${styles.credit}`} key={key}>
-                      {title}: {project.credits[key].join(", ")}
-                    </li>
-                  )
-              )}
-          </ul>
-        </li>
-        {/* <div className={styles.line}></div> */}
-      </>
+      <li className={styles.projectListItem} ref={(el) => (projectsRef.current[index] = el)}>
+        {renderMedia(project.thumbnail)}
+        <h4>
+          {formatMonth(project.month)} {formatYear(project.year)}
+        </h4>
+        <div className={styles.projectTitle}>{project.name}</div>
+        <ul className={styles.categories}>
+          {project.categories?.map((category, index) => (
+            <li key={index}>{category}, </li>
+          ))}
+        </ul>
+        <ul className={styles.credits}>
+          {project.credits &&
+            creditsMapping.map(
+              ({ key, title }) =>
+                project.credits[key] && (
+                  <li className={`${styles.credit}`} key={key}>
+                    {title}: {project.credits[key].join(", ")}
+                  </li>
+                )
+            )}
+        </ul>
+      </li>
     );
   };
 
@@ -118,7 +120,7 @@ function ListView({ projects }) {
   return (
     <ul className={styles.projectList} ref={containerRef}>
       {repeatedProjects.map((project, index) => (
-        <Link to={project?.slug?.current} key={index}>
+        <Link to={`/work/${project?.slug?.current}`} key={index}>
           <ListItem project={project} index={index} />
         </Link>
       ))}

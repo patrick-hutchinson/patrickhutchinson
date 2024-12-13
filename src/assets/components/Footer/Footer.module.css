@@ -10,6 +10,12 @@ footer {
   align-items: center;
   box-sizing: border-box;
   height: 40px;
+  opacity: 0.5;
+  transition: opacity 0.3s ease-in-out;
+}
+
+footer:hover {
+  opacity: 1;
 }
 
 .externalLink {

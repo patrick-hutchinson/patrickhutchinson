@@ -5,7 +5,7 @@ import { getPointerPos, getMouseDistance, getNewPosition, lerp } from "./utils/u
 
 import { getFileSrc } from "/src/assets/utils/getFileSrc";
 
-const ImageTrail = ({ projects, parentRef }) => {
+const ImageTrail = ({ data, parentRef }) => {
   const containerRef = useRef(null); // Reference to the container div
   const imagesRef = useRef([]); // Use a ref to store images
   const mousePos = useRef({ x: 0, y: 0 }); // Mouse position
@@ -39,6 +39,10 @@ const ImageTrail = ({ projects, parentRef }) => {
       parentRef.current.removeEventListener("touchmove", handlePointerMove);
     };
   }, []);
+
+  useRef(() => {
+    console.log(parentRef.current, "parentRef");
+  }, [parentRef.current]);
 
   useEffect(() => {
     const container = containerRef.current;
@@ -141,7 +145,7 @@ const ImageTrail = ({ projects, parentRef }) => {
 
   return (
     <div ref={containerRef} className="content">
-      {projects.map((project, index) => (
+      {data[0].imagegallery?.map((image, index) => (
         <div
           key={index}
           className={styles["content__img"]}
@@ -149,7 +153,7 @@ const ImageTrail = ({ projects, parentRef }) => {
             if (el) imagesRef.current[index] = el;
           }}
         >
-          <img className={styles["content__img-inner"]} src={getFileSrc(project.thumbnail)} alt="" />
+          <img className={styles["content__img-inner"]} src={getFileSrc(image)} alt="" />
         </div>
       ))}
     </div>

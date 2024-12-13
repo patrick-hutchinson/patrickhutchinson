@@ -3,6 +3,8 @@ import { useEffect, useState, useRef } from "react";
 
 import styles from "./Header.module.css";
 
+import { Link } from "react-router-dom";
+
 export default function Header() {
   let [isVisible, setIsVisible] = React.useState(false);
 
@@ -13,20 +15,28 @@ export default function Header() {
   let Menu = () => (
     <nav className={styles.menu}>
       <ul>
-        <li>About</li>
-        <li>Work</li>
-        <li>News</li>
-        <li>Contact</li>
+        <Link to="/">
+          <li>About</li>
+        </Link>
+        <Link to="/">
+          <li>Work</li>
+        </Link>
+        <Link to="/">
+          <li>News</li>
+        </Link>
+        <Link to="/">
+          <li>Contact</li>
+        </Link>
       </ul>
     </nav>
   );
 
   return (
     <header>
-      <div className={styles.logo}>
+      <Link to="/" className={styles.logo}>
         <span>PH ×</span>
         <img src="/assets/media/logo.gif" alt="" />
-      </div>
+      </Link>
 
       <div className={styles.menuContainer}>
         <button className={`${styles.externalLink} button`} onClick={toggleMenu}>

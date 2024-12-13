@@ -14,6 +14,18 @@ export default function Footer() {
           <div className="button-back-inner"></div>
         </div>
       </button>
+      <button className={`${styles.externalLink} button`}>
+        <div className="button-front">hutchinsonpatrick@icloud.com</div>
+        <div className="button-back">
+          <div className="button-back-inner"></div>
+        </div>
+      </button>
+      <button className={`${styles.externalLink} button`}>
+        <div className="button-front">Instagram</div>
+        <div className="button-back">
+          <div className="button-back-inner"></div>
+        </div>
+      </button>
       <p className={`${styles.copyright}`}>{`PH×35° ${currentYear} 🌡️ All Rights Reserved. `}</p>
     </footer>
   );

@@ -1,0 +1,40 @@
+.projectText {
+  padding: 0px 2px;
+  box-sizing: border-box;
+  position: sticky;
+  top: 40px;
+  padding: var(--margin);
+}
+
+.projectHeader,
+.projectInfo {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.projectHeader {
+  font-size: var(--font-size-500);
+}
+
+.projectInfo {
+  font-size: var(--font-size-200);
+}
+
+.projectInfo .categories {
+  display: flex;
+  flex-direction: row;
+}
+
+.projectContainer img,
+.projectContainer video {
+  width: 100%;
+  height: auto;
+}
+
+.project-footer {
+  position: fixed;
+  bottom: 50px;
+  right: 30px;
+  width: fit-content;
+}

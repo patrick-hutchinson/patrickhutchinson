@@ -1,5 +1,20 @@
-.viewMenu {
+.projectsNav {
+  top: 11px;
   display: flex;
   flex-direction: row;
+  width: 100%;
+  align-items: top;
+  position: relative;
   gap: var(--margin);
+}
+
+.viewMenu {
+  display: flex;
+  flex-direction: column;
+  gap: calc(var(--margin) / 2);
+  margin: 0px;
+}
+
+.filterButton {
+  margin-left: 30px;
 }

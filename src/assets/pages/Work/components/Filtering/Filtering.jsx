@@ -5,11 +5,9 @@ import styles from "./Filtering.module.css";
 
 import { gsap } from "gsap";
 
-export default function Filtering({ filters, activeFilters, setActiveFilters }) {
+export default function Filtering({ filters, activeFilters, setActiveFilters, showFiltering }) {
   // This should come from Sanity
   let [allSelected, setAllSelected] = useState(true); // Track if "All" is selected
-
-  let [showFilters, prevShowFilters] = useState(false);
 
   const filtersRef = useRef([]); // Store filters as refs to animate individually
 
@@ -36,19 +34,13 @@ export default function Filtering({ filters, activeFilters, setActiveFilters }) 
     });
   }
 
-  function showFiltering() {
-    prevShowFilters((prevShowFilters) => {
-      return !prevShowFilters;
-    });
-  }
-
   // Filtering Animation
   useEffect(() => {
     gsap.set(filtersRef.current, { opacity: 0, y: 5 }); // Initially hide Filters
   }, []);
 
   useEffect(() => {
-    if (showFilters) {
+    if (showFiltering) {
       gsap.fromTo(
         filtersRef.current, // Handle Enter and Exit Animation for every button press
         { opacity: 0, y: 5 },
@@ -57,7 +49,7 @@ export default function Filtering({ filters, activeFilters, setActiveFilters }) 
     } else {
       gsap.to(filtersRef.current, { opacity: 0, y: 5, stagger: 0.1, duration: 0.3, ease: "power2.in" });
     }
-  }, [showFilters]);
+  }, [showFiltering]);
 
   function formatText(filter) {
     return filter.replace(/([a-z])([A-Z])/g, "$1 $2");
@@ -71,13 +63,6 @@ export default function Filtering({ filters, activeFilters, setActiveFilters }) 
 
   return (
     <div className={styles.filterMenu}>
-      <button className="button" onClick={showFiltering}>
-        <div className="button-front">Filters</div>
-        <div className="button-back">
-          <div className="button-back-inner"></div>
-        </div>
-      </button>
-
       <ul className={styles.filterWrapper}>
         {/* Add "All" filter to the filtersRef array at index 0 */}
         <li onClick={(e) => handleAllFilter(e)} ref={(el) => (filtersRef.current[0] = el)}>

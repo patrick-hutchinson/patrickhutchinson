@@ -1,19 +1,16 @@
 import React, { useEffect, useState, useRef } from "react";
-import { motion, useInView } from "framer-motion";
 import sanityClient from "/src/client.js";
-import { PortableText } from "@portabletext/react";
-
-import ImageTrail from "./components/ImageTrail/ImageTrail";
 
 import styles from "./About.module.css";
 
-export default function About() {
-  let aboutRef = useRef(null);
-  const [aboutData, setAboutData] = useState();
-  const ref = useRef(null); // Reference for the element to observe
+import { gsap } from "gsap";
+import { useGSAP } from "@gsap/react";
 
-  // Directly use the useInView hook here
-  const isInView = useInView(ref); // Use useInView directly
+export default function About() {
+  const aboutRef = useRef(null);
+  const wordsRef = useRef([]);
+
+  const [aboutData, setAboutData] = useState();
 
   // Fetch data from Sanity
   useEffect(() => {
@@ -27,41 +24,42 @@ export default function About() {
       .catch(console.error);
   }, []);
 
-  let [projects, setProjects] = useState();
+  useGSAP(() => {
+    if (wordsRef.current.length > 0) {
+      console.log(wordsRef.current); // This will log all the elements in the wordsRef array
+
+      gsap.from(wordsRef.current, {
+        opacity: 0,
+        y: 50,
+        stagger: 0.1,
+        duration: 1,
+        ease: "power3.out",
+      });
+    }
+  }, [aboutData]); // Re-run animation when projects changes
+
   useEffect(() => {
-    sanityClient
-      .fetch(
-        `*[_type=="project"]{
-      coverimage,
-      thumbnail
-  }`
-      )
-      .then((data) => setProjects(data))
-      .catch(console.error);
-  }, []);
+    if (aboutRef.current !== null) {
+      aboutRef.current.querySelectorAll(`.${styles.wordOuter}`).forEach((word) => {
+        word.addEventListener("mouseenter", (e) => {
+          console.log("in");
+          word.querySelector(`.${styles.wordInner}`).style.transform = "rotateX(90deg)";
+          word.querySelector(`.${styles.wordAlternative}`).style.transform = "rotateX(0deg)";
+        });
+
+        word.addEventListener("mouseleave", () => {
+          console.log("out");
+          word.querySelector(`.${styles.wordInner}`).style.transform = "rotateX(0deg)";
+          word.querySelector(`.${styles.wordAlternative}`).style.transform = "rotateX(-90deg)";
+        });
+      });
+    }
+  }, [aboutData]);
 
   // Handle loading or error state
   if (!aboutData || aboutData.length === 0) {
     return <p>Error Loading Component</p>;
   }
-
-  if (!projects || projects.length === 0) {
-    return <p>Error Loading Component</p>; // Or some other loading state or message
-  }
-
-  // Animation variants
-  const wordAnimation = {
-    hidden: { opacity: 0.2, y: 10 },
-    visible: (i) => ({
-      opacity: 1,
-      y: 0,
-      transition: {
-        delay: i * 0.1, // Stagger animation for each word
-        duration: 0.5,
-        ease: "easeOut",
-      },
-    }),
-  };
 
   // Split text into words for individual animation
   const text = aboutData[0]?.biography[0]?.children[0]?.text || ""; // Example: Accessing the first block
@@ -69,24 +67,14 @@ export default function About() {
 
   return (
     <section className={styles.aboutSection} ref={aboutRef}>
-      {/* <ImageTrail projects={projects} aboutRef={aboutRef} /> */}
-      <motion.div
-        ref={ref}
-        initial="hidden"
-        animate={isInView ? "visible" : "hidden"} // Animate based on viewport visibility
-        className={styles.biographyText}
-      >
+      <div className={styles.biographyText}>
         {words.map((word, index) => (
-          <motion.span
-            key={index}
-            custom={index}
-            variants={wordAnimation}
-            style={{ display: "inline-block", marginRight: "5px" }}
-          >
-            {word}
-          </motion.span>
+          <span key={index} className={`${styles.wordOuter}`} ref={(el) => (wordsRef.current[index] = el)}>
+            <span className={`${styles.wordInner}`}>{word}</span>
+            <span className={`${styles.wordAlternative}`}>{word}</span>
+          </span>
         ))}
-      </motion.div>
+      </div>
     </section>
   );
 }
