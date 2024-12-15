@@ -4,6 +4,7 @@ import { useEffect, useState, useRef } from "react";
 import styles from "./Filtering.module.css";
 
 import { gsap } from "gsap";
+import { useGSAP } from "@gsap/react";
 
 export default function Filtering({ filters, activeFilters, setActiveFilters, showFiltering }) {
   // This should come from Sanity

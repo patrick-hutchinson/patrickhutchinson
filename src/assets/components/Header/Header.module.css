@@ -5,24 +5,32 @@ header {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  padding: 10px;
+  padding: var(--margin);
+
   box-sizing: border-box;
   align-items: center;
 
   position: sticky;
-  top: 0px;
+  top: var(--margin);
 
   z-index: 100;
-  background: var(--background-color);
+  background: transparent;
 }
 
 header .logo,
 header img {
-  height: 150%;
+  height: 25px;
   width: auto;
   position: relative;
   top: -1px;
   left: 1px;
+}
+
+header .button-front {
+  display: flex;
+  vertical-align: middle;
+  color: #000 !important;
+  mix-blend-mode: multiply;
 }
 
 .logo {

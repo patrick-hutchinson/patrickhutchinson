@@ -8,6 +8,12 @@
   gap: var(--margin);
 }
 
+.projectView {
+  display: flex;
+  flex-direction: column;
+  gap: calc(var(--margin) / 2);
+}
+
 .viewMenu {
   display: flex;
   flex-direction: column;

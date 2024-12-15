@@ -19,7 +19,8 @@ import { renderMedia } from "assets/utils/renderMedia";
 
 export default function Work() {
   const { isMobile } = useContext(GlobalStateContext);
-  let [currentView, setCurrentView] = useState("Grid View");
+  let [projectView, setProjectView] = useState("Grid View");
+  let [projectSelection, setProjectSelection] = useState("Selected Work");
 
   let [filters, setFilters] = useState(["WebDesign", "Development", "InteractionDesign", "MotionDesign", "Poster", "TypeDesign"]);
   let [activeFilters, setActiveFilters] = useState(filters);
@@ -58,42 +59,50 @@ export default function Work() {
     return project.categories?.some((category) => activeFilters.includes(category));
   });
 
-  let ProjectPreview = ({ project }) => {
+  let SelectedWork = () => {
     return (
-      <div className={styles.projectContainer} key={project._id}>
-        <div className={styles.projectText}>
-          <div className={styles.projectHeader}>
-            <div>{project.url}</div>
-            <div>
-              {formatMonth(project.formatMonth)} {formatYear(project.year)}
-            </div>
-          </div>
-          <div className={styles.projectInfo}>
-            <ul className={styles.categories}>
-              {project.categories?.map((category, index) => {
-                const isLast = index === project.categories.length - 1;
-                return (
-                  <li key={index}>
-                    {category}
-                    {!isLast && ","}&nbsp;
-                  </li>
-                );
-              })}
-            </ul>
-            <ul className={styles.credits}>
-              {project.credits &&
-                creditsMapping.map(
-                  ({ key, title }) =>
-                    project.credits[key] && (
-                      <li className={`${styles.credit}`} key={key}>
-                        {title}: {project.credits[key].join(", ")}
-                      </li>
-                    )
-                )}
-            </ul>
-          </div>
-        </div>
-        {renderMedia(project.thumbnail)}
+      <div className={styles.selectedProjectContainer}>
+        {projects.map((project) => {
+          return (
+            project.showOnHomepage && (
+              <div className={styles.projectWrapper} key={project._id}>
+                <div className={styles.projectText}>
+                  <div className={styles.projectHeader}>
+                    <div>{project.url}</div>
+                    <div>
+                      {formatMonth(project.month)} {formatYear(project.year)}
+                    </div>
+                  </div>
+                  {/* <div className={styles.projectInfo}>
+                    <ul className={styles.categories}>
+                      {project.categories?.map((category, index) => {
+                        const isLast = index === project.categories.length - 1;
+                        return (
+                          <li key={index}>
+                            {category}
+                            {!isLast && ","}&nbsp;
+                          </li>
+                        );
+                      })}
+                    </ul>
+                    <ul className={styles.credits}>
+                      {project.credits &&
+                        creditsMapping.map(
+                          ({ key, title }) =>
+                            project.credits[key] && (
+                              <li className={`${styles.credit}`} key={key}>
+                                {title}: {project.credits[key].join(", ")}
+                              </li>
+                            )
+                        )}
+                    </ul>
+                  </div> */}
+                </div>
+                {renderMedia(project.coverimage)}
+              </div>
+            )
+          );
+        })}
       </div>
     );
   };
@@ -102,21 +111,27 @@ export default function Work() {
     <section className={styles.workSection}>
       <div className={styles.headerContainer}>
         <h1>WORK</h1>
-        <ViewMenu currentView={currentView} setCurrentView={setCurrentView} setShowFiltering={setShowFiltering} />
+        <ViewMenu
+          projectView={projectView}
+          setProjectView={setProjectView}
+          projectSelection={projectSelection}
+          setProjectSelection={setProjectSelection}
+          setShowFiltering={setShowFiltering}
+        />
       </div>
-      <Filtering
-        filters={filters}
-        activeFilters={activeFilters}
-        setActiveFilters={setActiveFilters}
-        showFiltering={showFiltering}
-      />
+      {projectSelection === "All Work" && (
+        <Filtering
+          filters={filters}
+          activeFilters={activeFilters}
+          setActiveFilters={setActiveFilters}
+          showFiltering={showFiltering}
+        />
+      )}
 
-      {/* <div className={styles.workDisplay}>
-        {projects.map((project, index) => (project.showOnHomepage ? <ProjectPreview project={project} key={index} /> : null))}
-      </div> */}
+      {projectSelection === "Selected Work" && <SelectedWork />}
 
-      {currentView === "List View" && <ViewList projects={filteredProjects} />}
-      {currentView === "Grid View" && <ViewGrid projects={filteredProjects} />}
+      {projectSelection === "All Work" && projectView === "List View" && <ViewList projects={filteredProjects} />}
+      {projectSelection === "All Work" && projectView === "Grid View" && <ViewGrid projects={filteredProjects} />}
     </section>
   );
 }

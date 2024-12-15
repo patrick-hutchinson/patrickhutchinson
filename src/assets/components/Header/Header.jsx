@@ -34,8 +34,15 @@ export default function Header() {
   return (
     <header>
       <Link to="/" className={styles.logo}>
-        <span>PH ×</span>
-        <img src="/assets/media/logo.gif" alt="" />
+        <button className={`${styles.externalLink} button`}>
+          <div className={`button-front ${styles["button-front"]}`}>
+            <span>PH ×</span>
+            <img src="/assets/media/logo.gif" alt="" />
+          </div>
+          <div className="button-back">
+            <div className="button-back-inner"></div>
+          </div>
+        </button>
       </Link>
 
       <div className={styles.menuContainer}>
