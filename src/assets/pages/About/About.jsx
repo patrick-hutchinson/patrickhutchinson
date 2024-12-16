@@ -40,81 +40,91 @@ export default function About() {
   // }, [aboutData]); // Re-run animation when projects changes
 
   useEffect(() => {
-    let animationDuration = 0.2;
-    let animationDelay = animationDuration * 0.7;
-
     window.addEventListener("mousemove", (e) => {
       setMousePosition({
         x: e.clientX,
         y: e.clientY,
       });
     });
+  }, []);
 
-    aboutRef?.current?.querySelectorAll(`.${styles.wordContainer}`).forEach((word) => {
-      let wordFront = word.querySelector(`.${styles.wordFront}`);
-      let wordBack = word.querySelector(`.${styles.wordBack}`);
+  useEffect(() => {
+    let animationDuration = 0.2;
+    let animationDelay = animationDuration * 0.7;
 
-      let centerY = word.getBoundingClientRect().top + word.getBoundingClientRect().height / 2;
-      let centerX = word.getBoundingClientRect().left + word.getBoundingClientRect().width / 2;
+    let hoverRadius = 50;
 
-      word.addEventListener("mouseenter", () => {
-        const isExitPlaying = word.getAttribute("isplayingexit") === "true";
-        const isEnterPlaying = word.getAttribute("isplayingenter") === "true";
+    aboutRef?.current?.querySelectorAll(`.${styles.letterContainer}`).forEach((letter) => {
+      let letterFront = letter.querySelector(`.${styles.letterFront}`);
+      let letterBack = letter.querySelector(`.${styles.letterBack}`);
+
+      let centerX = letter.getBoundingClientRect().left + letter.getBoundingClientRect().width / 2;
+      let centerY = letter.getBoundingClientRect().top + letter.getBoundingClientRect().height / 2;
+
+      let distanceLeft = mousePosition.x - centerX;
+      let distanceTop = mousePosition.y - centerY;
+
+      const playEnterAnimation = (letterFront, letterBack) => {
+        letter.setAttribute("isplayingenter", "true");
+        letterFront.style.animation = `flipFrontOut ${animationDuration}s ease-in-out 0s 1 forwards`;
+        letterBack.style.animation = `flipBackIn ${animationDuration}s ease-in-out ${animationDelay}s 1 forwards`;
+
+        const onAnimationEnd = () => {
+          letterBack.removeEventListener("animationend", onAnimationEnd); // Clean up listener
+          letter.setAttribute("isplayingenter", "false");
+        };
+
+        letterBack.addEventListener("animationend", onAnimationEnd);
+      };
+
+      const playExitAnimation = (letterFront, letterBack) => {
+        letter.setAttribute("isplayingexit", "true");
+        letterFront.style.transform = "rotateX(90deg)";
+        letterFront.style.animation = `flipFrontIn ${animationDuration}s ease-in-out ${animationDelay}s 1 forwards`;
+        letterBack.style.animation = `flipBackOut ${animationDuration}s ease-in-out 0s 1 forwards`;
+
+        const onAnimationEnd = () => {
+          letterFront.removeEventListener("animationend", onAnimationEnd); // Clean up listener
+          letter.setAttribute("isplayingexit", "false");
+        };
+
+        letterFront.addEventListener("animationend", onAnimationEnd);
+      };
+
+      if (distanceLeft > -hoverRadius && distanceLeft < hoverRadius && distanceTop > -hoverRadius && distanceTop < hoverRadius) {
+        const isExitPlaying = letter.getAttribute("isplayingexit") === "true";
+        const isEnterPlaying = letter.getAttribute("isplayingenter") === "true";
 
         // If an animation is playing, wait for it to finish before triggering the next one
         if (!isEnterPlaying && !isExitPlaying) {
-          playEnterAnimation(wordFront, wordBack);
+          playEnterAnimation(letterFront, letterBack);
         } else if (!isEnterPlaying && isExitPlaying) {
           // If exit animation is playing, wait for it to finish
           setTimeout(() => {
-            playEnterAnimation(wordFront, wordBack);
-          }, animationDuration * 2000);
+            playEnterAnimation(letterFront, letterBack);
+          }, animationDuration * 1000);
         }
-      });
-
-      word.addEventListener("mouseleave", () => {
-        const isEnterPlaying = word.getAttribute("isplayingenter") === "true";
-        const isExitPlaying = word.getAttribute("isplayingexit") === "true";
+      } else if (
+        distanceLeft < -hoverRadius ||
+        distanceLeft > hoverRadius ||
+        distanceTop < -hoverRadius ||
+        distanceTop > hoverRadius
+      ) {
+        const isEnterPlaying = letter.getAttribute("isplayingenter") === "true";
+        const isExitPlaying = letter.getAttribute("isplayingexit") === "true";
 
         // If an animation is playing, wait for it to finish before triggering the next one
         if (!isExitPlaying && !isEnterPlaying) {
-          playExitAnimation(wordFront, wordBack);
+          playExitAnimation(letterFront, letterBack);
         } else if (!isExitPlaying && isEnterPlaying) {
           // If enter animation is playing, wait for it to finish
           setTimeout(() => {
-            playExitAnimation(wordFront, wordBack);
-          }, animationDuration * 2000);
+            playExitAnimation(letterFront, letterBack);
+          }, animationDuration * 1000);
         }
-      });
-
-      const playEnterAnimation = (wordFront, wordBack) => {
-        word.setAttribute("isplayingenter", "true");
-        wordFront.style.animation = `flipFrontOut ${animationDuration}s ease-in-out 0s 1 forwards`;
-        wordBack.style.animation = `flipBackIn ${animationDuration}s ease-in-out ${animationDelay}s 1 forwards`;
-
-        const onAnimationEnd = () => {
-          wordBack.removeEventListener("animationend", onAnimationEnd); // Clean up listener
-          word.setAttribute("isplayingenter", "false");
-        };
-
-        wordBack.addEventListener("animationend", onAnimationEnd);
-      };
-
-      const playExitAnimation = (wordFront, wordBack) => {
-        word.setAttribute("isplayingexit", "true");
-        wordFront.style.transform = "rotateX(90deg)";
-        wordFront.style.animation = `flipFrontIn ${animationDuration}s ease-in-out ${animationDelay}s 1 forwards`;
-        wordBack.style.animation = `flipBackOut ${animationDuration}s ease-in-out 0s 1 forwards`;
-
-        const onAnimationEnd = () => {
-          wordFront.removeEventListener("animationend", onAnimationEnd); // Clean up listener
-          word.setAttribute("isplayingexit", "false");
-        };
-
-        wordFront.addEventListener("animationend", onAnimationEnd);
-      };
+      }
     });
-  }, [aboutData]);
+  }, [aboutData, mousePosition]);
 
   // Handle loading or error state
   if (!aboutData || aboutData.length === 0) {
@@ -128,10 +138,16 @@ export default function About() {
   return (
     <section className={styles.aboutSection} ref={aboutRef}>
       <div className={styles.biographyText}>
-        {words.map((word, index) => (
-          <span key={index} className={`${styles.wordContainer}`} ref={(el) => (wordsRef.current[index] = el)}>
-            <span className={`${styles.wordFront}`}>{word}</span>
-            <span className={`${styles.wordBack}`}>{word}</span>
+        {words.map((word, wordIndex) => (
+          <span key={wordIndex} className={`${styles.wordContainer}`} ref={(el) => (wordsRef.current[wordIndex] = el)}>
+            {word.split("").map((letter, letterIndex) => (
+              <span key={`letter-${wordIndex}-${letterIndex}`} className={`${styles.letterContainer}`}>
+                <span className={`${styles.letterFront}`}>{letter}</span>
+                <span className={`${styles.letterBack}`}>{letter}</span>
+              </span>
+            ))}
+            {/* <span className={`${styles.letterFront}`}>{word}</span> */}
+            {/* <span className={`${styles.letterBack}`}>{word}</span> */}
           </span>
         ))}
       </div>

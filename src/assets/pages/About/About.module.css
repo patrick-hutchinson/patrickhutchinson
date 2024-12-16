@@ -7,6 +7,10 @@ section.aboutSection {
   line-height: var(--line-height-500);
   position: sticky;
   top: 40px;
+  /* color: #daff62; */
+  /* background: #796c63; */
+  /* color: #fcfcd3; */
+  /* background: #d0cec8; */
 }
 
 .biographyText {
@@ -16,25 +20,32 @@ section.aboutSection {
 
 .wordContainer {
   display: inline-block;
-  margin-right: 0px;
+  margin-right: 4px;
+  perspective: 100px;
+  position: relative;
+}
+.letterContainer {
+  display: inline-block;
   perspective: 100px;
   position: relative;
 }
 
-.wordFront {
+.wordFront,
+.letterFront {
   animation: none;
   transform: rotateX(0deg);
-  transform-origin: middle center;
+  /* transform-origin: middle center; */
   display: inline-block;
 }
 
-.wordBack {
+.wordBack,
+.letterBack {
   animation: none;
   transform: rotateX(-90deg);
 
-  transform-origin: middle center;
+  /* transform-origin: middle center; */
   position: absolute;
 
   left: 0px;
-  font-family: Times;
+  /* font-family: Times; */
 }

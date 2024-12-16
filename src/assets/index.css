@@ -49,8 +49,14 @@
   --font-size-300: 26px;
   --font-size-400: 42px;
   --font-size-500: clamp(1.675rem, 1.3393rem + 2.6786vi, 3rem);
-
   --h8: clamp(1.25rem, 0rem + 4vi, 8rem);
+
+  /* --font-size-100: 22px;
+  --font-size-200: 22px;
+  --font-size-300: 22px;
+  --font-size-400: 22px;
+  --font-size-500: 22px;
+  --h8: 22px; */
 
   --line-height-100: 1.15;
   --line-height-200: 1.15;
@@ -279,18 +285,18 @@ section {
 
 @keyframes flipBackIn {
   0% {
-    transform: rotateX(-90deg);
+    transform: rotateX(-90deg) translateY(-5px);
   }
   100% {
-    transform: rotateX(0deg);
+    transform: rotateX(-180deg) translateY(-5px);
   }
 }
 
 @keyframes flipBackOut {
   0% {
-    transform: rotateX(0deg);
+    transform: rotateX(-180deg) translateY(-5px);
   }
   100% {
-    transform: rotateX(-90deg);
+    transform: rotateX(-90deg) translateY(-5px);
   }
 }
