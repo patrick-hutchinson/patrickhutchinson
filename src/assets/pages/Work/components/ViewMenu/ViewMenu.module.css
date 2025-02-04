@@ -6,6 +6,9 @@
   align-items: top;
   position: relative;
   gap: var(--margin);
+  /* position: fixed; */
+  /* top: 40px; */
+  /* left: 10px; */
 }
 
 .projectView {

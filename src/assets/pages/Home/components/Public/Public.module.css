@@ -1,30 +1,32 @@
-section.newsSection {
+.public {
   height: 100%;
   width: 100%;
   position: relative;
-  background: var(--background-color);
-
-  /* display: grid; */
-  /* grid-template-columns: 1fr 1fr; */
 }
 
-.newsItem,
+.item,
 .experienceItem {
   display: flex;
   flex-direction: row;
 
   align-items: center;
-  gap: 5px;
+  gap: 10px;
+  /* margin-bottom: 10px; */
 }
 .name {
-  font-size: var(--font-size-200);
+  font-size: calc(var(--font-size-300));
+  text-decoration: underline;
 }
 .date {
   font-size: var(--font-size-100);
+  white-space: nowrap;
+
+  width: 20px;
+  min-width: 30px;
 }
 .thumbnail img {
   height: auto;
-  width: 60px;
+  width: 50px;
 }
 
 .alternatingImage {

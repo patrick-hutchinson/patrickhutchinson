@@ -7,8 +7,9 @@ import "./App.css";
 import Layout from "./assets/components/Layout";
 import Project from "assets/pages/Project/Project";
 
-// import Work from "./assets/pages/Work/Work";
 import Home from "./assets/pages/Home/Home";
+import News from "assets/pages/News/News";
+import Work from "assets/pages/Work/Work";
 
 function App() {
   return (
@@ -16,7 +17,9 @@ function App() {
       <Routes>
         <Route element={<Layout />}>
           <Route index element={<Home />}></Route>
+          <Route path="work" element={<Work />}></Route>
           <Route path="work/:slug" element={<Project />}></Route>
+          <Route path="public" element={<News />}></Route>
         </Route>
       </Routes>
     </BrowserRouter>

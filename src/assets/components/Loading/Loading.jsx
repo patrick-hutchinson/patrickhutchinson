@@ -1,43 +1,16 @@
 import React, { useEffect, useState, useRef } from "react";
-import sanityClient from "/src/client.js";
 
-import styles from "./About.module.css";
+import styles from "./Loading.module.css";
 
-import { gsap } from "gsap";
-import { useGSAP } from "@gsap/react";
-
-export default function About() {
+export default function Loading() {
+  let [counter, setCounter] = useState(0);
   let [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-  const aboutRef = useRef(null);
+
   const wordsRef = useRef([]);
+  const aboutRef = useRef();
 
-  const [aboutData, setAboutData] = useState();
-
-  // Fetch data from Sanity
-  useEffect(() => {
-    sanityClient
-      .fetch(
-        `*[_type=="about"]{
-        biography,
-      }`
-      )
-      .then((data) => setAboutData(data))
-      .catch(console.error);
-  }, []);
-
-  // useGSAP(() => {
-  //   if (wordsRef.current.length > 0) {
-  //     console.log(wordsRef.current); // This will log all the elements in the wordsRef array
-
-  //     gsap.from(wordsRef.current, {
-  //       opacity: 0,
-  //       y: 50,
-  //       stagger: 0.1,
-  //       duration: 1,
-  //       ease: "power3.out",
-  //     });
-  //   }
-  // }, [aboutData]); // Re-run animation when projects changes
+  const text = "Loading the content, please wait!";
+  const words = text.split(" ");
 
   useEffect(() => {
     window.addEventListener("mousemove", (e) => {
@@ -47,6 +20,8 @@ export default function About() {
       });
     });
   }, []);
+
+  let intervalCounter = 0;
 
   useEffect(() => {
     let animationDuration = 0.2;
@@ -124,20 +99,20 @@ export default function About() {
         }
       }
     });
-  }, [aboutData, mousePosition]);
+  }, [mousePosition]);
 
-  // Handle loading or error state
-  if (!aboutData || aboutData.length === 0) {
-    return <p>Error Loading Component</p>;
-  }
+  // setInterval(() => {
+  //   setCounter((prevCount) => {
+  //     return prevCount + 1;
+  //   });
+  // }, 1000);
 
-  // Split text into words for individual animation
-  const text = aboutData[0]?.biography[0]?.children[0]?.text || ""; // Example: Accessing the first block
-  const words = text.split(" ");
-
+  // useEffect(() => {
+  //   console.log(counter, "counter");
+  // }, [counter]);
   return (
-    <section className={styles.aboutSection} ref={aboutRef}>
-      <div className={styles.biographyText}>
+    <main ref={aboutRef}>
+      <div className={styles.textContainer}>
         {words.map((word, wordIndex) => (
           <span key={wordIndex} className={`${styles.wordContainer}`} ref={(el) => (wordsRef.current[wordIndex] = el)}>
             {word.split("").map((letter, letterIndex) => (
@@ -146,11 +121,9 @@ export default function About() {
                 <span className={`${styles.letterBack}`}>{letter}</span>
               </span>
             ))}
-            {/* <span className={`${styles.letterFront}`}>{word}</span> */}
-            {/* <span className={`${styles.letterBack}`}>{word}</span> */}
           </span>
         ))}
       </div>
-    </section>
+    </main>
   );
 }

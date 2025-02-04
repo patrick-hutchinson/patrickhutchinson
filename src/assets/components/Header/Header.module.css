@@ -4,17 +4,18 @@ header {
 
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  /* justify-content: space-between; */
   padding: var(--margin);
 
   box-sizing: border-box;
   align-items: center;
 
-  position: sticky;
+  position: fixed;
   top: var(--margin);
 
   z-index: 100;
   background: transparent;
+  gap: 10px;
 }
 
 header .logo,
@@ -29,7 +30,7 @@ header img {
 header .button-front {
   display: flex;
   vertical-align: middle;
-  color: #000 !important;
+  color: var(--font-color) !important;
   mix-blend-mode: multiply;
 }
 

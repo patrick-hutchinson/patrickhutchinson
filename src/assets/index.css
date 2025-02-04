@@ -16,13 +16,24 @@
   font-style: normal;
   font-display: block;
 }
+
 @font-face {
-  font-family: "NeueHaasDisplay-Thin";
-  src: url("/assets/fonts/NeueHaasGrotDisp-45.otf");
+  font-family: "TimesNewVariable";
+  src: url("/assets/fonts/TimesNewVariable.ttf");
   font-weight: normal;
   font-style: normal;
   font-display: block;
 }
+
+@import url("https://use.typekit.net/mbt4cue.css");
+
+/* font-family: "neue-haas-grotesk-text", sans-serif;
+font-weight: 400;
+font-style: normal; */
+
+/* font-family: "neue-haas-grotesk-display", sans-serif;
+font-weight: 500;
+font-style: normal; */
 
 * {
   scrollbar-width: none;
@@ -44,9 +55,9 @@
 }
 
 :root {
-  --font-size-100: 12px;
+  --font-size-100: 14px;
   --font-size-200: 18px;
-  --font-size-300: 26px;
+  --font-size-300: 22px;
   --font-size-400: 42px;
   --font-size-500: clamp(1.675rem, 1.3393rem + 2.6786vi, 3rem);
   --h8: clamp(1.25rem, 0rem + 4vi, 8rem);
@@ -67,7 +78,7 @@
   --font-weight-text: NeueHaasText;
   --font-weight-display: FoundersMedium;
 
-  --text-color: #000;
+  --font-color: #000;
   --background-color: #fff;
 
   --margin: 10px;
@@ -78,12 +89,15 @@
   --transition-duration: 0.3s;
 
   --box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+
+  --wghtAxis: 0;
+  --cursAxis: 0;
 }
 
 body {
   font-family: var(--font-weight-text);
   background: var(--background-color);
-  color: var(--text-color);
+  color: var(--font-color);
 
   font-size: var(--font-size-200);
   line-height: var(--line-height-200);
@@ -121,7 +135,7 @@ h1 {
 a,
 a:visited,
 a:hover {
-  color: #000;
+  color: var(--font-color);
   text-decoration: none;
 }
 
@@ -148,9 +162,26 @@ main {
   box-sizing: border-box;
 }
 section {
-  margin-bottom: 10px;
   padding: 10px;
   box-sizing: border-box;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+  margin: 0;
+}
+
+h5 {
+  font-size: var(--font-size-100);
+  padding: 0;
+  margin: 0;
+}
+
+.footnote {
+  /* opacity: 0.2; */
 }
 
 .button {
@@ -166,7 +197,7 @@ section {
 .button-front {
   position: relative;
   z-index: 100;
-  /* color: #000; */
+
   transition: color 0.2s ease-in-out;
 }
 
@@ -207,23 +238,23 @@ section {
 }
 .button:hover .button-front,
 .button.active .button-front {
-  color: #fff;
+  color: var(--background-color);
 }
 
 .externalLink {
   background: #ccc;
-  color: #fff;
+  color: var(--background-color);
 }
 .externalLink:hover {
-  color: #000;
-  background: #fff;
+  color: var(--font-color);
+  background: var(--background-color);
 }
 
 .activeIndicator {
   width: 15px;
   height: 15px;
   border-radius: 50%;
-  background: #fff;
+  background: var(--background-color);
   position: relative;
   display: inline-block;
   right: -5px;
@@ -299,4 +330,33 @@ section {
   100% {
     transform: rotateX(-90deg) translateY(-5px);
   }
+}
+
+/* Phones in Landscape Mode */
+@media (max-width: 575.98px) {
+  :root {
+    --font-size-100: 14px;
+    --font-size-200: 18px;
+    --font-size-300: 24px;
+    --font-size-400: 50px;
+    --font-size-500: 70px;
+
+    --line-height-100: 14px;
+    --line-height-200: 18px;
+    --line-height-300: 24px;
+    --line-height-400: calc(var(--font-size-400) / 1.25);
+    --line-height-500: calc(var(--font-size-500) / 1.25);
+  }
+}
+
+/* Small Devices (Phones, 576px and up) */
+@media (min-width: 576px) and (max-width: 767.98px) {
+}
+
+/* Medium Devices (Tablets, 768px and up) */
+@media (min-width: 768px) and (max-width: 991.98px) {
+}
+
+/* Desktop */
+@media (min-width: 991.98px) {
 }

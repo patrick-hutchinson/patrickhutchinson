@@ -92,7 +92,7 @@ function ListView({ projects }) {
             <li key={index}>{category}, </li>
           ))}
         </ul>
-        <ul className={styles.credits}>
+        {/* <ul className={styles.credits}>
           {project.credits &&
             creditsMapping.map(
               ({ key, title }) =>
@@ -102,7 +102,7 @@ function ListView({ projects }) {
                   </li>
                 )
             )}
-        </ul>
+        </ul> */}
       </li>
     );
   };

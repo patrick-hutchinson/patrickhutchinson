@@ -2,13 +2,6 @@
   position: relative;
   height: 80vh;
   overflow-y: hidden;
-  /* width: 80vw;
-  left: 50%;
-  transform: translateX(-50%);
-  box-shadow: var(--box-shadow);
-  border-radius: 10px;
-  padding: 20px;
-  box-sizing: border-box; */
 }
 
 .projectListItem {
@@ -17,7 +10,7 @@
 
   align-items: center;
 
-  transform-origin: top left;
+  transform-origin: center left;
 
   text-align: center;
   /* box-shadow: var(--box-shadow); */

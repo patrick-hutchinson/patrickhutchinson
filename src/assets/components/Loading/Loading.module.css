@@ -1,26 +1,24 @@
-section.aboutSection {
-  height: 80vh;
-  /* position: sticky; */
-  /* top: 50px; */
-  font-family: NeueHaasDisplay;
-  font-size: var(--font-size-500);
-  line-height: var(--line-height-500);
-  position: sticky;
-  top: 40px;
-  /* color: #daff62; */
-  /* background: #796c63; */
-  /* color: #fcfcd3; */
-  /* background: #d0cec8; */
+main {
+  height: 100vh;
+  width: 100vw;
+  /* background: red; */
+}
+
+.textContainer {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .biographyText {
-  width: 100%;
-  height: 100%;
+  position: relative;
+  margin-top: 35px;
 }
 
 .wordContainer {
   display: inline-block;
-  margin-right: 4px;
+  margin-right: 6px;
   perspective: 100px;
   position: relative;
 }
@@ -42,10 +40,6 @@ section.aboutSection {
 .letterBack {
   animation: none;
   transform: rotateX(-90deg);
-
-  /* transform-origin: middle center; */
   position: absolute;
-
   left: 0px;
-  /* font-family: Times; */
 }

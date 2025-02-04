@@ -1,0 +1,19 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  width: 100%;
+  height: 100%;
+  position: relative;
+  top: -10px;
+}
+
+.times-v {
+  font-family: TimesNewVariable;
+  font-variation-settings: "curs" var(--cursAxis), "wght" var(--wghtAxis);
+  letter-spacing: -1px;
+}
+.arial-v {
+  font-family: Arial;
+}

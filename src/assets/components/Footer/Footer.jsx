@@ -8,13 +8,13 @@ export default function Footer() {
 
   return (
     <footer>
-      <button className={`${styles.externalLink} button`}>
+      {/* <button className={`${styles.externalLink} button`}>
         <div className="button-front">Made by PH×35°</div>
         <div className="button-back">
           <div className="button-back-inner"></div>
         </div>
-      </button>
-      <button className={`${styles.externalLink} button`}>
+      </button> */}
+      {/* <button className={`${styles.externalLink} button`}>
         <div className="button-front">hutchinsonpatrick@icloud.com</div>
         <div className="button-back">
           <div className="button-back-inner"></div>
@@ -25,7 +25,7 @@ export default function Footer() {
         <div className="button-back">
           <div className="button-back-inner"></div>
         </div>
-      </button>
+      </button> */}
       <p className={`${styles.copyright}`}>{`PH×35° ${currentYear} 🌡️ All Rights Reserved. `}</p>
     </footer>
   );

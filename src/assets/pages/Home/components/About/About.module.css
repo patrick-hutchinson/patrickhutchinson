@@ -1,0 +1,32 @@
+.biographyText {
+  position: relative;
+  margin-top: 35px;
+}
+
+.wordContainer {
+  display: inline-block;
+  margin-right: 6px;
+  perspective: 100px;
+  position: relative;
+}
+.letterContainer {
+  display: inline-block;
+  perspective: 100px;
+  position: relative;
+}
+
+.wordFront,
+.letterFront {
+  animation: none;
+  transform: rotateX(0deg);
+  /* transform-origin: middle center; */
+  display: inline-block;
+}
+
+.wordBack,
+.letterBack {
+  animation: none;
+  transform: rotateX(-90deg);
+  position: absolute;
+  left: 0px;
+}

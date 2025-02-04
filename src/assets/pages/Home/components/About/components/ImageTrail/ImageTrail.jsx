@@ -13,21 +13,21 @@ const ImageTrail = ({ data, parentRef }) => {
   const cacheMousePos = useRef({ x: 0, y: 0 }); // Smoothed mouse position
   const [zIndexVal, setZIndexVal] = useState(1); // Tracks z-index for image stacking
   const [visibleImagesCount, setVisibleImagesCount] = useState(0);
-  const threshold = 200; // Distance to trigger the next image
-  const visibleImagesTotal = 5; // Max visible images at a time
+  const threshold = 60; // Distance to trigger the next image
+  const visibleImagesTotal = 7; // Max visible images at a time
   const animationRefs = useRef([]); // Store GSAP animations for cleanup
   const imgPositionRef = useRef(0);
 
   const isIdle = useRef(true);
 
-  useEffect(() => {
+  useEffect((e) => {
     if (!parentRef?.current) return;
 
     const handlePointerMove = (ev) => {
       if (ev.touches) {
         mousePos.current = getPointerPos(ev.touches[0]);
       } else {
-        mousePos.current = getPointerPos(ev);
+        mousePos.current = { x: ev.offsetX, y: ev.offsetY };
       }
     };
 
@@ -144,8 +144,8 @@ const ImageTrail = ({ data, parentRef }) => {
   };
 
   return (
-    <div ref={containerRef} className="content">
-      {data[0].imagegallery?.map((image, index) => (
+    <div ref={containerRef} className={styles.content}>
+      {data.map((image, index) => (
         <div
           key={index}
           className={styles["content__img"]}
@@ -153,7 +153,7 @@ const ImageTrail = ({ data, parentRef }) => {
             if (el) imagesRef.current[index] = el;
           }}
         >
-          <img className={styles["content__img-inner"]} src={getFileSrc(image)} alt="" />
+          <img className={styles["content__img-inner"]} src={getFileSrc(image.thumbnail)} alt="" />
         </div>
       ))}
     </div>

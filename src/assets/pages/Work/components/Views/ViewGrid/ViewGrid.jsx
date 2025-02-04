@@ -1,101 +1,65 @@
-import React, { useState, useRef, useEffect, useMemo } from "react";
-
-import { gsap } from "gsap";
-import { useGSAP } from "@gsap/react";
-
-import { renderMedia } from "assets/utils/renderMedia";
-
-import styles from "./ViewGrid.module.css";
-import { creditsMapping } from "assets/context/creditsMapping";
-
-import { Link } from "react-router-dom";
-
-import { formatMonth } from "assets/utils/formatMonth";
-import { formatYear } from "assets/utils/formatYear";
+import React, { useState, useEffect, useMemo } from "react";
+import { Stage, Container, Sprite } from "@pixi/react";
+import { getFileSrc } from "assets/utils/getFileSrc";
 
 export default function ViewGrid({ projects }) {
-  let parentRef = useRef();
-  const projectsRef = useRef([]);
+  if (!projects) return <p>Error Loading Component</p>;
 
-  let [years, setYears] = useState([2025, 2024, 2023, 2022, 2021, "Older"]);
-
-  let ListItem = ({ project, uniqueIndex }) => {
-    return (
-      <div className={styles.project} ref={(el) => (projectsRef.current[uniqueIndex] = el)}>
-        <div className={styles.projectText}>
-          <div className={styles.projectHeader}>
-            <div>{project.url}</div>
-            <div>
-              {formatMonth(project.month)} {formatYear(project.year)}
-            </div>
-          </div>
-          <div className={styles.projectInfo}>
-            <ul className={styles.categories}>
-              {project.categories?.map((category, index) => {
-                const isLast = index === project.categories.length - 1;
-                return (
-                  <li key={index}>
-                    {category}
-                    {!isLast && ","}&nbsp;
-                  </li>
-                );
-              })}
-            </ul>
-            <ul className={styles.credits}>
-              {project.credits &&
-                creditsMapping.map(
-                  ({ key, title }) =>
-                    project.credits[key] && (
-                      <li className={`${styles.credit}`} key={key}>
-                        {title}: {project.credits[key].join(", ")}
-                      </li>
-                    )
-                )}
-            </ul>
-          </div>
-        </div>
-        {renderMedia(project.coverimage)}
-      </div>
-    );
+  // Function to shuffle an array using Fisher-Yates algorithm
+  const shuffleArray = (array) => {
+    let shuffled = [...array];
+    for (let i = shuffled.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+    }
+    return shuffled;
   };
 
-  useGSAP(() => {
-    if (projectsRef.current.length > 0) {
-      console.log(projectsRef.current); // This will log all the elements in the projectsRef array
+  // Create 500 copies of each project image and shuffle them
+  const repeatedProjects = useMemo(
+    () => shuffleArray(projects.flatMap((project) => Array.from({ length: 200 }, () => project))),
+    [projects]
+  );
 
-      gsap.from(projectsRef.current, {
-        opacity: 0,
-        y: 50,
-        stagger: 0.1,
-        duration: 1,
-        ease: "power3.out",
-      });
-    }
-  }, [projectsRef.current]); // Re-run animation when projects changes
+  const [grid, setGrid] = useState({ cols: 0, rows: 0, imageSize: 0 });
 
-  // Early return if data is undefined or empty
-  if (!projects || projects.length === 0) {
-    return <p>Error Loading Component</p>;
-  }
+  useEffect(() => {
+    const updateGrid = () => {
+      const screenWidth = window.innerWidth;
+      const screenHeight = window.innerHeight;
+      const totalImages = repeatedProjects.length;
+
+      const cols = Math.ceil(Math.sqrt(totalImages * (screenWidth / screenHeight)));
+      const rows = Math.ceil(totalImages / cols);
+      const imageSize = Math.min(screenWidth / cols, screenHeight / rows);
+
+      setGrid({ cols, rows, imageSize });
+    };
+
+    updateGrid();
+    window.addEventListener("resize", updateGrid);
+    return () => window.removeEventListener("resize", updateGrid);
+  }, [repeatedProjects]);
 
   return (
-    <div className={styles.projectList} ref={parentRef}>
-      {years.map((year, columnIndex) => (
-        <div className={`${styles[`column-${columnIndex + 1}`]} ${styles.column}`} key={columnIndex}>
-          <div className={styles.yearHeader}>{year}</div>
-          {projects
-            .filter((project) => project.year === year)
-            .map((project, projectIndex) => {
-              // Unique integer generation to assign to Refs
-              const uniqueIndex = columnIndex * 100 + projectIndex;
-              return (
-                <Link to={`/work/${project?.slug?.current}`} key={uniqueIndex}>
-                  <ListItem key={uniqueIndex} project={project} uniqueIndex={uniqueIndex} />
-                </Link>
-              );
-            })}
-        </div>
-      ))}
-    </div>
+    <Stage width={window.innerWidth} height={window.innerHeight} options={{ backgroundColor: 0x0c0c0c }}>
+      <Container>
+        {repeatedProjects.map((project, index) => {
+          const col = index % grid.cols;
+          const row = Math.floor(index / grid.cols);
+
+          return (
+            <Sprite
+              key={index}
+              image={getFileSrc(project.coverimage)}
+              x={col * grid.imageSize}
+              y={row * grid.imageSize}
+              width={grid.imageSize}
+              height={grid.imageSize}
+            />
+          );
+        })}
+      </Container>
+    </Stage>
   );
 }
