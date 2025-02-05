@@ -2,64 +2,535 @@ import React, { useState, useEffect, useMemo } from "react";
 import { Stage, Container, Sprite } from "@pixi/react";
 import { getFileSrc } from "assets/utils/getFileSrc";
 
-export default function ViewGrid({ projects }) {
-  if (!projects) return <p>Error Loading Component</p>;
+import styles from "./ViewGrid.module.css";
 
-  // Function to shuffle an array using Fisher-Yates algorithm
-  const shuffleArray = (array) => {
-    let shuffled = [...array];
-    for (let i = shuffled.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
-    }
-    return shuffled;
+export default function ViewGrid({ projects }) {
+  let GridParent = () => {
+    return (
+      <div className={styles.gridParent}>
+        <div className={styles.gridCel}></div>
+        <div className={styles.titleContainer}>
+          <span>www.enricogisana.com,</span> <span>www.gg-office.com,</span> <span>www.gg-rugs.com,</span>
+          <span>www.the-apparel-garden.com,</span> <span>www.dirty-dms.com,</span> <span>www.bil-boe.com,</span>
+          <span>www.times-new-variable.com,</span> <span>Diagonale’23</span>
+        </div>
+        <div className={styles.gridCel}>
+          <div className={styles.gridCel}>
+            <div className={styles.gridCel}></div>
+            <div className={styles.gridCel}></div>
+            <div className={styles.gridCel}></div>
+            <div className={styles.gridCel}></div>
+          </div>
+          <div className={styles.gridCel}>
+            <div className={styles.gridCel}>
+              <div className={styles.gridCel}></div>
+              <div className={styles.gridCel}></div>
+              <div className={styles.gridCel}></div>
+              <div className={styles.gridCel}></div>
+            </div>
+            <div className={styles.gridCel}>
+              <div className={styles.gridCel}></div>
+              <div className={styles.gridCel}></div>
+              <div className={styles.gridCel}></div>
+              <div className={styles.gridCel}></div>
+            </div>
+            <div className={styles.gridCel}></div>
+            <div className={styles.gridCel}></div>
+          </div>
+          <div className={styles.gridCel}>
+            <div className={styles.gridCel}>
+              <div className={styles.gridCel}></div>
+              <div className={styles.gridCel}></div>
+              <div className={styles.gridCel}></div>
+              <div className={styles.gridCel}></div>
+            </div>
+            <div className={styles.gridCel}></div>
+            <div className={styles.gridCel}>
+              <div className={styles.gridCel}></div>
+              <div className={styles.gridCel}></div>
+              <div className={styles.gridCel}></div>
+              <div className={styles.gridCel}></div>
+            </div>
+            <div className={styles.gridCel}>
+              <div className={styles.gridCel}></div>
+              <div className={styles.gridCel}>
+                <div className={styles.gridCel}></div>
+                <div className={styles.gridCel}></div>
+                <div className={styles.gridCel}></div>
+                <div className={styles.gridCel}></div>
+              </div>
+              <div className={styles.gridCel}></div>
+              <div className={styles.gridCel}></div>
+            </div>
+          </div>
+          <div className={styles.gridCel}></div>
+        </div>
+        <div className={styles.gridCel}>
+          <div className={styles.gridCel}>
+            <div className={styles.gridCel}></div>
+            <div className={styles.gridCel}>
+              <div className={styles.gridCel}></div>
+              <div className={styles.gridCel}></div>
+              <div className={styles.gridCel}></div>
+              <div className={styles.gridCel}></div>
+            </div>
+            <div className={styles.gridCel}></div>
+            <div className={styles.gridCel}>
+              <div className={styles.gridCel}></div>
+              <div className={styles.gridCel}></div>
+              <div className={styles.gridCel}></div>
+              <div className={styles.gridCel}></div>
+            </div>
+          </div>
+          <div className={styles.gridCel}>
+            <div className={styles.gridCel}>
+              <div className={styles.gridCel}></div>
+              <div className={styles.gridCel}></div>
+              <div className={styles.gridCel}></div>
+              <div className={styles.gridCel}></div>
+            </div>
+            <div className={styles.gridCel}>
+              <div className={styles.gridCel}></div>
+              <div className={styles.gridCel}></div>
+              <div className={styles.gridCel}></div>
+              <div className={styles.gridCel}></div>
+            </div>
+            <div className={styles.gridCel}>
+              <div className={styles.gridCel}></div>
+              <div className={styles.gridCel}></div>
+              <div className={styles.gridCel}></div>
+              <div className={styles.gridCel}></div>
+            </div>
+            <div className={styles.gridCel}>
+              <div className={styles.gridCel}></div>
+              <div className={styles.gridCel}></div>
+              <div className={styles.gridCel}></div>
+              <div className={styles.gridCel}></div>
+            </div>
+          </div>
+          <div className={styles.gridCel}>
+            <div className={styles.gridCel}>
+              <div className={styles.gridCel}></div>
+              <div className={styles.gridCel}></div>
+              <div className={styles.gridCel}></div>
+              <div className={styles.gridCel}></div>
+            </div>
+            <div className={styles.gridCel}>
+              <div className={styles.gridCel}></div>
+              <div className={styles.gridCel}></div>
+              <div className={styles.gridCel}></div>
+              <div className={styles.gridCel}></div>
+            </div>
+            <div className={styles.gridCel}></div>
+            <div className={styles.gridCel}></div>
+          </div>
+          <div className={styles.gridCel}>
+            <div className={styles.gridCel}></div>
+            <div className={styles.gridCel}></div>
+            <div className={styles.gridCel}>
+              <div className={styles.gridCel}></div>
+              <div className={styles.gridCel}></div>
+              <div className={styles.gridCel}></div>
+              <div className={styles.gridCel}></div>
+            </div>
+            <div className={styles.gridCel}>
+              <div className={styles.gridCel}></div>
+              <div className={styles.gridCel}></div>
+              <div className={styles.gridCel}></div>
+              <div className={styles.gridCel}></div>
+            </div>
+          </div>
+        </div>
+        <div className={styles.gridCel}>
+          <div className={styles.gridCel}>
+            <div className={styles.gridCel}></div>
+            <div className={styles.gridCel}>
+              <div className={styles.gridCel}></div>
+              <div className={styles.gridCel}></div>
+              <div className={styles.gridCel}>
+                <div className={styles.gridCel}></div>
+                <div className={styles.gridCel}></div>
+                <div className={styles.gridCel}></div>
+                <div className={styles.gridCel}></div>
+              </div>
+              <div className={styles.gridCel}></div>
+            </div>
+            <div className={styles.gridCel}>
+              <div className={styles.gridCel}></div>
+              <div className={styles.gridCel}>
+                <div className={styles.gridCel}></div>
+                <div className={styles.gridCel}></div>
+                <div className={styles.gridCel}></div>
+                <div className={styles.gridCel}></div>
+              </div>
+              <div className={styles.gridCel}></div>
+              <div className={styles.gridCel}></div>
+            </div>
+            <div className={styles.gridCel}>
+              <div className={styles.gridCel}></div>
+              <div className={styles.gridCel}>
+                <div className={styles.gridCel}></div>
+                <div className={styles.gridCel}></div>
+                <div className={styles.gridCel}></div>
+                <div className={styles.gridCel}></div>
+              </div>
+              <div className={styles.gridCel}>
+                <div className={styles.gridCel}></div>
+                <div className={styles.gridCel}></div>
+                <div className={styles.gridCel}></div>
+                <div className={styles.gridCel}></div>
+              </div>
+              <div className={styles.gridCel}>
+                <div className={styles.gridCel}></div>
+                <div className={styles.gridCel}></div>
+                <div className={styles.gridCel}></div>
+                <div className={styles.gridCel}></div>
+              </div>
+            </div>
+          </div>
+          <div className={styles.gridCel}>
+            <div className={styles.gridCel}>
+              <div className={styles.gridCel}>
+                <div className={styles.gridCel}></div>
+                <div className={styles.gridCel}></div>
+                <div className={styles.gridCel}></div>
+                <div className={styles.gridCel}></div>
+              </div>
+              <div className={styles.gridCel}></div>
+              <div className={styles.gridCel}>
+                <div className={styles.gridCel}></div>
+                <div className={styles.gridCel}></div>
+                <div className={styles.gridCel}></div>
+                <div className={styles.gridCel}></div>
+              </div>
+              <div className={styles.gridCel}>
+                <div className={styles.gridCel}></div>
+                <div className={styles.gridCel}></div>
+                <div className={styles.gridCel}></div>
+                <div className={styles.gridCel}></div>
+              </div>
+            </div>
+            <div className={styles.gridCel}>
+              <div className={styles.gridCel}></div>
+              <div className={styles.gridCel}></div>
+              <div className={styles.gridCel}></div>
+              <div className={styles.gridCel}></div>
+            </div>
+            <div className={styles.gridCel}>
+              <div className={styles.gridCel}></div>
+              <div className={styles.gridCel}></div>
+              <div className={styles.gridCel}></div>
+              <div className={styles.gridCel}></div>
+            </div>
+            <div className={styles.gridCel}></div>
+          </div>
+          <div className={styles.gridCel}>
+            <div className={styles.gridCel}></div>
+            <div className={styles.gridCel}></div>
+            <div className={styles.gridCel}></div>
+            <div className={styles.gridCel}></div>
+          </div>
+          <div className={styles.gridCel}>
+            <div className={styles.gridCel}></div>
+            <div className={styles.gridCel}></div>
+            <div className={styles.gridCel}></div>
+            <div className={styles.gridCel}></div>
+          </div>
+        </div>
+        <div className={styles.gridCel}>
+          <div className={styles.gridCel}>
+            <div className={styles.gridCel}></div>
+            <div className={styles.gridCel}></div>
+            <div className={styles.gridCel}></div>
+            <div className={styles.gridCel}></div>
+          </div>
+          <div className={styles.gridCel}>
+            <div className={styles.gridCel}></div>
+            <div className={styles.gridCel}></div>
+            <div className={styles.gridCel}></div>
+            <div className={styles.gridCel}></div>
+          </div>
+          <div className={styles.gridCel}></div>
+          <div className={styles.gridCel}>
+            <div className={styles.gridCel}></div>
+            <div className={styles.gridCel}></div>
+            <div className={styles.gridCel}></div>
+            <div className={styles.gridCel}></div>
+          </div>
+        </div>
+        <div className={styles.gridCel}>
+          <div className={styles.gridCel}></div>
+          <div className={styles.gridCel}>
+            <div className={styles.gridCel}></div>
+            <div className={styles.gridCel}></div>
+            <div className={styles.gridCel}></div>
+            <div className={styles.gridCel}></div>
+          </div>
+          <div className={styles.gridCel}>
+            <div className={styles.gridCel}></div>
+            <div className={styles.gridCel}></div>
+            <div className={styles.gridCel}></div>
+            <div className={styles.gridCel}></div>
+          </div>
+          <div className={styles.gridCel}>
+            <div className={styles.gridCel}></div>
+            <div className={styles.gridCel}></div>
+            <div className={styles.gridCel}></div>
+            <div className={styles.gridCel}>
+              <div className={styles.gridCel}></div>
+              <div className={styles.gridCel}></div>
+              <div className={styles.gridCel}></div>
+              <div className={styles.gridCel}></div>
+            </div>
+          </div>
+        </div>
+        <div className={styles.gridCel}>
+          <div className={styles.gridCel}>
+            <div className={styles.gridCel}></div>
+            <div className={styles.gridCel}></div>
+            <div className={styles.gridCel}></div>
+            <div className={styles.gridCel}></div>
+          </div>
+          <div className={styles.gridCel}>
+            <div className={styles.gridCel}></div>
+            <div className={styles.gridCel}></div>
+            <div className={styles.gridCel}></div>
+            <div className={styles.gridCel}>
+              <div className={styles.gridCel}></div>
+              <div className={styles.gridCel}></div>
+              <div className={styles.gridCel}></div>
+              <div className={styles.gridCel}></div>
+            </div>
+          </div>
+          <div className={styles.gridCel}></div>
+          <div className={styles.gridCel}>
+            <div className={styles.gridCel}>
+              <div className={styles.gridCel}></div>
+              <div className={styles.gridCel}></div>
+              <div className={styles.gridCel}></div>
+              <div className={styles.gridCel}></div>
+            </div>
+            <div className={styles.gridCel}>
+              <div className={styles.gridCel}></div>
+              <div className={styles.gridCel}></div>
+              <div className={styles.gridCel}>
+                <div className={styles.gridCel}></div>
+                <div className={styles.gridCel}></div>
+                <div className={styles.gridCel}></div>
+                <div className={styles.gridCel}></div>
+              </div>
+              <div className={styles.gridCel}>
+                <div className={styles.gridCel}></div>
+                <div className={styles.gridCel}></div>
+                <div className={styles.gridCel}></div>
+                <div className={styles.gridCel}></div>
+              </div>
+            </div>
+            <div className={styles.gridCel}>
+              <div className={styles.gridCel}></div>
+              <div className={styles.gridCel}></div>
+              <div className={styles.gridCel}></div>
+              <div className={styles.gridCel}></div>
+            </div>
+            <div className={styles.gridCel}>
+              <div className={styles.gridCel}>
+                <div className={styles.gridCel}></div>
+                <div className={styles.gridCel}></div>
+                <div className={styles.gridCel}></div>
+                <div className={styles.gridCel}></div>
+              </div>
+              <div className={styles.gridCel}>
+                <div className={styles.gridCel}></div>
+                <div className={styles.gridCel}></div>
+                <div className={styles.gridCel}></div>
+                <div className={styles.gridCel}></div>
+              </div>
+              <div className={styles.gridCel}></div>
+              <div className={styles.gridCel}></div>
+            </div>
+          </div>
+        </div>
+        <div className={styles.gridCel}>
+          <div className={styles.gridCel}>
+            <div className={styles.gridCel}></div>
+            <div className={styles.gridCel}>
+              <div className={styles.gridCel}></div>
+              <div className={styles.gridCel}>
+                <div className={styles.gridCel}></div>
+                <div className={styles.gridCel}></div>
+                <div className={styles.gridCel}></div>
+                <div className={styles.gridCel}></div>
+              </div>
+              <div className={styles.gridCel}></div>
+              <div className={styles.gridCel}>
+                <div className={styles.gridCel}></div>
+                <div className={styles.gridCel}></div>
+                <div className={styles.gridCel}></div>
+                <div className={styles.gridCel}></div>
+              </div>
+            </div>
+            <div className={styles.gridCel}>
+              <div className={styles.gridCel}></div>
+              <div className={styles.gridCel}></div>
+              <div className={styles.gridCel}></div>
+              <div className={styles.gridCel}></div>
+            </div>
+            <div className={styles.gridCel}></div>
+          </div>
+          <div className={styles.gridCel}>
+            <div className={styles.gridCel}></div>
+            <div className={styles.gridCel}></div>
+            <div className={styles.gridCel}></div>
+            <div className={styles.gridCel}>
+              <div className={styles.gridCel}></div>
+              <div className={styles.gridCel}></div>
+              <div className={styles.gridCel}></div>
+              <div className={styles.gridCel}></div>
+            </div>
+          </div>
+          <div className={styles.gridCel}>
+            <div className={styles.gridCel}></div>
+            <div className={styles.gridCel}>
+              <div className={styles.gridCel}></div>
+              <div className={styles.gridCel}></div>
+              <div className={styles.gridCel}></div>
+              <div className={styles.gridCel}></div>
+            </div>
+            <div className={styles.gridCel}>
+              <div className={styles.gridCel}></div>
+              <div className={styles.gridCel}></div>
+              <div className={styles.gridCel}></div>
+              <div className={styles.gridCel}></div>
+            </div>
+            <div className={styles.gridCel}>
+              <div className={styles.gridCel}></div>
+              <div className={styles.gridCel}></div>
+              <div className={styles.gridCel}></div>
+              <div className={styles.gridCel}></div>
+            </div>
+          </div>
+          <div className={styles.gridCel}>
+            <div className={styles.gridCel}></div>
+            <div className={styles.gridCel}></div>
+            <div className={styles.gridCel}>
+              <div className={styles.gridCel}></div>
+              <div className={styles.gridCel}>
+                <div className={styles.gridCel}></div>
+                <div className={styles.gridCel}></div>
+                <div className={styles.gridCel}></div>
+                <div className={styles.gridCel}></div>
+              </div>
+              <div className={styles.gridCel}></div>
+              <div className={styles.gridCel}>
+                <div className={styles.gridCel}></div>
+                <div className={styles.gridCel}></div>
+                <div className={styles.gridCel}></div>
+                <div className={styles.gridCel}></div>
+              </div>
+            </div>
+            <div className={styles.gridCel}>
+              <div className={styles.gridCel}></div>
+              <div className={styles.gridCel}></div>
+              <div className={styles.gridCel}>
+                <div className={styles.gridCel}></div>
+                <div className={styles.gridCel}></div>
+                <div className={styles.gridCel}></div>
+                <div className={styles.gridCel}></div>
+              </div>
+              <div className={styles.gridCel}>
+                <div className={styles.gridCel}></div>
+                <div className={styles.gridCel}></div>
+                <div className={styles.gridCel}></div>
+                <div className={styles.gridCel}></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
   };
 
-  // Create 500 copies of each project image and shuffle them
-  const repeatedProjects = useMemo(
-    () => shuffleArray(projects.flatMap((project) => Array.from({ length: 200 }, () => project))),
-    [projects]
-  );
-
-  const [grid, setGrid] = useState({ cols: 0, rows: 0, imageSize: 0 });
-
   useEffect(() => {
-    const updateGrid = () => {
-      const screenWidth = window.innerWidth;
-      const screenHeight = window.innerHeight;
-      const totalImages = repeatedProjects.length;
+    const imageSources = [
+      "/assets/media/p01.png",
+      "/assets/media/p02.png",
+      "/assets/media/p03.png",
+      "/assets/media/p04.png",
+      "/assets/media/p05.png",
+      "/assets/media/p06.png",
+      "/assets/media/p07.png",
+      "/assets/media/p08.png",
+      "/assets/media/p09.png",
+      "",
+      "",
+    ];
 
-      const cols = Math.ceil(Math.sqrt(totalImages * (screenWidth / screenHeight)));
-      const rows = Math.ceil(totalImages / cols);
-      const imageSize = Math.min(screenWidth / cols, screenHeight / rows);
+    let gridCels = document.querySelectorAll(`.${styles.gridCel}`);
 
-      setGrid({ cols, rows, imageSize });
-    };
+    gridCels.forEach((gridCel) => {
+      // Pick a random background image for each gridCel
+      const randomImage = imageSources[Math.floor(Math.random() * imageSources.length)];
+      gridCel.style.backgroundImage = `url(${randomImage})`; // Apply the random image
 
-    updateGrid();
-    window.addEventListener("resize", updateGrid);
-    return () => window.removeEventListener("resize", updateGrid);
-  }, [repeatedProjects]);
+      gridCel.addEventListener("click", (event) => {
+        event.stopPropagation(); // Prevent the event from bubbling up
+        const parent = gridCel.parentElement;
+        const index = Array.from(parent.children).indexOf(gridCel) + 1;
+
+        if (index === 1) {
+          parent.style.gridTemplateColumns = "1fr 0fr";
+          parent.style.gridTemplateRows = "1fr 0fr";
+        } else if (index === 2) {
+          parent.style.gridTemplateColumns = "0fr 1fr";
+          parent.style.gridTemplateRows = "1fr 0fr";
+        } else if (index === 3) {
+          parent.style.gridTemplateColumns = "1fr 0fr";
+          parent.style.gridTemplateRows = "0fr 1fr";
+        } else if (index === 4) {
+          parent.style.gridTemplateColumns = "0fr 1fr";
+          parent.style.gridTemplateRows = "0fr 1fr";
+        }
+
+        const grandparent = parent.parentElement;
+        const parentindex = Array.from(grandparent.children).indexOf(parent) + 1;
+
+        if (parentindex === 1) {
+          grandparent.style.gridTemplateColumns = "1fr 0fr";
+          grandparent.style.gridTemplateRows = "1fr 0fr";
+        } else if (parentindex === 2) {
+          grandparent.style.gridTemplateColumns = "0fr 1fr";
+          grandparent.style.gridTemplateRows = "1fr 0fr";
+        } else if (parentindex === 3) {
+          grandparent.style.gridTemplateColumns = "1fr 0fr";
+          grandparent.style.gridTemplateRows = "0fr 1fr";
+        } else if (parentindex === 4) {
+          grandparent.style.gridTemplateColumns = "0fr 1fr";
+          grandparent.style.gridTemplateRows = "0fr 1fr";
+        }
+
+        // const greatgrandparent = grandparent.parentElement;
+        // const grandparentindex = Array.from(greatgrandparent.children).indexOf(parent) + 1;
+
+        // if (grandparentindex === 1) {
+        //   greatgrandparent.style.gridTemplateColumns = "1fr 0fr";
+        //   greatgrandparent.style.gridTemplateRows = "1fr 0fr";
+        // } else if (grandparentindex === 2) {
+        //   greatgrandparent.style.gridTemplateColumns = "0fr 1fr";
+        //   greatgrandparent.style.gridTemplateRows = "1fr 0fr";
+        // } else if (grandparentindex === 3) {
+        //   greatgrandparent.style.gridTemplateColumns = "1fr 0fr";
+        //   greatgrandparent.style.gridTemplateRows = "0fr 1fr";
+        // } else if (grandparentindex === 4) {
+        //   greatgrandparent.style.gridTemplateColumns = "0fr 1fr";
+        //   greatgrandparent.style.gridTemplateRows = "0fr 1fr";
+        // }
+      });
+    });
+  }, []);
 
   return (
-    <Stage width={window.innerWidth} height={window.innerHeight} options={{ backgroundColor: 0x0c0c0c }}>
-      <Container>
-        {repeatedProjects.map((project, index) => {
-          const col = index % grid.cols;
-          const row = Math.floor(index / grid.cols);
-
-          return (
-            <Sprite
-              key={index}
-              image={getFileSrc(project.coverimage)}
-              x={col * grid.imageSize}
-              y={row * grid.imageSize}
-              width={grid.imageSize}
-              height={grid.imageSize}
-            />
-          );
-        })}
-      </Container>
-    </Stage>
+    <div className={styles.wrapper}>
+      <GridParent />
+    </div>
   );
 }

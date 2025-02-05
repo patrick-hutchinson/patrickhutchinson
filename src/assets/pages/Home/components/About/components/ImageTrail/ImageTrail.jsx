@@ -3,9 +3,13 @@ import gsap from "gsap";
 import styles from "./ImageTrail.module.css";
 import { getPointerPos, getMouseDistance, getNewPosition, lerp } from "./utils/utils";
 
+import sanityClient from "/src/client.js";
+
 import { getFileSrc } from "/src/assets/utils/getFileSrc";
 
-const ImageTrail = ({ data, parentRef }) => {
+const ImageTrail = ({ parentRef }) => {
+  let [data, setData] = useState();
+
   const containerRef = useRef(null); // Reference to the container div
   const imagesRef = useRef([]); // Use a ref to store images
   const mousePos = useRef({ x: 0, y: 0 }); // Mouse position
@@ -19,6 +23,22 @@ const ImageTrail = ({ data, parentRef }) => {
   const imgPositionRef = useRef(0);
 
   const isIdle = useRef(true);
+
+  useEffect(() => {
+    sanityClient
+      .fetch(
+        `*[_type == "project"]{
+          coverimage,
+          thumbnail,
+          url,
+          name
+        }`
+      )
+      .then((fetchedData) => {
+        setData(fetchedData);
+      })
+      .catch(console.error);
+  }, []);
 
   useEffect((e) => {
     if (!parentRef?.current) return;
@@ -145,7 +165,7 @@ const ImageTrail = ({ data, parentRef }) => {
 
   return (
     <div ref={containerRef} className={styles.content}>
-      {data.map((image, index) => (
+      {data?.map((image, index) => (
         <div
           key={index}
           className={styles["content__img"]}

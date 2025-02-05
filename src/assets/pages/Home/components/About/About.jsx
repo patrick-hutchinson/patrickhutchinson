@@ -3,9 +3,6 @@ import sanityClient from "/src/client.js";
 
 import styles from "./About.module.css";
 
-import { gsap } from "gsap";
-import { useGSAP } from "@gsap/react";
-
 export default function About() {
   let [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const aboutRef = useRef(null);

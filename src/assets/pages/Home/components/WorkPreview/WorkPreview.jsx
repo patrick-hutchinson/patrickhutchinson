@@ -181,7 +181,8 @@ export default function WorkPreview({ data, parentRef }) {
           return (
             project.url && (
               <div key={index} className={styles.url}>
-                {project.url},{" "}
+                {project.url}
+                <span className={styles["project-thumbnail"]}>{renderMedia(project.coverimage)}</span>,
               </div>
             )
           );

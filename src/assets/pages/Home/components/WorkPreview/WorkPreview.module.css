@@ -29,6 +29,17 @@
   height: auto;
 }
 
+.project-thumbnail img,
+.project-thumbnail video {
+  position: relative;
+  width: auto;
+  height: 20px;
+  border-radius: 3px;
+  margin: 0px 4px;
+  top: 3px;
+  transform: rotate(-2deg);
+}
+
 :root {
   --img-width: 80px;
   --img-ratio: 1.59;
