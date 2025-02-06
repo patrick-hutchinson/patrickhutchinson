@@ -95,12 +95,14 @@
   white-space: nowrap;
   display: inline-flex;
   max-width: 100vw;
+  min-width: 100vw;
   line-height: 1;
+  background: var(--randomBackgroundColor);
 }
+
 .link a,
 .link a:visited {
   color: var(--randomFontColor);
-  background: var(--randomBackgroundColor);
 }
 
 /* Small Devices (Phones, 576px and up) */

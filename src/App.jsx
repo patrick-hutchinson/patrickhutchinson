@@ -1,29 +1,17 @@
-import React from "react";
+import React, { useState } from "react";
 
-import { useEffect, useState, useRef } from "react";
-import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
+import { BrowserRouter } from "react-router-dom";
+import { DataProvider } from "assets/context/WorkContext";
 import "./App.css";
 
-import Layout from "./assets/components/Layout/Layout";
-import Project from "assets/pages/Project/Project";
-
-import About from "./assets/pages/About/About";
-
-import Public from "assets/pages/Public/Public";
-import Work from "assets/pages/Work/Work";
+import AnimatedRoutes from "assets/components/AnimatedRoutes";
 
 function App() {
   return (
     <BrowserRouter>
-      <Routes>
-        <Route element={<Layout />}>
-          <Route index element={<About />}></Route>
-          {/* <Route path="about" element={<About />}></Route> */}
-          <Route path="work" element={<Work />}></Route>
-          <Route path="work/:slug" element={<Project />}></Route>
-          <Route path="public" element={<Public />}></Route>
-        </Route>
-      </Routes>
+      <DataProvider>
+        <AnimatedRoutes />
+      </DataProvider>
     </BrowserRouter>
   );
 }

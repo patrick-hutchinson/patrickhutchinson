@@ -1,6 +1,8 @@
 import React, { useEffect, useState, useRef } from "react";
 import sanityClient from "/src/client.js";
 
+import { motion } from "framer-motion";
+
 import styles from "./About.module.css";
 import ImageTrail from "assets/components/ImageTrail/ImageTrial";
 import Loading from "assets/components/Loading/Loading";
@@ -38,83 +40,83 @@ export default function About() {
     });
   }, []);
 
-  useEffect(() => {
-    let animationDuration = 0.2;
-    let animationDelay = animationDuration * 0.7;
+  // useEffect(() => {
+  //   let animationDuration = 0.2;
+  //   let animationDelay = animationDuration * 0.7;
 
-    let hoverRadius = 50;
+  //   let hoverRadius = 50;
 
-    aboutRef?.current?.querySelectorAll(`.${styles.letterContainer}`).forEach((letter) => {
-      let letterFront = letter.querySelector(`.${styles.letterFront}`);
-      let letterBack = letter.querySelector(`.${styles.letterBack}`);
+  //   aboutRef?.current?.querySelectorAll(`.${styles.letterContainer}`).forEach((letter) => {
+  //     let letterFront = letter.querySelector(`.${styles.letterFront}`);
+  //     let letterBack = letter.querySelector(`.${styles.letterBack}`);
 
-      let centerX = letter.getBoundingClientRect().left + letter.getBoundingClientRect().width / 2;
-      let centerY = letter.getBoundingClientRect().top + letter.getBoundingClientRect().height / 2;
+  //     let centerX = letter.getBoundingClientRect().left + letter.getBoundingClientRect().width / 2;
+  //     let centerY = letter.getBoundingClientRect().top + letter.getBoundingClientRect().height / 2;
 
-      let distanceLeft = mousePosition.x - centerX;
-      let distanceTop = mousePosition.y - centerY;
+  //     let distanceLeft = mousePosition.x - centerX;
+  //     let distanceTop = mousePosition.y - centerY;
 
-      const playEnterAnimation = (letterFront, letterBack) => {
-        letter.setAttribute("isplayingenter", "true");
-        letterFront.style.animation = `flipFrontOut ${animationDuration}s ease-in-out 0s 1 forwards`;
-        letterBack.style.animation = `flipBackIn ${animationDuration}s ease-in-out ${animationDelay}s 1 forwards`;
+  //     const playEnterAnimation = (letterFront, letterBack) => {
+  //       letter.setAttribute("isplayingenter", "true");
+  //       letterFront.style.animation = `flipFrontOut ${animationDuration}s ease-in-out 0s 1 forwards`;
+  //       letterBack.style.animation = `flipBackIn ${animationDuration}s ease-in-out ${animationDelay}s 1 forwards`;
 
-        const onAnimationEnd = () => {
-          letterBack.removeEventListener("animationend", onAnimationEnd); // Clean up listener
-          letter.setAttribute("isplayingenter", "false");
-        };
+  //       const onAnimationEnd = () => {
+  //         letterBack.removeEventListener("animationend", onAnimationEnd); // Clean up listener
+  //         letter.setAttribute("isplayingenter", "false");
+  //       };
 
-        letterBack.addEventListener("animationend", onAnimationEnd);
-      };
+  //       letterBack.addEventListener("animationend", onAnimationEnd);
+  //     };
 
-      const playExitAnimation = (letterFront, letterBack) => {
-        letter.setAttribute("isplayingexit", "true");
-        letterFront.style.transform = "rotateX(90deg)";
-        letterFront.style.animation = `flipFrontIn ${animationDuration}s ease-in-out ${animationDelay}s 1 forwards`;
-        letterBack.style.animation = `flipBackOut ${animationDuration}s ease-in-out 0s 1 forwards`;
+  //     const playExitAnimation = (letterFront, letterBack) => {
+  //       letter.setAttribute("isplayingexit", "true");
+  //       letterFront.style.transform = "rotateX(90deg)";
+  //       letterFront.style.animation = `flipFrontIn ${animationDuration}s ease-in-out ${animationDelay}s 1 forwards`;
+  //       letterBack.style.animation = `flipBackOut ${animationDuration}s ease-in-out 0s 1 forwards`;
 
-        const onAnimationEnd = () => {
-          letterFront.removeEventListener("animationend", onAnimationEnd); // Clean up listener
-          letter.setAttribute("isplayingexit", "false");
-        };
+  //       const onAnimationEnd = () => {
+  //         letterFront.removeEventListener("animationend", onAnimationEnd); // Clean up listener
+  //         letter.setAttribute("isplayingexit", "false");
+  //       };
 
-        letterFront.addEventListener("animationend", onAnimationEnd);
-      };
+  //       letterFront.addEventListener("animationend", onAnimationEnd);
+  //     };
 
-      if (distanceLeft > -hoverRadius && distanceLeft < hoverRadius && distanceTop > -hoverRadius && distanceTop < hoverRadius) {
-        const isExitPlaying = letter.getAttribute("isplayingexit") === "true";
-        const isEnterPlaying = letter.getAttribute("isplayingenter") === "true";
+  //     if (distanceLeft > -hoverRadius && distanceLeft < hoverRadius && distanceTop > -hoverRadius && distanceTop < hoverRadius) {
+  //       const isExitPlaying = letter.getAttribute("isplayingexit") === "true";
+  //       const isEnterPlaying = letter.getAttribute("isplayingenter") === "true";
 
-        // If an animation is playing, wait for it to finish before triggering the next one
-        if (!isEnterPlaying && !isExitPlaying) {
-          playEnterAnimation(letterFront, letterBack);
-        } else if (!isEnterPlaying && isExitPlaying) {
-          // If exit animation is playing, wait for it to finish
-          setTimeout(() => {
-            playEnterAnimation(letterFront, letterBack);
-          }, animationDuration * 1000);
-        }
-      } else if (
-        distanceLeft < -hoverRadius ||
-        distanceLeft > hoverRadius ||
-        distanceTop < -hoverRadius ||
-        distanceTop > hoverRadius
-      ) {
-        const isEnterPlaying = letter.getAttribute("isplayingenter") === "true";
-        const isExitPlaying = letter.getAttribute("isplayingexit") === "true";
+  //       // If an animation is playing, wait for it to finish before triggering the next one
+  //       if (!isEnterPlaying && !isExitPlaying) {
+  //         playEnterAnimation(letterFront, letterBack);
+  //       } else if (!isEnterPlaying && isExitPlaying) {
+  //         // If exit animation is playing, wait for it to finish
+  //         setTimeout(() => {
+  //           playEnterAnimation(letterFront, letterBack);
+  //         }, animationDuration * 1000);
+  //       }
+  //     } else if (
+  //       distanceLeft < -hoverRadius ||
+  //       distanceLeft > hoverRadius ||
+  //       distanceTop < -hoverRadius ||
+  //       distanceTop > hoverRadius
+  //     ) {
+  //       const isEnterPlaying = letter.getAttribute("isplayingenter") === "true";
+  //       const isExitPlaying = letter.getAttribute("isplayingexit") === "true";
 
-        // If an animation is playing, wait for it to finish before triggering the next one
-        if (!isExitPlaying && !isEnterPlaying) {
-          playExitAnimation(letterFront, letterBack);
-        } else if (!isExitPlaying && isEnterPlaying) {
-          // If enter animation is playing, wait for it to finish
-          setTimeout(() => {
-            playExitAnimation(letterFront, letterBack);
-          }, animationDuration * 1000);
-        }
-      }
-    });
-  }, [aboutData, mousePosition]);
+  //       // If an animation is playing, wait for it to finish before triggering the next one
+  //       if (!isExitPlaying && !isEnterPlaying) {
+  //         playExitAnimation(letterFront, letterBack);
+  //       } else if (!isExitPlaying && isEnterPlaying) {
+  //         // If enter animation is playing, wait for it to finish
+  //         setTimeout(() => {
+  //           playExitAnimation(letterFront, letterBack);
+  //         }, animationDuration * 1000);
+  //       }
+  //     }
+  //   });
+  // }, [aboutData, mousePosition]);
 
   // Handle loading or error state
   if (!aboutData) return <Loading />;
@@ -123,21 +125,6 @@ export default function About() {
   const text = aboutData[0]?.biography[0]?.children[0]?.text || ""; // Example: Accessing the first block
   const words = text.split(" ");
 
-  //   function navigateToWork() {
-  //     aboutRef.current.querySelectorAll(`.${styles.letterContainer}`).forEach((letter) => {
-  //       let animationDuration = 0.2;
-
-  //       let letterFront = letter.querySelector(`.${styles.letterFront}`);
-
-  //       setTimeout(() => {
-  //         letterFront.style.animation = `flipFrontOut ${animationDuration}s ease-in-out 0s 1 forwards`;
-  //       }, 300);
-  //       setTimeout(() => {
-  //         navigate("/work");
-  //       }, 700);
-  //     });
-  //   }
-
   return (
     <div className={styles.container} ref={parentRef}>
       <div className={styles.biographyText} ref={aboutRef}>
@@ -145,7 +132,14 @@ export default function About() {
           <span key={wordIndex} className={`${styles.wordContainer}`} ref={(el) => (wordsRef.current[wordIndex] = el)}>
             {word.split("").map((letter, letterIndex) => (
               <span key={`letter-${wordIndex}-${letterIndex}`} className={`${styles.letterContainer}`}>
-                <span className={`${styles.letterFront}`}>{letter}</span>
+                <motion.span
+                  className={`${styles.letterFront}`}
+                  initial={{ animation: "flipFrontOut 0.4s ease-in-out 0s 1 forwards" }}
+                  animate={{ animation: "flipFrontIn 0.4s ease-in-out 0s 1 forwards" }}
+                  exit={{ animation: "flipFrontOut 0.4s ease-in-out 0s 1 forwards" }}
+                >
+                  {letter}
+                </motion.span>
                 <span className={`${styles.letterBack}`}>{letter}</span>
               </span>
             ))}

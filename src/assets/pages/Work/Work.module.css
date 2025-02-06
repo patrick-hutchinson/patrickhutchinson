@@ -17,6 +17,7 @@
   mix-blend-mode: difference;
   filter: invert();
   font-size: 38px;
+  line-height: 1.1;
 }
 .project {
   font-family: NeueHaasDisplay;

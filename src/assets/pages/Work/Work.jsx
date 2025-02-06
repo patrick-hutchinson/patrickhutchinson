@@ -1,45 +1,30 @@
 import React from "react";
 import { useEffect, useState, useRef, useContext } from "react";
+import { Link } from "react-router-dom";
 
-import sanityClient from "/src/client.js";
+import { motion } from "framer-motion";
+
+import { DataContext } from "assets/context/WorkContext";
+import { getFileSrc } from "assets/utils/getFileSrc";
 import { renderMedia } from "assets/utils/renderMedia";
 
+import Loading from "assets/components/Loading/Loading";
 import ImageTrail from "assets/components/ImageTrail/ImageTrial";
 
 import styles from "./Work.module.css";
-import Loading from "assets/components/Loading/Loading";
-import { getFileSrc } from "assets/utils/getFileSrc";
-
-import { Link } from "react-router-dom";
 
 export default function Work() {
-  let [data, setData] = useState();
+  const data = useContext(DataContext);
+  const projectContainer = useRef();
   let parentRef = useRef();
 
   let mediaContainer = useRef();
   let mediaOutlet = useRef();
 
-  useEffect(() => {
-    sanityClient
-      .fetch(
-        `*[_type == "project"]{
-          coverimage,
-          thumbnail,
-          url,
-          name,
-          slug
-        }`
-      )
-      .then((fetchedData) => {
-        setData(fetchedData);
-      })
-      .catch(console.error);
-  }, []);
-
   // Early return if data is undefined or empty
   if (!data) return <Loading />;
 
-  function handleMouseEnter(project) {
+  function handleMouseEnter(event, project) {
     mediaContainer.current.style.display = "block";
     mediaOutlet.current.src = getFileSrc(project.coverimage);
   }
@@ -55,22 +40,28 @@ export default function Work() {
         <img src="" alt="" ref={mediaOutlet} />
       </div>
 
-      <div className={styles["project-container"]}>
+      <div className={styles["project-container"]} ref={projectContainer}>
         {data.map((project, index) => {
           return (
-            <div key={index} className={styles.project}>
+            <motion.div
+              key={index}
+              className={styles.project}
+              initial={{ animation: "flipFrontOut 0.4s ease-in-out 0s 1 forwards" }}
+              animate={{ animation: "flipFrontIn 0.4s ease-in-out 0s 1 forwards" }}
+              exit={{ animation: "flipFrontOut 0.4s ease-in-out 0s 1 forwards" }}
+            >
               <Link to={`/work/${project.slug.current}`}>
                 <span
-                  onMouseEnter={() => handleMouseEnter(project)}
+                  onMouseEnter={(event) => handleMouseEnter(event, project)}
                   onMouseLeave={(e) => handleMouseLeave(e)}
                   className={styles["project-title"]}
                 >
                   {project.name}
                 </span>
               </Link>
-              <span className="thumbnail">{renderMedia(project.coverimage)}</span>
+              <span className="thumbnail">{renderMedia(project.thumbnail)}</span>
               {index !== data.length - 1 && ","}
-            </div>
+            </motion.div>
           );
         })}
       </div>
