@@ -172,6 +172,7 @@ h3,
 h4,
 h5 {
   margin: 0;
+  font-family: NeueHaasDisplay;
 }
 
 h5 {
@@ -277,6 +278,17 @@ h5 {
   left: 0px;
   height: 100%;
   width: 100%;
+}
+
+.thumbnail img,
+.thumbnail video {
+  position: relative;
+  width: auto;
+  height: 30px;
+  border-radius: 3px;
+  margin: 0px 4px;
+  top: 0px;
+  transform: rotate(-2deg);
 }
 
 @keyframes spin {

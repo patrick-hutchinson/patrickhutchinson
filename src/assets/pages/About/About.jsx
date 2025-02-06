@@ -2,13 +2,18 @@ import React, { useEffect, useState, useRef } from "react";
 import sanityClient from "/src/client.js";
 
 import styles from "./About.module.css";
-import ImageTrail from "../Home/components/About/components/ImageTrail/ImageTrail";
+import ImageTrail from "assets/components/ImageTrail/ImageTrial";
+import Loading from "assets/components/Loading/Loading";
+
+import { useNavigate } from "react-router-dom";
 
 export default function About() {
   let [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const parentRef = useRef();
   const aboutRef = useRef(null);
   const wordsRef = useRef([]);
+
+  const navigate = useNavigate();
 
   const [aboutData, setAboutData] = useState();
 
@@ -112,13 +117,26 @@ export default function About() {
   }, [aboutData, mousePosition]);
 
   // Handle loading or error state
-  if (!aboutData || aboutData.length === 0) {
-    return <p>Error Loading Component</p>;
-  }
+  if (!aboutData) return <Loading />;
 
   // Split text into words for individual animation
   const text = aboutData[0]?.biography[0]?.children[0]?.text || ""; // Example: Accessing the first block
   const words = text.split(" ");
+
+  //   function navigateToWork() {
+  //     aboutRef.current.querySelectorAll(`.${styles.letterContainer}`).forEach((letter) => {
+  //       let animationDuration = 0.2;
+
+  //       let letterFront = letter.querySelector(`.${styles.letterFront}`);
+
+  //       setTimeout(() => {
+  //         letterFront.style.animation = `flipFrontOut ${animationDuration}s ease-in-out 0s 1 forwards`;
+  //       }, 300);
+  //       setTimeout(() => {
+  //         navigate("/work");
+  //       }, 700);
+  //     });
+  //   }
 
   return (
     <div className={styles.container} ref={parentRef}>
@@ -134,6 +152,7 @@ export default function About() {
           </span>
         ))}
       </div>
+
       <ImageTrail parentRef={parentRef} />
     </div>
   );

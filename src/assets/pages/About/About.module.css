@@ -10,7 +10,7 @@
 .biographyText {
   position: relative;
   margin-top: 35px;
-  font-size: 48px;
+  font-size: 38px;
   font-family: NeueHaasDisplay;
   line-height: 1.1;
   max-width: 840px;
@@ -42,4 +42,9 @@
   transform: rotateX(-90deg);
   position: absolute;
   left: 0px;
+}
+
+.workButton {
+  position: relative;
+  top: 300px;
 }

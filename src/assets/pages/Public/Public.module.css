@@ -1,30 +1,43 @@
-section.newsSection {
+.container {
   height: 100%;
   width: 100%;
   position: relative;
   background: var(--background-color);
 
-  /* display: grid; */
-  /* grid-template-columns: 1fr 1fr; */
+  padding: 10px 20px;
+  margin-top: 35px;
 }
 
-.newsItem,
-.experienceItem {
+.wrapper {
+  margin-bottom: 50px;
+  line-height: 1.1;
+  font-size: 38px;
+  font-family: NeueHaasDisplay;
+}
+
+.listItem {
   display: flex;
+  /* grid-template-columns: auto 40px 60px;  */
   flex-direction: row;
-
   align-items: center;
-  gap: 5px;
+  gap: 10px;
 }
+
+.listItem.link {
+  text-decoration: underline;
+}
+
 .name {
-  font-size: var(--font-size-200);
 }
 .date {
   font-size: var(--font-size-100);
+  text-align: center;
 }
 .thumbnail img {
   height: auto;
   width: 60px;
+  max-height: 40px;
+  object-fit: cover;
 }
 
 .alternatingImage {

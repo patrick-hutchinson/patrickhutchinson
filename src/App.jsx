@@ -4,12 +4,12 @@ import { useEffect, useState, useRef } from "react";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import "./App.css";
 
-import Layout from "./assets/components/Layout";
+import Layout from "./assets/components/Layout/Layout";
 import Project from "assets/pages/Project/Project";
 
 import About from "./assets/pages/About/About";
-import Home from "./assets/pages/Home/Home";
-import News from "assets/pages/News/News";
+
+import Public from "assets/pages/Public/Public";
 import Work from "assets/pages/Work/Work";
 
 function App() {
@@ -21,7 +21,7 @@ function App() {
           {/* <Route path="about" element={<About />}></Route> */}
           <Route path="work" element={<Work />}></Route>
           <Route path="work/:slug" element={<Project />}></Route>
-          <Route path="public" element={<News />}></Route>
+          <Route path="public" element={<Public />}></Route>
         </Route>
       </Routes>
     </BrowserRouter>

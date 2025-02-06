@@ -1,12 +1,12 @@
 import React, { useEffect, useRef, useState } from "react";
-import styles from "./News.module.css";
+import styles from "./Public.module.css";
 import { renderMedia } from "assets/utils/renderMedia";
 import sanityClient from "/src/client.js";
 import { formatMonth } from "assets/utils/formatMonth";
 import { formatYear } from "assets/utils/formatYear";
 import { gsap } from "gsap";
 
-export default function News() {
+export default function Public() {
   const [hoveredItemId, setHoveredItemId] = useState(null);
   const [cursorPosition, setCursorPosition] = useState({ x: 0, y: 0 });
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -14,8 +14,6 @@ export default function News() {
   const [experience, setExperience] = useState();
   const timerRef = useRef(null); // Reference to store the interval timer
   const imageRef = useRef(null); // Ref for the alternating image
-
-  const newsSectionRef = useRef();
 
   const fetchData = async (type, setter) => {
     try {
@@ -49,16 +47,14 @@ export default function News() {
   function formatIntervalDuration(intervalDuration) {
     return intervalDuration / 1000 / 2;
   }
-  const handleMouseEnter = (newsItem) => {
-    setHoveredItemId(newsItem._id);
+  const handleMouseEnter = (item) => {
+    setHoveredItemId(item._id);
     setCursorPosition({ x: 0, y: 0 }); // Reset cursor position
     setCurrentImageIndex(0); // Reset image index
 
     // Start alternating images
     timerRef.current = setInterval(() => {
-      setCurrentImageIndex((prevIndex) =>
-        newsItem.imagegallery && prevIndex < newsItem.imagegallery.length - 1 ? prevIndex + 1 : 0
-      );
+      setCurrentImageIndex((prevIndex) => (item.imagegallery && prevIndex < item.imagegallery.length - 1 ? prevIndex + 1 : 0));
     }, intervalDuration); // Change image every 1 second
   };
 
@@ -90,50 +86,43 @@ export default function News() {
   }
 
   return (
-    <section className={styles.newsSection} ref={newsSectionRef}>
-      <div className={styles.newsContainer}>
-        <h2>Public</h2>
-        {news.map((newsItem, index) => (
+    <div className={styles.container}>
+      <div className={styles.wrapper}>
+        {news.map((item, index) => (
           <div
             key={index}
-            className={styles.newsItem}
-            onMouseEnter={() => handleMouseEnter(newsItem)}
+            className={`${styles.listItem} ${item.imagegallery ? styles.link : ""}`}
+            onMouseEnter={() => handleMouseEnter(item)}
             onMouseLeave={handleMouseLeave}
             onMouseMove={handleMouseMove}
           >
-            <div className={styles.thumbnail}>{newsItem.thumbnail && renderMedia(newsItem.thumbnail)}</div>
+            <div className={styles.name}>{item.name}</div>
             <div className={styles.date}>
-              {formatMonth(newsItem.month)} {formatYear(newsItem.year)}
+              {formatMonth(item.month)} {formatYear(item.year)}
             </div>
-            <h3 className={styles.name}>{newsItem.name}</h3>
+            <div className="thumbnail">{item.thumbnail && renderMedia(item.thumbnail)}</div>
+
             {/* Conditionally render the image gallery */}
-            {hoveredItemId === newsItem._id && newsItem.imagegallery && (
-              <div
-                className={styles.alternatingImage}
-                style={{
-                  top: cursorPosition.y,
-                  left: cursorPosition.x,
-                }}
-              >
-                {/* Render the current image */}
-                <div ref={imageRef}>{renderMedia(newsItem.imagegallery[currentImageIndex])}</div>
+            {hoveredItemId === item._id && item.imagegallery && (
+              <div className={styles.alternatingImage} style={{ top: cursorPosition.y, left: cursorPosition.x }}>
+                <div ref={imageRef}>{renderMedia(item.imagegallery[currentImageIndex])}</div>
               </div>
             )}
           </div>
         ))}
       </div>
-      <div className={styles.experienceContainer}>
-        <h2>Experience</h2>
+
+      <div className={styles.wrapper}>
         {experience.map((experienceItem, index) => (
-          <div key={index} className={styles.experienceItem}>
-            <div className={styles.thumbnail}>{experienceItem.thumbnail && renderMedia(experienceItem.thumbnail)}</div>
+          <div key={index} className={styles.listItem}>
+            <div className={styles.name}>{experienceItem.name}</div>
             <div className={styles.date}>
               {formatMonth(experienceItem.month)} {formatYear(experienceItem.year)}
             </div>
-            <h3 className={styles.name}>{experienceItem.name}</h3>
+            <div className="thumbnail">{experienceItem.thumbnail && renderMedia(experienceItem.thumbnail)}</div>
           </div>
         ))}
       </div>
-    </section>
+    </div>
   );
 }

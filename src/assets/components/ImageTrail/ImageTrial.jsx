@@ -17,7 +17,7 @@ const ImageTrail = ({ parentRef }) => {
   const cacheMousePos = useRef({ x: 0, y: 0 }); // Smoothed mouse position
   const [zIndexVal, setZIndexVal] = useState(1); // Tracks z-index for image stacking
   const [visibleImagesCount, setVisibleImagesCount] = useState(0);
-  const threshold = 60; // Distance to trigger the next image
+  const threshold = 120; // Distance to trigger the next image
   const visibleImagesTotal = 7; // Max visible images at a time
   const animationRefs = useRef([]); // Store GSAP animations for cleanup
   const imgPositionRef = useRef(0);
@@ -54,10 +54,10 @@ const ImageTrail = ({ parentRef }) => {
     parentRef.current.addEventListener("mousemove", handlePointerMove);
     parentRef.current.addEventListener("touchmove", handlePointerMove);
 
-    return () => {
-      parentRef.current.removeEventListener("mousemove", handlePointerMove);
-      parentRef.current.removeEventListener("touchmove", handlePointerMove);
-    };
+    // return () => {
+    //   parentRef.current.removeEventListener("mousemove", handlePointerMove);
+    //   parentRef.current.removeEventListener("touchmove", handlePointerMove);
+    // };
   }, []);
 
   useRef(() => {

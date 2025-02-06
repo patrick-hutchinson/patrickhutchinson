@@ -4,7 +4,7 @@ import { useEffect, useState, useRef, useContext } from "react";
 import sanityClient from "/src/client.js";
 import { renderMedia } from "assets/utils/renderMedia";
 
-import ImageTrail from "../Home/components/About/components/ImageTrail/ImageTrail";
+import ImageTrail from "assets/components/ImageTrail/ImageTrial";
 
 import styles from "./Work.module.css";
 import Loading from "assets/components/Loading/Loading";
@@ -68,7 +68,7 @@ export default function Work() {
                   {project.name}
                 </span>
               </Link>
-              <span className={styles["project-thumbnail"]}>{renderMedia(project.coverimage)}</span>
+              <span className="thumbnail">{renderMedia(project.coverimage)}</span>
               {index !== data.length - 1 && ","}
             </div>
           );
