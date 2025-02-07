@@ -1,15 +1,15 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState, useContext } from "react";
 import gsap from "gsap";
+import { motion } from "framer-motion";
 import styles from "./ImageTrail.module.css";
 import { getPointerPos, getMouseDistance, getNewPosition, lerp } from "./utils/utils";
 
-import sanityClient from "/src/client.js";
+import { DataContext } from "assets/context/WorkContext";
 
 import { getFileSrc } from "/src/assets/utils/getFileSrc";
 
 const ImageTrail = ({ parentRef }) => {
-  let [data, setData] = useState();
-
+  const data = useContext(DataContext);
   const containerRef = useRef(null); // Reference to the container div
   const imagesRef = useRef([]); // Use a ref to store images
   const mousePos = useRef({ x: 0, y: 0 }); // Mouse position
@@ -23,22 +23,6 @@ const ImageTrail = ({ parentRef }) => {
   const imgPositionRef = useRef(0);
 
   const isIdle = useRef(true);
-
-  useEffect(() => {
-    sanityClient
-      .fetch(
-        `*[_type == "project"]{
-          coverimage,
-          thumbnail,
-          url,
-          name
-        }`
-      )
-      .then((fetchedData) => {
-        setData(fetchedData);
-      })
-      .catch(console.error);
-  }, []);
 
   useEffect((e) => {
     if (!parentRef?.current) return;
@@ -59,10 +43,6 @@ const ImageTrail = ({ parentRef }) => {
     //   parentRef.current.removeEventListener("touchmove", handlePointerMove);
     // };
   }, []);
-
-  useRef(() => {
-    console.log(parentRef.current, "parentRef");
-  }, [parentRef.current]);
 
   useEffect(() => {
     const container = containerRef.current;
@@ -99,7 +79,7 @@ const ImageTrail = ({ parentRef }) => {
 
     if (img) {
       const rect = img.getBoundingClientRect();
-      const scaleValue = gsap.utils.random(0.9, 1.1);
+      const scaleValue = gsap.utils.random(0.7, 1.2);
 
       const animation = gsap
         .timeline({
@@ -162,6 +142,8 @@ const ImageTrail = ({ parentRef }) => {
       return newCount;
     });
   };
+
+  if (!data) return;
 
   return (
     <div ref={containerRef} className={styles.content}>

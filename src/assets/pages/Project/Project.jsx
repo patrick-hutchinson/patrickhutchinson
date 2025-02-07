@@ -2,6 +2,8 @@ import React from "react";
 import { useEffect, useState, useRef } from "react";
 import { useParams } from "react-router-dom";
 
+import { motion } from "framer-motion";
+
 import styles from "./Project.module.css";
 
 import sanityClient from "/src/client.js";
@@ -64,7 +66,7 @@ export default function Project() {
   const { slug } = useParams();
 
   // Early return if Projects is undefined
-  if (!projects) return <p>Error Loading Component</p>; // Or some other loading state or message
+  if (!projects) return; // Or some other loading state or message
 
   const project = projects.find((projectfound) => projectfound.slug?.current === slug);
 
@@ -149,7 +151,7 @@ export default function Project() {
   };
 
   return (
-    <div className={styles.projectContainer}>
+    <motion.div className={styles.projectContainer}>
       {renderMedia(project.coverimage)}
 
       <ProjectInfo />
@@ -163,6 +165,6 @@ export default function Project() {
       </div>
 
       <MoreProjects projects={projects} />
-    </div>
+    </motion.div>
   );
 }

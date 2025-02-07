@@ -5,7 +5,6 @@ import { motion } from "framer-motion";
 
 import styles from "./About.module.css";
 import ImageTrail from "assets/components/ImageTrail/ImageTrial";
-import Loading from "assets/components/Loading/Loading";
 
 import { useNavigate } from "react-router-dom";
 
@@ -17,18 +16,27 @@ export default function About() {
 
   const navigate = useNavigate();
 
-  const [aboutData, setAboutData] = useState();
+  const [about, setAbout] = useState(() => {
+    // Check localStorage once during initial state setup
+    const cachedData = localStorage.getItem("about");
+    return cachedData ? JSON.parse(cachedData) : 0;
+  });
 
   // Fetch data from Sanity
   useEffect(() => {
-    sanityClient
-      .fetch(
-        `*[_type=="about"]{
+    if (!about) {
+      sanityClient
+        .fetch(
+          `*[_type=="about"]{
         biography,
       }`
-      )
-      .then((data) => setAboutData(data))
-      .catch(console.error);
+        )
+        .then((fetchedData) => {
+          localStorage.setItem("about", JSON.stringify(fetchedData));
+          setAbout(fetchedData);
+        })
+        .catch(console.error);
+    }
   }, []);
 
   useEffect(() => {
@@ -40,89 +48,11 @@ export default function About() {
     });
   }, []);
 
-  // useEffect(() => {
-  //   let animationDuration = 0.2;
-  //   let animationDelay = animationDuration * 0.7;
-
-  //   let hoverRadius = 50;
-
-  //   aboutRef?.current?.querySelectorAll(`.${styles.letterContainer}`).forEach((letter) => {
-  //     let letterFront = letter.querySelector(`.${styles.letterFront}`);
-  //     let letterBack = letter.querySelector(`.${styles.letterBack}`);
-
-  //     let centerX = letter.getBoundingClientRect().left + letter.getBoundingClientRect().width / 2;
-  //     let centerY = letter.getBoundingClientRect().top + letter.getBoundingClientRect().height / 2;
-
-  //     let distanceLeft = mousePosition.x - centerX;
-  //     let distanceTop = mousePosition.y - centerY;
-
-  //     const playEnterAnimation = (letterFront, letterBack) => {
-  //       letter.setAttribute("isplayingenter", "true");
-  //       letterFront.style.animation = `flipFrontOut ${animationDuration}s ease-in-out 0s 1 forwards`;
-  //       letterBack.style.animation = `flipBackIn ${animationDuration}s ease-in-out ${animationDelay}s 1 forwards`;
-
-  //       const onAnimationEnd = () => {
-  //         letterBack.removeEventListener("animationend", onAnimationEnd); // Clean up listener
-  //         letter.setAttribute("isplayingenter", "false");
-  //       };
-
-  //       letterBack.addEventListener("animationend", onAnimationEnd);
-  //     };
-
-  //     const playExitAnimation = (letterFront, letterBack) => {
-  //       letter.setAttribute("isplayingexit", "true");
-  //       letterFront.style.transform = "rotateX(90deg)";
-  //       letterFront.style.animation = `flipFrontIn ${animationDuration}s ease-in-out ${animationDelay}s 1 forwards`;
-  //       letterBack.style.animation = `flipBackOut ${animationDuration}s ease-in-out 0s 1 forwards`;
-
-  //       const onAnimationEnd = () => {
-  //         letterFront.removeEventListener("animationend", onAnimationEnd); // Clean up listener
-  //         letter.setAttribute("isplayingexit", "false");
-  //       };
-
-  //       letterFront.addEventListener("animationend", onAnimationEnd);
-  //     };
-
-  //     if (distanceLeft > -hoverRadius && distanceLeft < hoverRadius && distanceTop > -hoverRadius && distanceTop < hoverRadius) {
-  //       const isExitPlaying = letter.getAttribute("isplayingexit") === "true";
-  //       const isEnterPlaying = letter.getAttribute("isplayingenter") === "true";
-
-  //       // If an animation is playing, wait for it to finish before triggering the next one
-  //       if (!isEnterPlaying && !isExitPlaying) {
-  //         playEnterAnimation(letterFront, letterBack);
-  //       } else if (!isEnterPlaying && isExitPlaying) {
-  //         // If exit animation is playing, wait for it to finish
-  //         setTimeout(() => {
-  //           playEnterAnimation(letterFront, letterBack);
-  //         }, animationDuration * 1000);
-  //       }
-  //     } else if (
-  //       distanceLeft < -hoverRadius ||
-  //       distanceLeft > hoverRadius ||
-  //       distanceTop < -hoverRadius ||
-  //       distanceTop > hoverRadius
-  //     ) {
-  //       const isEnterPlaying = letter.getAttribute("isplayingenter") === "true";
-  //       const isExitPlaying = letter.getAttribute("isplayingexit") === "true";
-
-  //       // If an animation is playing, wait for it to finish before triggering the next one
-  //       if (!isExitPlaying && !isEnterPlaying) {
-  //         playExitAnimation(letterFront, letterBack);
-  //       } else if (!isExitPlaying && isEnterPlaying) {
-  //         // If enter animation is playing, wait for it to finish
-  //         setTimeout(() => {
-  //           playExitAnimation(letterFront, letterBack);
-  //         }, animationDuration * 1000);
-  //       }
-  //     }
-  //   });
-  // }, [aboutData, mousePosition]);
-
   // Handle loading or error state
-  if (!aboutData) return <Loading />;
+  if (!about) return;
 
   // Split text into words for individual animation
-  const text = aboutData[0]?.biography[0]?.children[0]?.text || ""; // Example: Accessing the first block
+  const text = about[0]?.biography[0]?.children[0]?.text || ""; // Example: Accessing the first block
   const words = text.split(" ");
 
   return (
@@ -134,9 +64,9 @@ export default function About() {
               <span key={`letter-${wordIndex}-${letterIndex}`} className={`${styles.letterContainer}`}>
                 <motion.span
                   className={`${styles.letterFront}`}
-                  initial={{ animation: "flipFrontOut 0.4s ease-in-out 0s 1 forwards" }}
-                  animate={{ animation: "flipFrontIn 0.4s ease-in-out 0s 1 forwards" }}
-                  exit={{ animation: "flipFrontOut 0.4s ease-in-out 0s 1 forwards" }}
+                  initial={{ rotateX: 90 }}
+                  animate={{ rotateX: 0, transition: { duration: 0.4, ease: "easeInOut" } }}
+                  exit={{ rotateX: -90, transition: { duration: 0.4, ease: "easeInOut" } }}
                 >
                   {letter}
                 </motion.span>

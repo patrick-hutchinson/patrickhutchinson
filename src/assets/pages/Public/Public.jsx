@@ -5,32 +5,52 @@ import sanityClient from "/src/client.js";
 import { formatMonth } from "assets/utils/formatMonth";
 import { formatYear } from "assets/utils/formatYear";
 import { gsap } from "gsap";
+import { motion } from "framer-motion";
 
 export default function Public() {
   const [hoveredItemId, setHoveredItemId] = useState(null);
   const [cursorPosition, setCursorPosition] = useState({ x: 0, y: 0 });
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const [news, setNews] = useState();
-  const [experience, setExperience] = useState();
+  const [news, setNews] = useState(() => {
+    const cachedData = localStorage.getItem("news");
+    return cachedData ? JSON.parse(cachedData) : 0;
+  });
+  const [experience, setExperience] = useState(() => {
+    const cachedData = localStorage.getItem("experience");
+    return cachedData ? JSON.parse(cachedData) : 0;
+  });
   const timerRef = useRef(null); // Reference to store the interval timer
   const imageRef = useRef(null); // Ref for the alternating image
 
   const fetchData = async (type, setter) => {
-    try {
-      const data = await sanityClient.fetch(
-        `*[_type=="${type}"]{
-          _id,
-          name,
-          thumbnail,
-          month,
-          year, 
-          url,
-          ${type === "news" ? "imagegallery" : ""}
-        }`
-      );
-      setter(data);
-    } catch (error) {
-      console.error(`Failed to fetch ${type}:`, error);
+    // Check if data is cached in localStorage
+    const cachedData = localStorage.getItem(type);
+
+    if (cachedData) {
+      // If data is cached, use it
+      setter(JSON.parse(cachedData));
+    } else {
+      // Only fetch if there is no cached data
+      sanityClient
+        .fetch(
+          `*[_type=="${type}"]{
+            _id,
+            name,
+            thumbnail,
+            month,
+            year, 
+            url,
+            ${type === "news" ? "imagegallery" : ""}
+          }`
+        )
+        .then((fetchedData) => {
+          // Cache the fetched data in localStorage
+          localStorage.setItem(type, JSON.stringify(fetchedData));
+          setter(fetchedData); // Use the setter function passed in
+        })
+        .catch((error) => {
+          console.error(`Failed to fetch ${type}:`, error);
+        });
     }
   };
 
@@ -81,22 +101,23 @@ export default function Public() {
     }
   }, [currentImageIndex]);
 
-  if (!news || news.length === 0 || !experience || experience.length === 0) {
-    return <p>Error Loading Component</p>;
-  }
+  if (!news || news.length === 0 || !experience || experience.length === 0) return;
 
   return (
     <div className={styles.container}>
       <div className={styles.wrapper}>
         {news.map((item, index) => (
-          <div
+          <motion.div
             key={index}
-            className={`${styles.listItem} ${item.imagegallery ? styles.link : ""}`}
+            className={`${styles.listItem}`}
             onMouseEnter={() => handleMouseEnter(item)}
             onMouseLeave={handleMouseLeave}
             onMouseMove={handleMouseMove}
+            initial={{ rotateX: -90 }}
+            animate={{ rotateX: 0, transition: { duration: 0.4, ease: "easeInOut" } }}
+            exit={{ rotateX: 90, transition: { duration: 0.4, ease: "easeInOut" } }}
           >
-            <div className={styles.name}>{item.name}</div>
+            <div className={`${styles.name} ${item.imagegallery ? styles.link : ""}`}>{item.name}</div>
             <div className={styles.date}>
               {formatMonth(item.month)} {formatYear(item.year)}
             </div>
@@ -108,19 +129,25 @@ export default function Public() {
                 <div ref={imageRef}>{renderMedia(item.imagegallery[currentImageIndex])}</div>
               </div>
             )}
-          </div>
+          </motion.div>
         ))}
       </div>
 
       <div className={styles.wrapper}>
         {experience.map((experienceItem, index) => (
-          <div key={index} className={styles.listItem}>
+          <motion.div
+            key={index}
+            className={styles.listItem}
+            initial={{ rotateX: 90 }}
+            animate={{ rotateX: 0, transition: { duration: 0.4, ease: "easeInOut" } }}
+            exit={{ rotateX: -90, transition: { duration: 0.4, ease: "easeInOut" } }}
+          >
             <div className={styles.name}>{experienceItem.name}</div>
             <div className={styles.date}>
               {formatMonth(experienceItem.month)} {formatYear(experienceItem.year)}
             </div>
             <div className="thumbnail">{experienceItem.thumbnail && renderMedia(experienceItem.thumbnail)}</div>
-          </div>
+          </motion.div>
         ))}
       </div>
     </div>

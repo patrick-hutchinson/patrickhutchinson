@@ -22,9 +22,9 @@ export default function Work() {
   let mediaOutlet = useRef();
 
   // Early return if data is undefined or empty
-  if (!data) return <Loading />;
+  if (!data) return;
 
-  function handleMouseEnter(event, project) {
+  function handleMouseEnter(project) {
     mediaContainer.current.style.display = "block";
     mediaOutlet.current.src = getFileSrc(project.coverimage);
   }
@@ -37,7 +37,9 @@ export default function Work() {
   return (
     <div ref={parentRef} className={styles.container}>
       <div className={styles.mediaContainer} ref={mediaContainer}>
-        <img src="" alt="" ref={mediaOutlet} />
+        <video autoPlay muted loop>
+          <source src="" alt="" ref={mediaOutlet} type="mp4"></source>
+        </video>
       </div>
 
       <div className={styles["project-container"]} ref={projectContainer}>
@@ -46,13 +48,13 @@ export default function Work() {
             <motion.div
               key={index}
               className={styles.project}
-              initial={{ animation: "flipFrontOut 0.4s ease-in-out 0s 1 forwards" }}
-              animate={{ animation: "flipFrontIn 0.4s ease-in-out 0s 1 forwards" }}
-              exit={{ animation: "flipFrontOut 0.4s ease-in-out 0s 1 forwards" }}
+              initial={{ rotateX: 90 }}
+              animate={{ rotateX: 0, transition: { duration: 0.4, ease: "easeInOut" } }}
+              exit={{ rotateX: -90, transition: { duration: 0.4, ease: "easeInOut" } }}
             >
               <Link to={`/work/${project.slug.current}`}>
                 <span
-                  onMouseEnter={(event) => handleMouseEnter(event, project)}
+                  onMouseEnter={() => handleMouseEnter(project)}
                   onMouseLeave={(e) => handleMouseLeave(e)}
                   className={styles["project-title"]}
                 >
