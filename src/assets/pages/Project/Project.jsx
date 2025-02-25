@@ -42,6 +42,7 @@ export default function Project() {
       .catch(console.error);
   }, []);
 
+  // Scroll Link from left to right
   useEffect(() => {
     const refElement = linkRef.current;
     if (!refElement) return;
@@ -136,10 +137,17 @@ export default function Project() {
               creditsMapping.map(
                 ({ key, title }) =>
                   project.credits[key] && (
-                    <div className={styles.creditcontainer} key={key}>
-                      <div className={styles["creditcontainer-inner"]}>
+                    <div className={`${styles.creditcontainer} `} key={key}>
+                      <div className={styles[`creditcount_${project.credits[key].length}`]}>
                         <li className={`${styles.credit}`}>{title}:</li>
-                        <li>{project.credits[key].join(", ")}</li>
+                        <li>
+                          {project.credits[key].map((item, index) => (
+                            <React.Fragment key={index}>
+                              {item}
+                              {index !== project.credits[key].length - 1 && <br />}
+                            </React.Fragment>
+                          ))}
+                        </li>
                       </div>
                     </div>
                   )

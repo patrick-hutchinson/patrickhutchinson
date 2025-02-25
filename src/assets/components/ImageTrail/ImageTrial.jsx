@@ -1,163 +1,96 @@
 import React, { useEffect, useRef, useState, useContext } from "react";
-import gsap from "gsap";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import styles from "./ImageTrail.module.css";
-import { getPointerPos, getMouseDistance, getNewPosition, lerp } from "./utils/utils";
+import { getPointerPos, getMouseDistance, lerp, getNewPosition } from "./utils/utils";
 
 import { DataContext } from "assets/context/WorkContext";
-
 import { getFileSrc } from "/src/assets/utils/getFileSrc";
 
-const ImageTrail = ({ parentRef }) => {
+const ImageTrail = () => {
   const data = useContext(DataContext);
-  const containerRef = useRef(null); // Reference to the container div
-  const imagesRef = useRef([]); // Use a ref to store images
-  const mousePos = useRef({ x: 0, y: 0 }); // Mouse position
-  const lastMousePos = useRef({ x: 0, y: 0 }); // Last position where an image was triggered
-  const cacheMousePos = useRef({ x: 0, y: 0 }); // Smoothed mouse position
-  const [zIndexVal, setZIndexVal] = useState(1); // Tracks z-index for image stacking
-  const [visibleImagesCount, setVisibleImagesCount] = useState(0);
-  const threshold = 120; // Distance to trigger the next image
-  const visibleImagesTotal = 7; // Max visible images at a time
-  const animationRefs = useRef([]); // Store GSAP animations for cleanup
-  const imgPositionRef = useRef(0);
+  const containerRef = useRef();
 
-  const isIdle = useRef(true);
+  const mousePos = useRef({ x: 0, y: 0 });
+  const lastMousePos = useRef({ x: 0, y: 0 });
 
-  useEffect((e) => {
-    if (!parentRef?.current) return;
+  const threshold = 40;
 
-    const handlePointerMove = (ev) => {
-      if (ev.touches) {
-        mousePos.current = getPointerPos(ev.touches[0]);
-      } else {
-        mousePos.current = { x: ev.offsetX, y: ev.offsetY };
-      }
-    };
+  const maxImagesVisible = 7;
+  const [visibleImageCount, setVisibleImagesCount] = useState(0);
 
-    parentRef.current.addEventListener("mousemove", handlePointerMove);
-    parentRef.current.addEventListener("touchmove", handlePointerMove);
+  let [imageCounter, setImageCounter] = useState(0);
+  let [imageArray, setImageArray] = useState([]);
 
-    // return () => {
-    //   parentRef.current.removeEventListener("mousemove", handlePointerMove);
-    //   parentRef.current.removeEventListener("touchmove", handlePointerMove);
-    // };
-  }, []);
-
-  useEffect(() => {
-    const container = containerRef.current;
-    if (container) {
-      const imageElements = Array.from(container.querySelectorAll(`.${styles["content__img"]}`));
-      imagesRef.current = imageElements;
-
-      const render = () => {
-        const distance = getMouseDistance(mousePos.current, lastMousePos.current);
-
-        cacheMousePos.current.x = lerp(cacheMousePos.current.x || mousePos.current.x, mousePos.current.x, 0.3);
-        cacheMousePos.current.y = lerp(cacheMousePos.current.y || mousePos.current.y, mousePos.current.y, 0.3);
-
-        if (distance > threshold) {
-          setZIndexVal((prev) => prev + 1);
-          showNextImage();
-          lastMousePos.current = { ...mousePos.current };
-        }
-
-        requestAnimationFrame(render);
-      };
-
-      render();
-    }
-  }, []);
-
-  const showNextImage = () => {
-    setZIndexVal((prev) => prev + 1);
-
-    imgPositionRef.current = imgPositionRef.current < imagesRef.current.length - 1 ? imgPositionRef.current + 1 : 0;
-    const img = imagesRef.current[imgPositionRef.current];
-
-    setVisibleImagesCount((prev) => prev + 1);
-
-    if (img) {
-      const rect = img.getBoundingClientRect();
-      const scaleValue = gsap.utils.random(0.7, 1.2);
-
-      const animation = gsap
-        .timeline({
-          onStart: () => onImageActivated(),
-          onComplete: () => onImageDeactivated(),
-        })
-        .fromTo(
-          img,
-          {
-            scale: scaleValue - Math.max(gsap.utils.random(0.2, 0.6), 0),
-            rotationZ: 0,
-            opacity: 1,
-            zIndex: zIndexVal,
-            x: cacheMousePos.current.x - rect.width / 2,
-            y: cacheMousePos.current.y - rect.height / 2,
-          },
-          {
-            duration: 0.4,
-            ease: "power3",
-            scale: scaleValue,
-            rotationZ: gsap.utils.random(-3, 3),
-            x: mousePos.current.x - rect.width / 2,
-            y: mousePos.current.y - rect.height / 2,
-          },
-          0
-        );
-
-      animationRefs.current.push(animation);
+  const handleMouseMove = (event) => {
+    if (event.touches) {
+      mousePos.current = getPointerPos(event.touches[0]);
+    } else {
+      mousePos.current = { x: event.clientX, y: event.clientY };
     }
 
-    if (visibleImagesCount > visibleImagesTotal) {
-      const lastInQueue = getNewPosition(imgPositionRef.current, visibleImagesTotal, imagesRef.current);
-      const lastImage = imagesRef.current[lastInQueue];
+    const distance = getMouseDistance(mousePos.current, lastMousePos.current);
 
-      if (lastImage) {
-        gsap.to(lastImage, {
-          duration: 0.4,
-          ease: "power4",
-          opacity: 0,
-          scale: 0.7,
-          onComplete: () => {
-            if (visibleImagesCount <= 0) {
-              isIdle = true;
-            }
-          },
-        });
-      }
+    if (distance > threshold) {
+      setImageCounter((prevCounter) => (prevCounter + 1) % data.length);
+
+      lastMousePos.current = { ...mousePos.current };
+
+      let randomScale = Math.random() * (1.3 - 0.7) + 0.7;
+      let randomRotation = Math.random() * (4 - -4) + -4;
+      setImageArray((prevImages) => {
+        const newImage = {
+          x: mousePos.current.x,
+          y: mousePos.current.y,
+          zIndex: prevImages.length + 1,
+          index: imageCounter,
+          randomScale: randomScale,
+          randomRotation: randomRotation,
+          uniqueId: Date.now(), // Generate a unique key
+        };
+
+        return prevImages.length >= data.length ? [...prevImages.slice(1), newImage] : [...prevImages, newImage];
+      });
     }
   };
 
-  let onImageActivated = () => {
-    setVisibleImagesCount((prev) => prev + 1);
-    if (isIdle.current) isIdle.current = false; // or setIsIdle(false);
-  };
-
-  let onImageDeactivated = () => {
-    setVisibleImagesCount((prev) => {
-      const newCount = prev - 1;
-      if (newCount <= 0) isIdle.current = true; // or setIsIdle(true);
-      return newCount;
-    });
+  const variants = {
+    initial: { scale: 0, rotateZ: -1 },
+    animate: ({ scale, rotation }) => ({
+      scale: scale,
+      rotateZ: rotation,
+      transition: { duration: 0.2, ease: "easeInOut" },
+    }),
+    exit: { scale: 0, rotateZ: -1, transition: { duration: 0.3, ease: "easeInOut" } },
   };
 
   if (!data) return;
 
   return (
-    <div ref={containerRef} className={styles.content}>
-      {data?.map((image, index) => (
-        <div
-          key={index}
-          className={styles["content__img"]}
-          ref={(el) => {
-            if (el) imagesRef.current[index] = el;
-          }}
-        >
-          <img className={styles["content__img-inner"]} src={getFileSrc(image.thumbnail)} alt="" />
-        </div>
-      ))}
+    <div ref={containerRef} className={styles.container} onMouseMove={handleMouseMove}>
+      <AnimatePresence>
+        {imageArray.map((image) => {
+          console.log(image.index); // Now it will log properly
+
+          return (
+            <motion.div
+              key={image.uniqueId}
+              className={styles["content__img"]}
+              style={{
+                x: image.x - (180 * image.randomScale) / 2,
+                y: image.y - ((180 / 1.59) * image.randomScale) / 2,
+                zIndex: image.zIndex,
+              }}
+              variants={variants}
+              custom={{ scale: image.randomScale, rotation: image.randomRotation }} // Pass an object
+              initial="initial"
+              animate="animate"
+              exit="exit"
+            >
+              <img className={styles["content__img-inner"]} src={getFileSrc(data[image.index].thumbnail)} alt="" />
+            </motion.div>
+          );
+        })}
+      </AnimatePresence>
     </div>
   );
 };

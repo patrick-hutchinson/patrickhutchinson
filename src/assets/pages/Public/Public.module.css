@@ -9,9 +9,9 @@
 }
 
 .wrapper {
-  margin-bottom: calc(38px * 1.1);
+  margin-bottom: calc(var(--font-size-text) * 1.1);
   line-height: 1.1;
-  font-size: 38px;
+  font-size: var(--font-size-text);
   font-family: NeueHaasDisplay;
 }
 

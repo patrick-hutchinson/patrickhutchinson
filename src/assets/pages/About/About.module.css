@@ -10,23 +10,12 @@
 .biographyText {
   position: relative;
   margin-top: 35px;
-  font-size: 38px;
+  font-size: var(--font-size-text);
   font-family: NeueHaasDisplay;
   line-height: 1.1;
   max-width: 840px;
   perspective: 500px;
-}
-
-.wordContainer {
-  display: inline-block;
-  margin-right: 6px;
-  perspective: 100px;
-  position: relative;
-}
-.letterContainer {
-  display: inline-block;
-  perspective: 100px;
-  position: relative;
+  pointer-events: none;
 }
 
 .wordFront,

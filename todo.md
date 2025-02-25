@@ -12,3 +12,5 @@ Handle Multiple Collaborators in Project View
 Fullscreen Media on Phone ()
 
 No imagetrial on menu
+
+Import data in projects from via context

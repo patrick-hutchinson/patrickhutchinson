@@ -1,18 +1,17 @@
 .menu {
   position: absolute;
-  bottom: 25px;
+  bottom: 0px;
   left: 20px;
   /* background: yellow; */
   border-radius: 5px;
-  padding: 10px;
-
-  font-size: var(--font-size-400);
+  padding: 0px;
 
   /* transform: perspective(80px) rotateX(4deg) rotateY(-16deg) rotateZ(4deg); */
   /* box-shadow: 24px 16px 64px 0 rgba(0, 0, 0, 0.08); */
   /* border-radius: 2px; */
-  font-size: 38px;
+  font-size: var(--font-size-text);
   font-family: NeueHaasDisplay;
+  line-height: 1.1;
 }
 
 .menu li:hover {

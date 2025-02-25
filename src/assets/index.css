@@ -1,6 +1,6 @@
 /* Global Styles */
 
-@charset "UTF-8";
+/* @charset "UTF-8"; */
 
 @font-face {
   font-family: "NeueHaasText";
@@ -25,7 +25,7 @@
   font-display: block;
 }
 
-@import url("https://use.typekit.net/mbt4cue.css");
+/* @import url("https://use.typekit.net/mbt4cue.css"); */
 
 /* font-family: "neue-haas-grotesk-text", sans-serif;
 font-weight: 400;
@@ -56,14 +56,14 @@ font-style: normal; */
 
 :root {
   --font-size-100: 14px;
-  --font-size-200: 18px;
+  --font-size-text: 28px;
   --font-size-300: 22px;
-  --font-size-400: 42px;
+  --font-size-400: 38px;
   --font-size-500: clamp(1.675rem, 1.3393rem + 2.6786vi, 3rem);
   --h8: clamp(1.25rem, 0rem + 4vi, 8rem);
 
   /* --font-size-100: 22px;
-  --font-size-200: 22px;
+  --font-size-text: 22px;
   --font-size-300: 22px;
   --font-size-400: 22px;
   --font-size-500: 22px;
@@ -99,7 +99,7 @@ body {
   background: var(--background-color);
   color: var(--font-color);
 
-  font-size: var(--font-size-200);
+  font-size: var(--font-size-text);
   line-height: var(--line-height-200);
 
   box-sizing: border-box;
@@ -181,17 +181,13 @@ h5 {
   margin: 0;
 }
 
-.footnote {
-  /* opacity: 0.2; */
-}
-
 .button {
   background: var(--background-color);
   border-radius: 6px !important;
   position: relative;
   overflow: hidden;
   box-shadow: var(--box-shadow);
-  font-size: var(--font-size-200);
+  font-size: var(--font-size-text);
   border: 1px solid #eee;
 }
 
@@ -284,11 +280,24 @@ h5 {
 .thumbnail video {
   position: relative;
   width: auto;
-  height: 30px;
+  height: 25px;
   border-radius: 3px;
   margin: 0px 4px;
   top: 0px;
   transform: rotate(-2deg);
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+}
+
+.letter {
+  display: inline-block;
+  /* perspective: 100px; */
+  position: relative;
+}
+.word {
+  display: inline-block;
+  margin-right: 5px;
+  /* perspective: 100px; */
+  position: relative;
 }
 
 @keyframes spin {
@@ -308,47 +317,11 @@ h5 {
   }
 }
 
-@keyframes flipFrontOut {
-  0% {
-    transform: rotateX(0deg);
-  }
-  100% {
-    transform: rotateX(90deg);
-  }
-}
-
-@keyframes flipFrontIn {
-  0% {
-    transform: rotateX(90deg);
-  }
-  100% {
-    transform: rotateX(0deg);
-  }
-}
-
-@keyframes flipBackIn {
-  0% {
-    transform: rotateX(-90deg) translateY(-5px);
-  }
-  100% {
-    transform: rotateX(-180deg) translateY(-5px);
-  }
-}
-
-@keyframes flipBackOut {
-  0% {
-    transform: rotateX(-180deg) translateY(-5px);
-  }
-  100% {
-    transform: rotateX(-90deg) translateY(-5px);
-  }
-}
-
 /* Phones in Landscape Mode */
 @media (max-width: 575.98px) {
   :root {
     --font-size-100: 14px;
-    --font-size-200: 18px;
+    --font-size-text: 18px;
     --font-size-300: 24px;
     --font-size-400: 50px;
     --font-size-500: 70px;

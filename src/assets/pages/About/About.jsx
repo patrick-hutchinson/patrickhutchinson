@@ -55,22 +55,36 @@ export default function About() {
   const text = about[0]?.biography[0]?.children[0]?.text || ""; // Example: Accessing the first block
   const words = text.split(" ");
 
+  const letterVariants = {
+    initial: { rotateX: 90 },
+    animate: (i) => ({
+      rotateX: 0,
+      transition: { duration: 0.4, ease: "easeInOut", delay: i * 0.1 * Math.random() },
+    }),
+    exit: (i) => ({
+      rotateX: -90,
+      transition: { duration: 0.4, ease: "easeInOut", delay: i * 0.1 * Math.random() }, // Added delay here
+    }),
+  };
+
   return (
     <div className={styles.container} ref={parentRef}>
       <div className={styles.biographyText} ref={aboutRef}>
         {words.map((word, wordIndex) => (
-          <span key={wordIndex} className={`${styles.wordContainer}`} ref={(el) => (wordsRef.current[wordIndex] = el)}>
+          <span key={wordIndex} className="word" ref={(el) => (wordsRef.current[wordIndex] = el)}>
             {word.split("").map((letter, letterIndex) => (
-              <span key={`letter-${wordIndex}-${letterIndex}`} className={`${styles.letterContainer}`}>
+              <span key={`letter-${wordIndex}-${letterIndex}`} className="letter">
                 <motion.span
-                  className={`${styles.letterFront}`}
-                  initial={{ rotateX: 90 }}
-                  animate={{ rotateX: 0, transition: { duration: 0.4, ease: "easeInOut" } }}
-                  exit={{ rotateX: -90, transition: { duration: 0.4, ease: "easeInOut" } }}
+                  className={styles.letterFront}
+                  custom={letterIndex} // pass the index to the variant
+                  variants={letterVariants}
+                  initial="initial"
+                  animate="animate"
+                  exit="exit"
                 >
                   {letter}
                 </motion.span>
-                <span className={`${styles.letterBack}`}>{letter}</span>
+                <motion.span className={styles.letterBack}>{letter}</motion.span>
               </span>
             ))}
           </span>

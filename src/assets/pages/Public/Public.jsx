@@ -4,10 +4,13 @@ import { renderMedia } from "assets/utils/renderMedia";
 import sanityClient from "/src/client.js";
 import { formatMonth } from "assets/utils/formatMonth";
 import { formatYear } from "assets/utils/formatYear";
-import { gsap } from "gsap";
+
 import { motion } from "framer-motion";
 
+import { randomRotation } from "assets/utils/randomRotation";
+
 export default function Public() {
+  const thumbnailRef = useRef([]);
   const [hoveredItemId, setHoveredItemId] = useState(null);
   const [cursorPosition, setCursorPosition] = useState({ x: 0, y: 0 });
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -19,7 +22,7 @@ export default function Public() {
     const cachedData = localStorage.getItem("experience");
     return cachedData ? JSON.parse(cachedData) : 0;
   });
-  const timerRef = useRef(null); // Reference to store the interval timer
+
   const imageRef = useRef(null); // Ref for the alternating image
 
   const fetchData = async (type, setter) => {
@@ -55,99 +58,123 @@ export default function Public() {
   };
 
   useEffect(() => {
+    thumbnailRef.current.forEach((item) => {
+      item.firstElementChild.style.transform = `rotate(${randomRotation()}deg)`;
+    });
+  }, []);
+
+  useEffect(() => {
     fetchData("news", setNews);
     fetchData("experience", setExperience);
   }, []);
 
-  const handleMouseMove = (e) => {
-    setCursorPosition({ x: e.clientX, y: e.clientY });
+  if (!news || !experience) return;
+
+  const letterVariants = {
+    initial: { rotateX: 90 },
+    animate: (i) => ({
+      rotateX: 0,
+      transition: { duration: 0.4, ease: "easeInOut", delay: i * 0.05 * Math.random() },
+    }),
+    exit: (i) => ({
+      rotateX: -90,
+      transition: { duration: 0.4, ease: "easeInOut", delay: i * 0.05 * Math.random() }, // Added delay here
+    }),
   };
 
-  let intervalDuration = 800;
-  function formatIntervalDuration(intervalDuration) {
-    return intervalDuration / 1000 / 2;
-  }
-  const handleMouseEnter = (item) => {
-    setHoveredItemId(item._id);
-    setCursorPosition({ x: 0, y: 0 }); // Reset cursor position
-    setCurrentImageIndex(0); // Reset image index
-
-    // Start alternating images
-    timerRef.current = setInterval(() => {
-      setCurrentImageIndex((prevIndex) => (item.imagegallery && prevIndex < item.imagegallery.length - 1 ? prevIndex + 1 : 0));
-    }, intervalDuration); // Change image every 1 second
+  let Word = ({ children }) => {
+    return <span className="word">{children}</span>;
   };
 
-  const handleMouseLeave = () => {
-    setHoveredItemId(null);
-    clearInterval(timerRef.current); // Stop the timer
+  let Letter = ({ letter, letterindex }) => {
+    return (
+      <motion.span
+        className="letter"
+        custom={letterindex}
+        variants={letterVariants}
+        initial="initial"
+        animate="animate"
+        exit="exit"
+        key={letterindex}
+      >
+        {letter}
+      </motion.span>
+    );
   };
 
-  // GSAP animation for the image gallery
-  useEffect(() => {
-    if (imageRef.current) {
-      gsap.fromTo(
-        imageRef.current,
-        { scale: 0 },
-        { scale: 1, duration: formatIntervalDuration(intervalDuration), ease: "power2.out" }
-      );
+  let Thumbnail = ({ item, index }) => {
+    return (
+      <motion.span
+        className="thumbnail"
+        variants={letterVariants}
+        initial="initial"
+        animate="animate"
+        exit="exit"
+        ref={(el) => (thumbnailRef.current[index] = el)}
+      >
+        {item.thumbnail && renderMedia(item.thumbnail)}
+        {index !== news.length - 1 && ","}
+      </motion.span>
+    );
+  };
 
-      gsap.to(imageRef.current, {
-        scale: 0,
-        duration: formatIntervalDuration(intervalDuration),
-        delay: formatIntervalDuration(intervalDuration), // Halfway into the interval duration
-        ease: "power2.in",
-      });
+  let Date = ({ item }) => {
+    return (
+      <motion.div className={styles.date} variants={letterVariants} initial="initial" animate="animate" exit="exit">
+        {formatMonth(item.month)} {formatYear(item.year)}
+      </motion.div>
+    );
+  };
+
+  const sortByDate = (a, b) => {
+    if (b.year !== a.year) {
+      return b.year - a.year; // Sort by year (descending)
     }
-  }, [currentImageIndex]);
-
-  if (!news || news.length === 0 || !experience || experience.length === 0) return;
+    return b.month - a.month; // Sort by month (descending)
+  };
 
   return (
     <div className={styles.container}>
       <div className={styles.wrapper}>
-        {news.map((item, index) => (
-          <motion.div
-            key={index}
-            className={`${styles.listItem}`}
-            onMouseEnter={() => handleMouseEnter(item)}
-            onMouseLeave={handleMouseLeave}
-            onMouseMove={handleMouseMove}
-            initial={{ rotateX: -90 }}
-            animate={{ rotateX: 0, transition: { duration: 0.4, ease: "easeInOut" } }}
-            exit={{ rotateX: 90, transition: { duration: 0.4, ease: "easeInOut" } }}
-          >
-            <div className={`${styles.name} ${item.imagegallery ? styles.link : ""}`}>{item.name}</div>
-            <div className={styles.date}>
-              {formatMonth(item.month)} {formatYear(item.year)}
+        {news.sort(sortByDate).map((news, newsindex) => (
+          <div key={newsindex} className={`${styles.listItem}`}>
+            <div className={`${styles.name} ${news.imagegallery ? styles.link : ""}`}>
+              {news.name.split(" ").map((word, wordIndex) => (
+                <Word key={wordIndex}>
+                  {word.split("").map((letter, letterindex) => (
+                    <Letter key={`letter-${wordIndex}-${letterindex}`} letter={letter} letterindex={letterindex} />
+                  ))}
+                </Word>
+              ))}
             </div>
-            <div className="thumbnail">{item.thumbnail && renderMedia(item.thumbnail)}</div>
+            <Date item={news} />
+            <Thumbnail item={news} index={newsindex} />
 
             {/* Conditionally render the image gallery */}
-            {hoveredItemId === item._id && item.imagegallery && (
+            {hoveredItemId === news._id && news.imagegallery && (
               <div className={styles.alternatingImage} style={{ top: cursorPosition.y, left: cursorPosition.x }}>
-                <div ref={imageRef}>{renderMedia(item.imagegallery[currentImageIndex])}</div>
+                <div ref={imageRef}>{renderMedia(news.imagegallery[currentImageIndex])}</div>
               </div>
             )}
-          </motion.div>
+          </div>
         ))}
       </div>
 
       <div className={styles.wrapper}>
-        {experience.map((experienceItem, index) => (
-          <motion.div
-            key={index}
-            className={styles.listItem}
-            initial={{ rotateX: 90 }}
-            animate={{ rotateX: 0, transition: { duration: 0.4, ease: "easeInOut" } }}
-            exit={{ rotateX: -90, transition: { duration: 0.4, ease: "easeInOut" } }}
-          >
-            <div className={styles.name}>{experienceItem.name}</div>
-            <div className={styles.date}>
-              {formatMonth(experienceItem.month)} {formatYear(experienceItem.year)}
+        {experience.sort(sortByDate).map((experience, experienceindex) => (
+          <div key={experienceindex} className={styles.listItem}>
+            <div className={styles.name}>
+              {experience.name.split(" ").map((word, wordIndex) => (
+                <Word key={wordIndex}>
+                  {word.split("").map((letter, letterindex) => (
+                    <Letter key={`letter-${wordIndex}-${letterindex}`} letter={letter} letterindex={letterindex} />
+                  ))}
+                </Word>
+              ))}
             </div>
-            <div className="thumbnail">{experienceItem.thumbnail && renderMedia(experienceItem.thumbnail)}</div>
-          </motion.div>
+            <Date item={experience} />
+            <Thumbnail item={experience} index={experienceindex} />
+          </div>
         ))}
       </div>
     </div>

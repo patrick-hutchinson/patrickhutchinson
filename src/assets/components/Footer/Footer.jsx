@@ -26,7 +26,7 @@ export default function Footer() {
           <div className="button-back-inner"></div>
         </div>
       </button> */}
-      <p className={`${styles.copyright}`}>{`PH×35° ${currentYear} 🌡️ All Rights Reserved. `}</p>
+      <p className={`${styles.copyright}`}>{`PH ${currentYear}. All Rights Reserved. `}</p>
     </footer>
   );
 }
