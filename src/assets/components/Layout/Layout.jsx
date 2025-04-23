@@ -1,21 +1,20 @@
-import React, { useEffect, useState, useRef } from "react";
-
-import { Link, Outlet, useLocation } from "react-router-dom";
-import { ReactLenis, useLenis } from "@studio-freight/react-lenis";
-
-import styles from "./Layout.module.css";
+import React from "react";
+import { Outlet, useLocation } from "react-router-dom";
+import { ReactLenis } from "@studio-freight/react-lenis";
 
 import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
 
 export default function Layout() {
+  const location = useLocation();
+  const isHome = location.pathname === "/";
+
   return (
     <ReactLenis root>
-      <Header />
-      <main>
-        <Outlet />
-      </main>
-
+      {!isHome && <Header />}
+      {/* <main> */}
+      <Outlet />
+      {/* </main> */}
       <Footer />
     </ReactLenis>
   );

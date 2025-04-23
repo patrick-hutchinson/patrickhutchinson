@@ -1,22 +1,14 @@
-import React from "react";
-
-import styles from "./Header.module.css";
-
+import styles from "../Selected.module.css";
 import { Link } from "react-router-dom";
+let colorModes = [
+  // { backgroundColor: "#DF0002", fontColor: "#121111" },
+  { backgroundColor: "#ffffff", fontColor: "#121111" },
+  { backgroundColor: "#121111", fontColor: "#D9DAD9" },
+];
 
-export default function Header() {
-  let colorModes = [
-    // { backgroundColor: "#DF0002", fontColor: "#121111" },
-    { backgroundColor: "#ffffff", fontColor: "#121111" },
-    { backgroundColor: "#121111", fontColor: "#D9DAD9" },
-  ];
-
-  const handleMode = (color) => {
-    document.querySelector(":root").style.setProperty("--background-color", color.backgroundColor);
-    document.querySelector(":root").style.setProperty("--font-color", color.fontColor);
-  };
+export default function FauxHeader() {
   return (
-    <header>
+    <div className={styles["faux-header"]}>
       <div className={styles["header-inner"]}>
         <div>
           <Link to="/">
@@ -70,6 +62,6 @@ export default function Header() {
           </ul>
         </div>
       </div>
-    </header>
+    </div>
   );
 }

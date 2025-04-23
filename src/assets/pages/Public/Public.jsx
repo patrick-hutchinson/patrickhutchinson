@@ -37,35 +37,37 @@ export default function Public() {
   }
 
   return (
-    <div className={styles.container}>
-      {data.map((section, sectionIndex) => (
-        <div className={styles.wrapper} key={sectionIndex}>
-          <h2>
-            <FlipText string={section.title} />
-          </h2>
-          <br />
+    <main>
+      <div className={styles.container}>
+        {data.map((section, sectionIndex) => (
+          <div className={styles.wrapper} key={sectionIndex}>
+            <h2>
+              <FlipText string={section.title} />
+            </h2>
+            <br />
 
-          {section.items.sort(sortByDate).map((item, itemIndex) => (
-            <motion.div
-              key={itemIndex}
-              className={styles.listItem}
-              initial="initialThumbnail"
-              whileHover="animateThumbnail"
-              exit="exitThumbnail"
-              onMouseEnter={() => handleZIndex()}
-            >
-              <div className={styles.date}>
-                <FlipText string={`${formatMonth(item.month)}`} />
-                <FlipText string={`${formatYear(item.year)}`} />
-              </div>
-              <div className={styles.name}>
-                <FlipText string={item.name} />
-                <Thumbnail source={getFileSrc(item.thumbnail, { width: 300 })} zIndex={zIndex.current} />
-              </div>
-            </motion.div>
-          ))}
-        </div>
-      ))}
-    </div>
+            {section.items.sort(sortByDate).map((item, itemIndex) => (
+              <motion.div
+                key={itemIndex}
+                className={styles.listItem}
+                initial="initialThumbnail"
+                whileHover="animateThumbnail"
+                exit="exitThumbnail"
+                onMouseEnter={() => handleZIndex()}
+              >
+                <div className={styles.date}>
+                  <FlipText string={`${formatMonth(item.month)}`} />
+                  <FlipText string={`${formatYear(item.year)}`} />
+                </div>
+                <div className={styles.name}>
+                  <FlipText string={item.name} />
+                  <Thumbnail source={getFileSrc(item.thumbnail, { width: 300 })} zIndex={zIndex.current} />
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        ))}
+      </div>
+    </main>
   );
 }

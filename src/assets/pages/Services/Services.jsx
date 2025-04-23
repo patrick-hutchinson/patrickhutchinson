@@ -59,109 +59,119 @@ export default function Services() {
   };
 
   return (
-    <section className={styles.content}>
-      {/* <p>
+    <main>
+      <section className={styles.content}>
+        {/* <p>
         <FlipText string="A FULL PRODUCTION CYCLE COVERING EVERY STEP OF THE WAY." />
       </p> */}
 
-      <div className={styles["service-section"]}>
-        <h2 className={styles.title}>
-          <span className={styles.count}>
-            <FlipText string="01" />
-          </span>
-          <FlipText string="DESIGN" />
-        </h2>
-        <ul className={styles.competencies}>
-          {designCompetencies.map((competency, index) => {
-            return (
-              <li key={index}>
-                <span className={styles.count}>
-                  <FlipText string={`0${index + 1}`} />
-                </span>
+        <div className={styles["service-section"]}>
+          <h2 className={styles.title}>
+            <span className={styles.count}>
+              <FlipText string="01" />
+            </span>
+            <FlipText string="DESIGN" />
+          </h2>
+          <ul className={styles.competencies}>
+            {designCompetencies.map((competency, index) => {
+              return (
+                <li key={index}>
+                  <span className={styles.count}>
+                    <FlipText string={`0${index + 1}`} />
+                  </span>
 
-                <span>
-                  {competency.split(" ").map((word, wordIndex) => (
-                    <Word key={wordIndex}>
-                      {word.split("").map((letter, letterindex) => (
-                        <Letter key={`letter-${wordIndex}-${letterindex}`} letter={letter} letterindex={letterindex} />
-                      ))}
-                    </Word>
-                  ))}
-                </span>
-              </li>
-            );
-          })}
-        </ul>
-      </div>
-
-      <div className={styles["service-section"]}>
-        <h2 className={styles.title}>
-          <span className={styles.count}>
-            <FlipText string="02" />
-          </span>
-          <FlipText string="DEVELOPMENT" />
-        </h2>
-
-        <div className={styles["competencies-container"]}>
-          {developmentCompetencies.map((competencies, index) => {
-            return (
-              <ul className={styles.competencies} key={index}>
-                <FlipText string={competencies.title} />
-                {competencies.competencies.map((competency, competencyindex) => (
-                  <li key={competencyindex}>
-                    <span className={styles.count}>
-                      <FlipText string={`0${competencyindex + 1}`} />
-                    </span>
-                    <span>
-                      {competency.split(" ").map((word, wordIndex) => (
-                        <Word key={wordIndex}>
-                          {word.split("").map((letter, letterindex) => (
-                            <Letter
-                              key={`letter-${wordIndex}-${letterindex}`}
-                              letter={letter}
-                              letterindex={letterindex}
-                            />
-                          ))}
-                        </Word>
-                      ))}
-                    </span>
-                  </li>
-                ))}
-              </ul>
-            );
-          })}
+                  <span>
+                    {competency.split(" ").map((word, wordIndex) => (
+                      <Word key={wordIndex}>
+                        {word.split("").map((letter, letterindex) => (
+                          <Letter
+                            key={`letter-${wordIndex}-${letterindex}`}
+                            letter={letter}
+                            letterindex={letterindex}
+                          />
+                        ))}
+                      </Word>
+                    ))}
+                  </span>
+                </li>
+              );
+            })}
+          </ul>
         </div>
-      </div>
 
-      <div className={styles["service-section"]}>
-        <h2 className={styles.title}>
-          <span className={styles.count}>
-            <FlipText string="03" />
-          </span>
-          <FlipText string="HOSTING AND PUBLISHING" />
-        </h2>
+        <div className={styles["service-section"]}>
+          <h2 className={styles.title}>
+            <span className={styles.count}>
+              <FlipText string="02" />
+            </span>
+            <FlipText string="DEVELOPMENT" />
+          </h2>
 
-        <ul className={styles.competencies}>
-          {hostingCompetencies.map((competency, index) => {
-            return (
-              <li key={index}>
-                <span className={styles.count}>
-                  <FlipText string={`0${index + 1}`} />
-                </span>
-                <span>
-                  {competency.split(" ").map((word, wordIndex) => (
-                    <Word key={wordIndex}>
-                      {word.split("").map((letter, letterindex) => (
-                        <Letter key={`letter-${wordIndex}-${letterindex}`} letter={letter} letterindex={letterindex} />
-                      ))}
-                    </Word>
+          <div className={styles["competencies-container"]}>
+            {developmentCompetencies.map((competencies, index) => {
+              return (
+                <ul className={styles.competencies} key={index}>
+                  <FlipText string={competencies.title} />
+                  {competencies.competencies.map((competency, competencyindex) => (
+                    <li key={competencyindex}>
+                      <span className={styles.count}>
+                        <FlipText string={`0${competencyindex + 1}`} />
+                      </span>
+                      <span>
+                        {competency.split(" ").map((word, wordIndex) => (
+                          <Word key={wordIndex}>
+                            {word.split("").map((letter, letterindex) => (
+                              <Letter
+                                key={`letter-${wordIndex}-${letterindex}`}
+                                letter={letter}
+                                letterindex={letterindex}
+                              />
+                            ))}
+                          </Word>
+                        ))}
+                      </span>
+                    </li>
                   ))}
-                </span>
-              </li>
-            );
-          })}
-        </ul>
-      </div>
-    </section>
+                </ul>
+              );
+            })}
+          </div>
+        </div>
+
+        <div className={styles["service-section"]}>
+          <h2 className={styles.title}>
+            <span className={styles.count}>
+              <FlipText string="03" />
+            </span>
+            <FlipText string="HOSTING AND PUBLISHING" />
+          </h2>
+
+          <ul className={styles.competencies}>
+            {hostingCompetencies.map((competency, index) => {
+              return (
+                <li key={index}>
+                  <span className={styles.count}>
+                    <FlipText string={`0${index + 1}`} />
+                  </span>
+                  <span>
+                    {competency.split(" ").map((word, wordIndex) => (
+                      <Word key={wordIndex}>
+                        {word.split("").map((letter, letterindex) => (
+                          <Letter
+                            key={`letter-${wordIndex}-${letterindex}`}
+                            letter={letter}
+                            letterindex={letterindex}
+                          />
+                        ))}
+                      </Word>
+                    ))}
+                  </span>
+                </li>
+              );
+            })}
+          </ul>
+        </div>
+      </section>
+    </main>
   );
 }

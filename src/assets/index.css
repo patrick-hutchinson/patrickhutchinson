@@ -99,13 +99,14 @@ body {
 }
 
 .link:hover {
-  color: var(--hoverColor);
+  color: var(--hoverColor) !important;
 }
 
 .color-selection li {
   width: 10px;
   height: 10px;
   border-radius: 50%;
+  filter: invert();
 }
 
 ul {
@@ -132,7 +133,7 @@ a,
 a:visited,
 a:hover {
   color: var(--font-color);
-  text-decoration: none;
+  text-decoration: underline;
 }
 
 button {
@@ -152,7 +153,7 @@ button {
 
 main {
   box-sizing: border-box;
-  margin-top: 10vh;
+
   padding: var(--margin);
 }
 section {

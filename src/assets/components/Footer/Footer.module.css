@@ -11,6 +11,9 @@ footer {
   grid-template-columns: 33vw 1fr 1fr;
   padding: var(--margin);
   text-transform: uppercase;
+  color: #fff !important;
+
+  mix-blend-mode: difference;
 }
 
 footer div:last-child {

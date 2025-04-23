@@ -3,8 +3,8 @@ import React from "react";
 import { useEffect, useState, useRef } from "react";
 import { Link } from "react-router-dom";
 
-import styles from "./MoreProjects.module.css";
-import { getFileSrc } from "../../../utils/getFileSrc";
+import styles from "../Project.Module.css";
+
 import { renderMedia } from "../../../utils/renderMedia";
 
 export default function MoreProjects({ projects }) {

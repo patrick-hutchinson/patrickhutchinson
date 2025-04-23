@@ -22,7 +22,7 @@ export const DataProvider = ({ children }) => {
   useEffect(() => {
     sanityClient
       .fetch(
-        `*[_type == "project"]{ id, name, coverimage, thumbnail, imagegallery, gridStructure, month, year, url, categories, projectType, credits, showOnHomepage, slug }`
+        `*[_type == "project"]{ _id, name, coverimage, thumbnail, imagegallery, gridStructure, month, year, url, categories, projectType, credits, showOnHomepage, slug }`
       )
       .then((fetchedData) => {
         localStorage.setItem("projects", JSON.stringify(fetchedData));

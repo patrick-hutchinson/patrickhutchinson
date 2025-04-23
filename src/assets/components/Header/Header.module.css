@@ -13,6 +13,9 @@ header {
   box-sizing: border-box;
 
   text-transform: uppercase;
+  color: #fff !important;
+
+  mix-blend-mode: difference;
 }
 
 .header-inner {
@@ -27,6 +30,11 @@ header {
 .header-inner div:last-child {
   display: flex;
   justify-content: end;
+}
+
+header a,
+header a:visited {
+  color: #fff !important;
 }
 
 header .socials {

@@ -7,7 +7,7 @@ import { DataContext } from "assets/context/DataContext";
 import { getFileSrc } from "/src/assets/utils/getFileSrc";
 
 const ImageTrail = () => {
-  const data = useContext(DataContext);
+  const { data } = useContext(DataContext);
 
   const mousePos = useRef({ x: 0, y: 0 });
   const lastMousePos = useRef({ x: 0, y: 0 });
