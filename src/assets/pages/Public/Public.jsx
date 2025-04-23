@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState, useContext } from "react";
 import styles from "./Public.module.css";
 import { renderMedia } from "assets/utils/renderMedia";
 import sanityClient from "/src/client.js";
@@ -13,10 +13,12 @@ import { randomRotation } from "assets/utils/randomRotation";
 import FlipText from "assets/components/Animations/FlipText/FlipText";
 import MaskSplitImage from "assets/components/Animations/MaskSplitImage/MaskSplitImage";
 
+import { DataContext } from "assets/context/DataContext";
+
 export default function Public() {
-  const [hoveredItemId, setHoveredItemId] = useState(null);
-  const [cursorPosition, setCursorPosition] = useState({ x: 0, y: 0 });
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const { experiences } = useContext(DataContext);
+  const zIndex = useRef(100);
+
   const [news, setNews] = useState(() => {
     const cachedData = localStorage.getItem("news");
     return cachedData ? JSON.parse(cachedData) : 0;
@@ -25,8 +27,6 @@ export default function Public() {
     const cachedData = localStorage.getItem("experience");
     return cachedData ? JSON.parse(cachedData) : 0;
   });
-
-  const imageRef = useRef(null); // Ref for the alternating image
 
   const fetchData = async (type, setter) => {
     // Check if data is cached in localStorage
@@ -64,6 +64,10 @@ export default function Public() {
     fetchData("news", setNews);
     fetchData("experience", setExperience);
   }, []);
+
+  if (!experiences) return;
+
+  console.log(experiences, "new data");
 
   if (!news || !experience) return;
 
@@ -117,14 +121,20 @@ export default function Public() {
   const thumbnailVariants = {
     initialThumbnail: { scale: 1 },
     animateThumbnail: {
-      scale: 8,
-      transition: { duration: 0.8, ease: [0.6, -0.05, 0.01, 0.99] },
+      zIndex: zIndex.current,
+      scale: 12,
+      transition: { duration: 0.6, ease: [0.6, -0.05, 0.01, 0.99] },
     },
     exitThumbnail: {
       scale: 1,
-      transition: { duration: 0.8, ease: [0.6, -0.05, 0.01, 0.99] },
+      transition: { duration: 0.6, ease: [0.6, -0.05, 0.01, 0.99] },
     },
   };
+
+  function handleZIndex(e) {
+    zIndex.current += 1;
+    e.currentTarget.style.zIndex = zIndex.current;
+  }
 
   return (
     <div className={styles.container}>
@@ -135,7 +145,14 @@ export default function Public() {
         <br />
 
         {news.sort(sortByDate).map((news, newsindex) => (
-          <div key={newsindex} className={`${styles.listItem}`}>
+          <motion.div
+            key={newsindex}
+            className={`${styles.listItem}`}
+            initial="initialThumbnail"
+            whileHover="animateThumbnail"
+            exit="exitThumbnail"
+            onMouseEnter={() => handleZIndex()}
+          >
             <Date item={news} />
             <div className={`${styles.name} ${news.imagegallery ? styles.link : ""}`}>
               {news.name.split(" ").map((word, wordIndex) => (
@@ -145,18 +162,11 @@ export default function Public() {
                   ))}
                 </Word>
               ))}
-              <motion.div className="thumbnail">
-                <MaskSplitImage source={getFileSrc(news.thumbnail, { width: 30 })} />
+              <motion.div className="thumbnail" variants={thumbnailVariants}>
+                <MaskSplitImage source={getFileSrc(news.thumbnail, { width: 300 })} />
               </motion.div>
             </div>
-
-            {/* Conditionally render the image gallery */}
-            {hoveredItemId === news._id && news.imagegallery && (
-              <div className={styles.alternatingImage} style={{ top: cursorPosition.y, left: cursorPosition.x }}>
-                <div ref={imageRef}>{renderMedia(news.imagegallery[currentImageIndex])}</div>
-              </div>
-            )}
-          </div>
+          </motion.div>
         ))}
       </div>
 
@@ -172,6 +182,7 @@ export default function Public() {
             initial="initialThumbnail"
             whileHover="animateThumbnail"
             exit="exitThumbnail"
+            onMouseEnter={() => handleZIndex()}
           >
             <Date item={experience} />
             <div className={styles.name}>

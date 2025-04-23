@@ -10,6 +10,15 @@ export const DataProvider = ({ children }) => {
     return cachedData ? JSON.parse(cachedData) : 0;
   });
 
+  const [news, setNews] = useState(() => {
+    const cachedData = localStorage.getItem("news");
+    return cachedData ? JSON.parse(cachedData) : 0;
+  });
+  const [experiences, setExperiences] = useState(() => {
+    const cachedData = localStorage.getItem("experience");
+    return cachedData ? JSON.parse(cachedData) : 0;
+  });
+
   useEffect(() => {
     sanityClient
       .fetch(
@@ -22,5 +31,42 @@ export const DataProvider = ({ children }) => {
       .catch(console.error);
   }, []);
 
-  return <DataContext.Provider value={{ data }}>{children}</DataContext.Provider>;
+  const fetchData = async (type, setter) => {
+    // Check if data is cached in localStorage
+    const cachedData = localStorage.getItem(type);
+
+    if (cachedData) {
+      // If data is cached, use it
+      setter(JSON.parse(cachedData));
+    } else {
+      // Only fetch if there is no cached data
+      sanityClient
+        .fetch(
+          `*[_type=="${type}"]{
+              _id,
+              name,
+              thumbnail,
+              month,
+              year, 
+              url,
+              ${type === "news" ? "imagegallery" : ""}
+            }`
+        )
+        .then((fetchedData) => {
+          // Cache the fetched data in localStorage
+          localStorage.setItem(type, JSON.stringify(fetchedData));
+          setter(fetchedData); // Use the setter function passed in
+        })
+        .catch((error) => {
+          console.error(`Failed to fetch ${type}:`, error);
+        });
+    }
+  };
+
+  useEffect(() => {
+    fetchData("news", setNews);
+    fetchData("experience", setExperiences);
+  }, []);
+
+  return <DataContext.Provider value={{ data, experiences, news }}>{children}</DataContext.Provider>;
 };

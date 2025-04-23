@@ -286,12 +286,9 @@ figcaption {
 .thumbnail {
   display: inline-block;
   width: 15px;
-  background: #fff;
   max-height: 12px;
-  background: #fff;
-  /* transform: scale(2); */
-  /* transform: scale(1); */
   transform-origin: left center;
+  position: relative;
 }
 
 .imagecontainer {

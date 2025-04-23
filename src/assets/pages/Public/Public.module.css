@@ -17,6 +17,7 @@
   display: grid;
 
   grid-template-columns: 5vw auto;
+  width: fit-content;
 }
 
 .name.link {
