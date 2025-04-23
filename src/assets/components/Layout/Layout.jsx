@@ -11,26 +11,12 @@ import Footer from "../Footer/Footer";
 export default function Layout() {
   return (
     <ReactLenis root>
-      <>
-        <Header />
+      <Header />
+      <main>
         <Outlet />
+      </main>
 
-        <div className={styles.menu}>
-          <ul>
-            <li>
-              <Link to="/">/About</Link>
-            </li>
-            <li>
-              <Link to="/work">/Work</Link>
-            </li>
-            <li>
-              <Link to="/public">/Public</Link>
-            </li>
-          </ul>
-        </div>
-
-        <Footer />
-      </>
+      <Footer />
     </ReactLenis>
   );
 }

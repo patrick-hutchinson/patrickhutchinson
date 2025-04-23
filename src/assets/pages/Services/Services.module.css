@@ -1,0 +1,39 @@
+.competencies {
+  display: flex;
+  flex-direction: column;
+}
+
+.title {
+  font-size: 42px;
+
+  display: grid;
+  grid-template-columns: 80px auto;
+  margin-bottom: 10px;
+}
+
+.competencies {
+  text-transform: uppercase;
+  margin-left: 80px;
+}
+.competencies li {
+  display: grid;
+  grid-template-columns: 25px auto;
+  align-items: center;
+}
+.competencies .count {
+  font-size: calc(var(--font-size-100) / 1.75);
+}
+.competencies-container {
+  display: flex;
+  flex-direction: row;
+  gap: 40px;
+}
+
+.service-section {
+  margin-bottom: 50px;
+}
+
+.content {
+  padding: 50px;
+  box-sizing: border-box;
+}

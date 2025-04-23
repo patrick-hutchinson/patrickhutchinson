@@ -16,24 +16,13 @@
   font-style: normal;
   font-display: block;
 }
-
 @font-face {
-  font-family: "TimesNewVariable";
-  src: url("/assets/fonts/TimesNewVariable.ttf");
+  font-family: "NeueHaasBold";
+  src: url("/assets/fonts/NeueHaasGrotDisp-75Bold-Trial.otf");
   font-weight: normal;
   font-style: normal;
   font-display: block;
 }
-
-/* @import url("https://use.typekit.net/mbt4cue.css"); */
-
-/* font-family: "neue-haas-grotesk-text", sans-serif;
-font-weight: 400;
-font-style: normal; */
-
-/* font-family: "neue-haas-grotesk-display", sans-serif;
-font-weight: 500;
-font-style: normal; */
 
 * {
   scrollbar-width: none;
@@ -57,29 +46,23 @@ font-style: normal; */
 :root {
   --font-size-100: 14px;
   --font-size-text: 28px;
-  --font-size-300: 22px;
-  --font-size-400: 38px;
+  --font-size-300: 42px;
+  --font-size-400: 42px;
   --font-size-500: clamp(1.675rem, 1.3393rem + 2.6786vi, 3rem);
   --h8: clamp(1.25rem, 0rem + 4vi, 8rem);
 
-  /* --font-size-100: 22px;
-  --font-size-text: 22px;
-  --font-size-300: 22px;
-  --font-size-400: 22px;
-  --font-size-500: 22px;
-  --h8: 22px; */
-
-  --line-height-100: 1.15;
+  --line-height-100: 1;
   --line-height-200: 1.15;
   --line-height-300: 1.15;
   --line-height-400: 1.15;
   --line-height-500: 1.15;
 
-  --font-weight-text: NeueHaasText;
-  --font-weight-display: FoundersMedium;
+  --font-weight-text: NeueHaasBold;
 
   --font-color: #000;
   --background-color: #fff;
+
+  --hoverColor: #f765ae;
 
   --margin: 10px;
 
@@ -98,28 +81,41 @@ body {
   font-family: var(--font-weight-text);
   background: var(--background-color);
   color: var(--font-color);
-
-  font-size: var(--font-size-text);
-  line-height: var(--line-height-200);
+  /* padding: var(--margin); */
+  font-size: var(--font-size-100);
+  line-height: var(--line-height-100);
 
   box-sizing: border-box;
   font-synthesis: none;
   text-rendering: optimizelegibility;
   -webkit-font-smoothing: antialiased;
-  font-size: 16px;
 
   margin: 0;
   padding: 0;
 
   overflow-x: hidden !important;
+  min-height: 100vh;
+  width: 100vw;
+}
+
+.link:hover {
+  color: var(--hoverColor);
+}
+
+.color-selection li {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
 }
 
 ul {
   list-style: none;
   padding: 0;
   margin: 0;
-  margin: 10px 0px;
 }
+/* p {
+  margin: 0;
+} */
 li {
   text-decoration: none;
   padding: 0;
@@ -154,15 +150,12 @@ button {
   white-space: nowrap;
 }
 
-footer {
-  margin: 0;
-  padding: 0;
-}
 main {
   box-sizing: border-box;
+  margin-top: 10vh;
+  padding: var(--margin);
 }
 section {
-  padding: 10px;
   box-sizing: border-box;
 }
 
@@ -172,13 +165,27 @@ h3,
 h4,
 h5 {
   margin: 0;
-  font-family: NeueHaasDisplay;
 }
 
 h5 {
   font-size: var(--font-size-100);
   padding: 0;
   margin: 0;
+}
+
+h2 {
+  font-size: var(--font-size-400);
+  text-transform: uppercase;
+}
+
+figure {
+  margin: 0;
+  padding: 0;
+}
+
+figcaption {
+  margin: 0;
+  padding: 0;
 }
 
 .button {
@@ -276,16 +283,38 @@ h5 {
   width: 100%;
 }
 
+.thumbnail {
+  display: inline-block;
+  width: 15px;
+  background: #fff;
+  max-height: 12px;
+  background: #fff;
+  /* transform: scale(2); */
+  /* transform: scale(1); */
+  transform-origin: left center;
+}
+
+.imagecontainer {
+  overflow: hidden;
+  position: relative;
+  white-space: nowrap;
+}
+
+.thumbnail .imagecontainer {
+  /* transform: scale(3); */
+  display: inline-block;
+  height: 15px;
+  width: fit-content;
+}
+
 .thumbnail img,
 .thumbnail video {
-  position: relative;
-  width: auto;
-  height: 25px;
-  border-radius: 3px;
-  margin: 0px 4px;
-  top: 0px;
-  transform: rotate(-2deg);
-  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  object-position: center;
+  height: auto;
+  margin-left: 0.5px;
 }
 
 .letter {

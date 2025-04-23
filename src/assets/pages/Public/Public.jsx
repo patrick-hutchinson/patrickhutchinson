@@ -7,10 +7,13 @@ import { formatYear } from "assets/utils/formatYear";
 
 import { motion } from "framer-motion";
 
+import { getFileSrc } from "assets/utils/getFileSrc";
+
 import { randomRotation } from "assets/utils/randomRotation";
+import FlipText from "assets/components/Animations/FlipText/FlipText";
+import MaskSplitImage from "assets/components/Animations/MaskSplitImage/MaskSplitImage";
 
 export default function Public() {
-  const thumbnailRef = useRef([]);
   const [hoveredItemId, setHoveredItemId] = useState(null);
   const [cursorPosition, setCursorPosition] = useState({ x: 0, y: 0 });
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -58,12 +61,6 @@ export default function Public() {
   };
 
   useEffect(() => {
-    thumbnailRef.current.forEach((item) => {
-      item.firstElementChild.style.transform = `rotate(${randomRotation()}deg)`;
-    });
-  }, []);
-
-  useEffect(() => {
     fetchData("news", setNews);
     fetchData("experience", setExperience);
   }, []);
@@ -102,22 +99,6 @@ export default function Public() {
     );
   };
 
-  let Thumbnail = ({ item, index }) => {
-    return (
-      <motion.span
-        className="thumbnail"
-        variants={letterVariants}
-        initial="initial"
-        animate="animate"
-        exit="exit"
-        ref={(el) => (thumbnailRef.current[index] = el)}
-      >
-        {item.thumbnail && renderMedia(item.thumbnail)}
-        {index !== news.length - 1 && ","}
-      </motion.span>
-    );
-  };
-
   let Date = ({ item }) => {
     return (
       <motion.div className={styles.date} variants={letterVariants} initial="initial" animate="animate" exit="exit">
@@ -133,11 +114,29 @@ export default function Public() {
     return b.month - a.month; // Sort by month (descending)
   };
 
+  const thumbnailVariants = {
+    initialThumbnail: { scale: 1 },
+    animateThumbnail: {
+      scale: 8,
+      transition: { duration: 0.8, ease: [0.6, -0.05, 0.01, 0.99] },
+    },
+    exitThumbnail: {
+      scale: 1,
+      transition: { duration: 0.8, ease: [0.6, -0.05, 0.01, 0.99] },
+    },
+  };
+
   return (
     <div className={styles.container}>
       <div className={styles.wrapper}>
+        <h2>
+          <FlipText string="PUBLIC" />
+        </h2>
+        <br />
+
         {news.sort(sortByDate).map((news, newsindex) => (
           <div key={newsindex} className={`${styles.listItem}`}>
+            <Date item={news} />
             <div className={`${styles.name} ${news.imagegallery ? styles.link : ""}`}>
               {news.name.split(" ").map((word, wordIndex) => (
                 <Word key={wordIndex}>
@@ -146,9 +145,10 @@ export default function Public() {
                   ))}
                 </Word>
               ))}
+              <motion.div className="thumbnail">
+                <MaskSplitImage source={getFileSrc(news.thumbnail, { width: 30 })} />
+              </motion.div>
             </div>
-            <Date item={news} />
-            <Thumbnail item={news} index={newsindex} />
 
             {/* Conditionally render the image gallery */}
             {hoveredItemId === news._id && news.imagegallery && (
@@ -161,8 +161,19 @@ export default function Public() {
       </div>
 
       <div className={styles.wrapper}>
+        <h2>
+          <FlipText string="EXPERIENCE" />
+        </h2>
+        <br />
         {experience.sort(sortByDate).map((experience, experienceindex) => (
-          <div key={experienceindex} className={styles.listItem}>
+          <motion.div
+            key={experienceindex}
+            className={styles.listItem}
+            initial="initialThumbnail"
+            whileHover="animateThumbnail"
+            exit="exitThumbnail"
+          >
+            <Date item={experience} />
             <div className={styles.name}>
               {experience.name.split(" ").map((word, wordIndex) => (
                 <Word key={wordIndex}>
@@ -171,10 +182,11 @@ export default function Public() {
                   ))}
                 </Word>
               ))}
+              <motion.div className="thumbnail" variants={thumbnailVariants}>
+                <MaskSplitImage source={getFileSrc(experience.thumbnail, { width: 300 })} />
+              </motion.div>
             </div>
-            <Date item={experience} />
-            <Thumbnail item={experience} index={experienceindex} />
-          </div>
+          </motion.div>
         ))}
       </div>
     </div>

@@ -1,25 +1,18 @@
 footer {
   position: fixed;
-  bottom: 10px;
+  bottom: 0px;
   width: 100%;
   font-size: var(--font-size-100);
-  /* display: flex; */
-  /* flex-direction: row; */
-  /* /* justify-content: space-between; */
-  text-align: right;
-  padding: var(--margin) !important;
+
   align-items: center;
   box-sizing: border-box;
-  height: 40px;
-  opacity: 0.5;
-  transition: opacity 0.3s ease-in-out;
-  z-index: -1;
+
+  display: grid;
+  grid-template-columns: 33vw 1fr 1fr;
+  padding: var(--margin);
+  text-transform: uppercase;
 }
 
-footer:hover {
-  opacity: 1;
-}
-
-.externalLink {
-  cursor: ne-resize;
+footer div:last-child {
+  text-align: right;
 }

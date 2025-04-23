@@ -4,28 +4,62 @@ import { useEffect, useState, useRef } from "react";
 import styles from "./Header.module.css";
 
 import { Link } from "react-router-dom";
+import { keyBy } from "lodash";
 
 export default function Header() {
+  let colorModes = [
+    { backgroundColor: "#DF0002", fontColor: "#121111" },
+    { backgroundColor: "#D9DAD9", fontColor: "#121111" },
+    { backgroundColor: "#121111", fontColor: "#D9DAD9" },
+  ];
+
+  const handleMode = (color) => {
+    document.querySelector(":root").style.setProperty("--background-color", color.backgroundColor);
+    document.querySelector(":root").style.setProperty("--font-color", color.fontColor);
+  };
   return (
     <header>
-      <Link to="/" className={styles.logo}>
-        <button className={`${styles.externalLink} button`}>
-          <div className={`button-front ${styles["button-front"]}`}>
-            <span>PH ×</span>
-          </div>
-          <div className="button-back">
-            <div className="button-back-inner"></div>
-          </div>
-        </button>
-      </Link>
-      <button className="button">
-        <div className={`button-front ${styles["button-front"]}`}>
-          <span>MENU</span>
+      <div className={styles["header-inner"]}>
+        <div>
+          <Link to="/">
+            <span>SELECTED</span>
+          </Link>
+          <Link to="/index">
+            <span>INDEX</span>
+          </Link>
+          <Link to="/services">
+            <span>SERVICES</span>
+          </Link>
+          <Link to="/public">
+            <span>PUBLIC</span>
+          </Link>
         </div>
-        <div className="button-back">
-          <div className="button-back-inner"></div>
+
+        <div>
+          <div>
+            PATRICK HUTCHINSON (GER) IS A GRAPHIC DESIGNER AND FRONT-END DEVELOPER BASED IN AMSTERDAM (NED). HE
+            SPECIALIZES ON WEB-, INTERACTION- AND TYPE DESIGN AND MOSTLY USES CODE, VISUAL PROGRAMMING AND
+            ANIMATION-BASED TOOLS TO BUILD HIS WORK.
+          </div>
+          <br />
+          <ul className={styles.socials}>
+            <li>Email</li>
+            <li>Instagram</li>
+            <li>LinkedIn</li>
+            <li>GitHub</li>
+          </ul>
         </div>
-      </button>
+
+        <div>
+          <ul className="color-selection">
+            {colorModes.map((color, index) => {
+              return (
+                <li onClick={() => handleMode(color)} style={{ background: color.backgroundColor }} key={index}></li>
+              );
+            })}
+          </ul>
+        </div>
+      </div>
     </header>
   );
 }

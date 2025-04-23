@@ -3,9 +3,12 @@ import { Routes, Route, useLocation } from "react-router-dom";
 import { AnimatePresence } from "framer-motion";
 
 import Layout from "./Layout/Layout";
-import About from "assets/pages/About/About";
-import Work from "assets/pages/Work/Work";
+import Work from "assets/pages/Index/Index";
 import Public from "assets/pages/Public/Public";
+import Selected from "assets/pages/Selected/Selected";
+import Index from "assets/pages/Index/Index";
+import Services from "assets/pages/Services/Services";
+
 const Project = lazy(() => import("assets/pages/Project/Project"));
 
 function AnimatedRoutes() {
@@ -15,10 +18,12 @@ function AnimatedRoutes() {
     <AnimatePresence mode="wait">
       <Routes location={location} key={location.pathname}>
         <Route element={<Layout />}>
-          <Route index element={<About />}></Route>
+          <Route index element={<Selected />}></Route>
           <Route path="work" element={<Work />}></Route>
           <Route path="work/:slug" element={<Project />}></Route>
           <Route path="public" element={<Public />}></Route>
+          <Route path="services" element={<Services />}></Route>
+          <Route path="index" element={<Index />}></Route>
         </Route>
       </Routes>
     </AnimatePresence>

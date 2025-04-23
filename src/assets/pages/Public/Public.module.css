@@ -2,46 +2,32 @@
   height: 100%;
   width: 100%;
   position: relative;
-  background: var(--background-color);
-
-  padding: 10px 20px;
-  margin-top: 35px;
+  text-transform: uppercase;
+  padding: 50px;
+  box-sizing: border-box;
 }
 
 .wrapper {
   margin-bottom: calc(var(--font-size-text) * 1.1);
-  line-height: 1.1;
-  font-size: var(--font-size-text);
-  font-family: NeueHaasDisplay;
+  line-height: 1;
+  font-size: var(--font-size-100);
 }
 
 .listItem {
-  display: flex;
-  /* grid-template-columns: auto 40px 60px;  */
-  flex-direction: row;
-  align-items: center;
-  gap: 10px;
+  display: grid;
+
+  grid-template-columns: 5vw auto;
 }
 
 .name.link {
   text-decoration: underline;
 }
 
-.name {
-}
 .date {
   font-size: var(--font-size-100);
-  text-align: center;
-}
-.thumbnail img {
-  height: auto;
-  width: 60px;
-  max-height: 40px;
-  object-fit: cover;
 }
 
 .alternatingImage {
-  /* position: absolute; */
   transform: translate(-50%, -50%);
   pointer-events: none;
   width: 200px;

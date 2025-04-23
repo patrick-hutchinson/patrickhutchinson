@@ -14,3 +14,7 @@ Fullscreen Media on Phone ()
 No imagetrial on menu
 
 Import data in projects from via context
+
+Page Transition;
+
+Hover anmimations; maybe shuffle
