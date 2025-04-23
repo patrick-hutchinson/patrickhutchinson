@@ -3,7 +3,7 @@ import React, { useState, useEffect, useRef, useContext } from "react";
 import { DataContext } from "assets/context/DataContext";
 import { getFileSrc } from "assets/utils/getFileSrc";
 
-import MaskSplitImage from "assets/components/Animations/MaskSplitImage/MaskSplitImage";
+import MaskSplitImage from "assets/components/Animations/MaskSplitImage";
 
 import styles from "./Selected.module.css";
 

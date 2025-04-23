@@ -5,13 +5,13 @@ import { DataContext } from "assets/context/DataContext";
 import styles from "./Index.module.css";
 
 import { motion } from "framer-motion";
-import { categoriesMapping } from "assets/context/categoriesMapping";
+import { categoriesMapping } from "assets/utils/categoriesMapping";
 
 import { Link } from "react-router-dom";
 import { getFileSrc } from "assets/utils/getFileSrc";
 
-import FlipText from "assets/components/Animations/FlipText/FlipText";
-import MaskSplitImage from "assets/components/Animations/MaskSplitImage/MaskSplitImage";
+import FlipText from "assets/components/Animations/FlipText";
+import MaskSplitImage from "assets/components/Animations/MaskSplitImage";
 
 export default function Index() {
   const { data } = useContext(DataContext);

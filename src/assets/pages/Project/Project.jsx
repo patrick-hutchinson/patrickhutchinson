@@ -10,9 +10,9 @@ import sanityClient from "/src/client.js";
 
 import { formatMonth } from "assets/utils/formatMonth";
 import { formatYear } from "assets/utils/formatYear";
-import { creditsMapping } from "assets/context/creditsMapping";
-import { categoriesMapping } from "assets/context/categoriesMapping";
-import randomColorScheme from "assets/context/colorSchemes";
+import { creditsMapping } from "assets/utils/creditsMapping";
+import { categoriesMapping } from "assets/utils/categoriesMapping";
+import randomColorScheme from "assets/utils/colorSchemes";
 
 import { renderMedia } from "assets/utils/renderMedia";
 import MoreProjects from "./MoreProjects/MoreProjects";

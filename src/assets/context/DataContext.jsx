@@ -14,7 +14,7 @@ export const DataProvider = ({ children }) => {
     const cachedData = localStorage.getItem("news");
     return cachedData ? JSON.parse(cachedData) : 0;
   });
-  const [experiences, setExperiences] = useState(() => {
+  const [experience, setExperience] = useState(() => {
     const cachedData = localStorage.getItem("experience");
     return cachedData ? JSON.parse(cachedData) : 0;
   });
@@ -65,8 +65,8 @@ export const DataProvider = ({ children }) => {
 
   useEffect(() => {
     fetchData("news", setNews);
-    fetchData("experience", setExperiences);
+    fetchData("experience", setExperience);
   }, []);
 
-  return <DataContext.Provider value={{ data, experiences, news }}>{children}</DataContext.Provider>;
+  return <DataContext.Provider value={{ data, experience, news }}>{children}</DataContext.Provider>;
 };

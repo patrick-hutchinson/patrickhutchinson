@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef, useContext } from "react";
 import { motion } from "framer-motion";
 
-import FlipText from "assets/components/Animations/FlipText/FlipText";
+import FlipText from "assets/components/Animations/FlipText";
 
 import styles from "./Services.module.css";
 
@@ -60,9 +60,9 @@ export default function Services() {
 
   return (
     <section className={styles.content}>
-      <p>
+      {/* <p>
         <FlipText string="A FULL PRODUCTION CYCLE COVERING EVERY STEP OF THE WAY." />
-      </p>
+      </p> */}
 
       <div className={styles["service-section"]}>
         <h2 className={styles.title}>
@@ -75,7 +75,9 @@ export default function Services() {
           {designCompetencies.map((competency, index) => {
             return (
               <li key={index}>
-                <FlipText string={`${index + 1}`} />
+                <span className={styles.count}>
+                  <FlipText string={`0${index + 1}`} />
+                </span>
 
                 <span>
                   {competency.split(" ").map((word, wordIndex) => (
@@ -108,7 +110,7 @@ export default function Services() {
                 {competencies.competencies.map((competency, competencyindex) => (
                   <li key={competencyindex}>
                     <span className={styles.count}>
-                      <FlipText string={`${competencyindex + 1}`} />
+                      <FlipText string={`0${competencyindex + 1}`} />
                     </span>
                     <span>
                       {competency.split(" ").map((word, wordIndex) => (
@@ -144,7 +146,7 @@ export default function Services() {
             return (
               <li key={index}>
                 <span className={styles.count}>
-                  <FlipText string={`${index + 1}`} />
+                  <FlipText string={`0${index + 1}`} />
                 </span>
                 <span>
                   {competency.split(" ").map((word, wordIndex) => (
