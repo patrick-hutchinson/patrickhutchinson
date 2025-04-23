@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef, useContext } from "react";
-import { motion } from "framer-motion";
 
 import FlipText from "assets/components/Animations/FlipText";
 
@@ -26,45 +25,9 @@ export default function Services() {
 
   let hostingCompetencies = ["VERCEL", "DIGITALOCEAN / CLOUDWAYS"];
 
-  const letterVariants = {
-    initial: { rotateX: 90 },
-    animate: (i) => ({
-      rotateX: 0,
-      transition: { duration: 0.4, ease: "easeInOut", delay: i * 0.05 * Math.random() },
-    }),
-    exit: (i) => ({
-      rotateX: -90,
-      transition: { duration: 0.4, ease: "easeInOut", delay: i * 0.05 * Math.random() }, // Added delay here
-    }),
-  };
-
-  let Word = ({ children }) => {
-    return <span className="word">{children}</span>;
-  };
-
-  let Letter = ({ letter, letterindex }) => {
-    return (
-      <motion.span
-        className="letter"
-        custom={letterindex}
-        variants={letterVariants}
-        initial="initial"
-        animate="animate"
-        exit="exit"
-        key={letterindex}
-      >
-        {letter}
-      </motion.span>
-    );
-  };
-
   return (
     <main>
       <section className={styles.content}>
-        {/* <p>
-        <FlipText string="A FULL PRODUCTION CYCLE COVERING EVERY STEP OF THE WAY." />
-      </p> */}
-
         <div className={styles["service-section"]}>
           <h2 className={styles.title}>
             <span className={styles.count}>
@@ -81,17 +44,7 @@ export default function Services() {
                   </span>
 
                   <span>
-                    {competency.split(" ").map((word, wordIndex) => (
-                      <Word key={wordIndex}>
-                        {word.split("").map((letter, letterindex) => (
-                          <Letter
-                            key={`letter-${wordIndex}-${letterindex}`}
-                            letter={letter}
-                            letterindex={letterindex}
-                          />
-                        ))}
-                      </Word>
-                    ))}
+                    <FlipText string={competency} />
                   </span>
                 </li>
               );
@@ -118,17 +71,7 @@ export default function Services() {
                         <FlipText string={`0${competencyindex + 1}`} />
                       </span>
                       <span>
-                        {competency.split(" ").map((word, wordIndex) => (
-                          <Word key={wordIndex}>
-                            {word.split("").map((letter, letterindex) => (
-                              <Letter
-                                key={`letter-${wordIndex}-${letterindex}`}
-                                letter={letter}
-                                letterindex={letterindex}
-                              />
-                            ))}
-                          </Word>
-                        ))}
+                        <FlipText string={competency} />
                       </span>
                     </li>
                   ))}
@@ -154,17 +97,7 @@ export default function Services() {
                     <FlipText string={`0${index + 1}`} />
                   </span>
                   <span>
-                    {competency.split(" ").map((word, wordIndex) => (
-                      <Word key={wordIndex}>
-                        {word.split("").map((letter, letterindex) => (
-                          <Letter
-                            key={`letter-${wordIndex}-${letterindex}`}
-                            letter={letter}
-                            letterindex={letterindex}
-                          />
-                        ))}
-                      </Word>
-                    ))}
+                    <FlipText string={competency} />
                   </span>
                 </li>
               );

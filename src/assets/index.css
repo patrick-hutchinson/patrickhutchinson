@@ -322,9 +322,24 @@ figcaption {
 }
 .word {
   display: inline-block;
-  margin-right: 5px;
+  margin-right: 4px;
   /* perspective: 100px; */
   position: relative;
+}
+
+.textcontainer {
+  overflow: hidden;
+  position: relative;
+  white-space: nowrap;
+  height: 100%;
+}
+
+.splash {
+  font-size: 39vw;
+}
+.splash .word {
+  display: flex;
+  flex-direction: row;
 }
 
 @keyframes spin {

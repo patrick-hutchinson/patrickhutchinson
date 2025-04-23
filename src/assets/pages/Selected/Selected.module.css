@@ -36,9 +36,11 @@
 .splash-wrapper {
   width: 100vw;
   height: auto;
-  background: red;
+
   box-sizing: border-box;
   padding: var(--margin);
+  line-height: 0.8;
+  margin-top: 20px;
 }
 
 .splash-wrapper img {
@@ -72,7 +74,7 @@
   grid-template-columns: 33vw 1fr 20px;
   /* gap: 10px; */
 }
-.header-inner span {
+.menu-item {
   margin-right: 40px;
 }
 .header-inner div:last-child {

@@ -4,6 +4,8 @@ import styles from "./Header.module.css";
 
 import { Link } from "react-router-dom";
 
+import FlipText from "../Animations/FlipText";
+
 export default function Header() {
   let colorModes = [
     // { backgroundColor: "#DF0002", fontColor: "#121111" },
@@ -20,42 +22,56 @@ export default function Header() {
       <div className={styles["header-inner"]}>
         <div>
           <Link to="/">
-            <span>SELECTED</span>
+            <span className={styles["menu-item"]}>
+              <FlipText string="SELECTED" />
+            </span>
           </Link>
           <Link to="/index">
-            <span>INDEX</span>
+            <span className={styles["menu-item"]}>
+              <FlipText string="INDEX" />
+            </span>
           </Link>
           <Link to="/services">
-            <span>SERVICES</span>
+            <span className={styles["menu-item"]}>
+              <FlipText string="SERVICES" />
+            </span>
           </Link>
           <Link to="/public">
-            <span>PUBLIC</span>
+            <span className={styles["menu-item"]}>
+              <FlipText string="PUBLIC" />
+            </span>
           </Link>
         </div>
 
         <div>
           <div>
-            PATRICK HUTCHINSON (GER) IS A GRAPHIC DESIGNER AND FRONT-END DEVELOPER BASED IN AMSTERDAM (NED). HE
+            <FlipText
+              string="PATRICK HUTCHINSON (GER) IS A GRAPHIC DESIGNER AND FRONT-END DEVELOPER BASED IN AMSTERDAM (NED). HE
             SPECIALIZES ON WEB-, INTERACTION- AND TYPE DESIGN AND MOSTLY USES CODE, VISUAL PROGRAMMING AND
-            ANIMATION-BASED TOOLS TO BUILD HIS WORK.
+            ANIMATION-BASED TOOLS TO BUILD HIS WORK."
+            />
           </div>
           <br />
           <ul className={styles.socials}>
             <li className="link">
               <a href="mailto:hutchinsonpatrick@icloud.com" target="_blank">
-                Email
+                <FlipText string="EMAIL" />
               </a>
             </li>
             <li className="link">
               <a href="https://www.instagram.com/pa.hson/" target="_blank">
-                Instagram
+                <FlipText string="INSTAGRAM" />
               </a>
             </li>
             <li className="link">
-              <a href="https://www.linkedin.com/in/patrick-hutchinson-839226220/">LinkedIn</a>
+              <a href="https://www.linkedin.com/in/patrick-hutchinson-839226220/">
+                <FlipText string="LINKEDIN" />
+              </a>
             </li>
             <li className="link">
-              <a href="https://github.com/patrick-hutchinson">GitHub</a>
+              <a href="https://github.com/patrick-hutchinson">
+                <FlipText string="GITHUB" />
+              </a>
             </li>
           </ul>
         </div>

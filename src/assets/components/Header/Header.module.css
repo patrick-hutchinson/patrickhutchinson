@@ -24,7 +24,7 @@ header {
   grid-template-columns: 33vw 1fr 20px;
   /* gap: 10px; */
 }
-.header-inner span {
+.menu-item {
   margin-right: 40px;
 }
 .header-inner div:last-child {

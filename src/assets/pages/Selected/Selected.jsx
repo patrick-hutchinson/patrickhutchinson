@@ -12,6 +12,7 @@ import { Link } from "react-router-dom";
 import Categories from "assets/components/Categories/Categories";
 import ImageTrail from "assets/components/ImageTrail/ImageTrail";
 import FauxHeader from "./components/FauxHeader";
+import MaskSplitText from "assets/components/Animations/MaskSplitText";
 
 export default function Selected() {
   const { data } = useContext(DataContext);
@@ -21,7 +22,10 @@ export default function Selected() {
     <div className={styles.content}>
       <div className={styles["image-trail"]}>
         <div className={styles["splash-wrapper"]}>
-          <img src="/assets/media/Hallo.svg" alt="Hallo!" />
+          {/* <img src="/assets/media/Hallo.svg" alt="Hallo!" /> */}
+          <div className="splash">
+            <MaskSplitText string="Hallo!" />
+          </div>
         </div>
 
         <ImageTrail />
