@@ -39,8 +39,12 @@ export default function Selected() {
             <Link to={`/work/${project.slug.current}`} key={index}>
               <div key={index} className={styles.project}>
                 <div className={styles["project-info"]}>
-                  <FlipText string={`0${index + 1}`} />
-                  <FlipText string={project.name} />
+                  <h2>
+                    <FlipText string={`0${index + 1}`} />
+                  </h2>
+                  <h2>
+                    <FlipText string={project.name} />
+                  </h2>
                   <FlipText string={`${project.year}`} />
 
                   <ul className={styles.categories}>
