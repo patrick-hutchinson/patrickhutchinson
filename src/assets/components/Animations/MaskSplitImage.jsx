@@ -21,9 +21,9 @@ export default function MaskSplitImage({ source }) {
       viewport={{ margin: "-100px 0px -50px 0px" }}
       className="imagecontainer"
     >
-      <picture>
-        <motion.img src={source} alt="" variants={variants} />
-      </picture>
+      {/* <picture> */}
+      <motion.img src={source} alt="" variants={variants} />
+      {/* </picture> */}
     </motion.div>
   );
 }

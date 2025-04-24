@@ -8,6 +8,7 @@ import { motion } from "framer-motion";
 
 import { Link } from "react-router-dom";
 import { getFileSrc } from "assets/utils/getFileSrc";
+import { sortByDate } from "assets/utils/sortByDate";
 
 import FlipText from "assets/components/Animations/FlipText";
 
@@ -23,6 +24,9 @@ export default function Index() {
   return (
     <main>
       <div className={styles["project-container"]}>
+        <h2 className={styles["container-title"]}>
+          <FlipText string="INDEX" />
+        </h2>
         {projectTypes.map((type) => {
           const filteredProjects = data.filter((project) => project.projectType[0] === type);
 
@@ -32,7 +36,7 @@ export default function Index() {
                 <FlipText string={type} />
               </div>
 
-              {filteredProjects.map((project, index) => (
+              {filteredProjects.sort(sortByDate).map((project, index) => (
                 <Link to={`/work/${project.slug.current}`}>
                   <motion.div className={`${styles.project} link`} key={index} animate="initial" whileHover="animate">
                     <FlipText string={`0${index + 1}`} />

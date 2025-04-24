@@ -1,26 +1,31 @@
-import styles from "../Project.Module.css";
-import { renderMedia } from "assets/utils/renderMedia";
+import MaskSplitImage from "assets/components/Animations/MaskSplitImage";
+import styles from "../Project.module.css";
+import { getFileSrc } from "assets/utils/getFileSrc";
 
 export default function Gallery({ project }) {
   let index = 0;
 
   return (
-    project.gridStructure &&
-    project.gridStructure.map((columnsInRow, rowIndex) => {
-      const rowImages = project.imagegallery.slice(index, index + columnsInRow); // Slice the images for each row
-      index += columnsInRow; // Update the index for the next row
+    <div className={styles.gallery}>
+      <h5 className={styles["section-header"]}>More Images</h5>
+      {project.gridStructure.map((columnsInRow, rowIndex) => {
+        const rowImages = project.imagegallery.slice(index, index + columnsInRow);
+        index += columnsInRow;
 
-      const rowStyles = {
-        gridTemplateColumns: `repeat(${columnsInRow}, 1fr)`, // Use the value from gridStructure for this row
-      };
+        const rowStyles = {
+          gridTemplateColumns: `repeat(${columnsInRow}, 1fr)`,
+        };
 
-      return (
-        <div key={rowIndex} className={styles.galleryRow} style={rowStyles}>
-          {rowImages.map((image, index) => (
-            <div key={index}> {renderMedia(image)} </div>
-          ))}
-        </div>
-      );
-    })
+        return (
+          <div key={rowIndex} className={styles.galleryRow} style={rowStyles}>
+            {rowImages.map((image, index) => (
+              <div key={index}>
+                <MaskSplitImage source={getFileSrc(image)} />
+              </div>
+            ))}
+          </div>
+        );
+      })}
+    </div>
   );
 }

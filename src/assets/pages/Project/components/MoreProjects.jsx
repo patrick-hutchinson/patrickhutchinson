@@ -3,11 +3,14 @@ import React from "react";
 import { useEffect, useState, useRef } from "react";
 import { Link } from "react-router-dom";
 
-import styles from "../Project.Module.css";
+import styles from "../Project.module.css";
 
 import { renderMedia } from "../../../utils/renderMedia";
+import FlipText from "assets/components/Animations/FlipText";
+import MaskSplitImage from "assets/components/Animations/MaskSplitImage";
+import { getFileSrc } from "assets/utils/getFileSrc";
 
-export default function MoreProjects({ projects }) {
+export default function öMoreProjects({ projects }) {
   const moreprojectsRef = useRef(null);
 
   function handlePan(direction) {
@@ -26,7 +29,7 @@ export default function MoreProjects({ projects }) {
   }
 
   let Media = ({ project }) => {
-    return project.coverimage && renderMedia(project.coverimage);
+    return project.coverimage && <MaskSplitImage source={getFileSrc(project.thumbnail)} />;
   };
 
   const ProjectList = () => (
@@ -53,7 +56,9 @@ export default function MoreProjects({ projects }) {
   );
   return (
     <section>
-      <h2>More Projects</h2>
+      <h5 className={styles["section-header"]}>
+        <FlipText string="More Projects" />
+      </h5>
       <ProjectList />
     </section>
   );

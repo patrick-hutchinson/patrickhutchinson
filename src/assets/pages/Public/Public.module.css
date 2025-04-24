@@ -5,6 +5,11 @@
   text-transform: uppercase;
   padding: 50px;
   box-sizing: border-box;
+
+  padding: 50px;
+  box-sizing: border-box;
+  margin-top: 15vh;
+  padding-top: 0px;
 }
 
 .wrapper {

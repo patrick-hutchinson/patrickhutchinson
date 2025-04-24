@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from "react";
 
-import styles from "../Project.Module.css";
+import styles from "../Project.module.css";
 
 export default function StyledLink({ project, data }) {
   let linkRef = useRef(null);
@@ -28,10 +28,13 @@ export default function StyledLink({ project, data }) {
   }, [data]);
 
   return (
-    <div className={styles.link} ref={linkRef}>
-      <a href={project.url} target="_blank">
-        {project.url}
-      </a>
+    <div>
+      {/* <h5 className={styles["section-header"]}>VIEW IT LIVE</h5> */}
+      <div className={styles.link} ref={linkRef}>
+        <a href={project.url} target="_blank">
+          {project.url}
+        </a>
+      </div>
     </div>
   );
 }

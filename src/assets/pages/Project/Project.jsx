@@ -11,6 +11,7 @@ import Gallery from "./components/Gallery";
 import StyledLink from "./components/StyledLink";
 import MoreProjects from "./components/MoreProjects";
 import MaskSplitImage from "assets/components/Animations/MaskSplitImage";
+import ProjectHeader from "./components/ProjectHeader";
 
 import { getFileSrc } from "assets/utils/getFileSrc";
 import randomColorScheme from "assets/utils/colorSchemes";
@@ -31,11 +32,13 @@ export default function Project() {
   return (
     <main>
       <motion.div className={styles.projectContainer}>
+        <ProjectHeader project={project} />
+
         <MaskSplitImage source={getFileSrc(project.thumbnail)} />
 
         <ProjectInfo project={project} />
 
-        <Gallery project={project} />
+        {project.gridStructure && <Gallery project={project} />}
 
         <StyledLink project={project} data={data} />
 

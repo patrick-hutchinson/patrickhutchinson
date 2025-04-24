@@ -12,6 +12,8 @@ import { getFileSrc } from "assets/utils/getFileSrc";
 import FlipText from "assets/components/Animations/FlipText";
 import Thumbnail from "assets/components/Animations/Thumbnail";
 
+import { sortByDate } from "assets/utils/sortByDate";
+
 export default function Public() {
   const { experience } = useContext(DataContext);
   const { news } = useContext(DataContext);
@@ -24,13 +26,6 @@ export default function Public() {
   if (!data) return;
 
   const zIndex = useRef(100);
-
-  const sortByDate = (a, b) => {
-    if (b.year !== a.year) {
-      return b.year - a.year; // Sort by year (descending)
-    }
-    return b.month - a.month; // Sort by month (descending)
-  };
 
   function handleZIndex() {
     zIndex.current += 1;

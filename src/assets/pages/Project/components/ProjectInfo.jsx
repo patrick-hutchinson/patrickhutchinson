@@ -1,6 +1,6 @@
 import React from "react";
 
-import styles from "../Project.Module.css";
+import styles from "../Project.module.css";
 import Categories from "assets/components/Categories/Categories";
 
 import { formatMonth } from "assets/utils/formatMonth";
@@ -12,9 +12,11 @@ import FlipText from "assets/components/Animations/FlipText";
 export default function ProjectInfo({ project }) {
   return (
     <div className={styles.projectText}>
-      <div className={styles.projectHeader}>
+      {/* <div className={styles.projectHeader}>
         <div>
-          <FlipText string="Title" />
+          <div className={styles["section-header"]}>
+            <FlipText string="Title" />
+          </div>
           <h2>
             <FlipText string={project.name} />
           </h2>
@@ -23,17 +25,21 @@ export default function ProjectInfo({ project }) {
           <FlipText string={`${formatMonth(project.month)}`} />
           <FlipText string={`${formatYear(project.year)}`} />
         </h2>
-      </div>
+      </div> */}
 
       <div className={styles.projectInfo}>
         <ul className={styles.categories}>
-          <FlipText string="Involvement" />
+          <div className={styles["section-header"]}>
+            <FlipText string="Involvement" />
+          </div>
           <Categories project={project} />
         </ul>
 
         {/* Credits */}
         <ul className={styles.credits}>
-          <FlipText string="Credits" />
+          <div className={styles["section-header"]}>
+            <FlipText string="Credits" />
+          </div>
           {project.credits &&
             creditsMapping.map(
               ({ key, title }) =>

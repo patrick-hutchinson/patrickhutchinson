@@ -296,6 +296,7 @@ figcaption {
   overflow: hidden;
   position: relative;
   white-space: nowrap;
+  height: 100%;
 }
 
 .thumbnail .imagecontainer {
