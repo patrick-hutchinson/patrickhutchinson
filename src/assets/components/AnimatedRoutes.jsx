@@ -8,7 +8,7 @@ import Public from "assets/pages/Public/Public";
 import Selected from "assets/pages/Selected/Selected";
 import Index from "assets/pages/Index/Index";
 import Services from "assets/pages/Services/Services";
-
+// import Project from "assets/pages/Project/Project";
 const Project = lazy(() => import("assets/pages/Project/Project"));
 
 function AnimatedRoutes() {

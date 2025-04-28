@@ -12,9 +12,9 @@ export default function Layout() {
   return (
     <ReactLenis root>
       {!isHome && <Header />}
-      {/* <main> */}
+
       <Outlet />
-      {/* </main> */}
+
       <Footer />
     </ReactLenis>
   );

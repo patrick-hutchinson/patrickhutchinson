@@ -19,6 +19,8 @@ export default function Index() {
   const { data } = useContext(DataContext);
   if (!data) return null;
 
+  console.log("page has loaded");
+
   const projectTypes = [...new Set(data.map((project) => project.projectType[0]))];
 
   return (
@@ -37,15 +39,15 @@ export default function Index() {
               </div>
 
               {filteredProjects.sort(sortByDate).map((project, index) => (
-                <Link to={`/work/${project.slug.current}`}>
+                <Link to={`/work/${project.slug.current}`} key={index}>
                   <motion.div className={`${styles.project} link`} key={index} animate="initial" whileHover="animate">
                     <FlipText string={`0${index + 1}`} />
 
                     <div className={styles["title-container"]}>
                       <FlipText string={project.name} />
                       {project.thumbnail && <Thumbnail source={getFileSrc(project.thumbnail, { width: 30 })} />}
-                      {project.imagegallery?.map((image) => {
-                        return <Thumbnail source={getFileSrc(image, { width: 30 })} />;
+                      {project.imagegallery?.map((image, imageindex) => {
+                        return <Thumbnail source={getFileSrc(image, { width: 30 })} key={imageindex} />;
                       })}
                     </div>
 

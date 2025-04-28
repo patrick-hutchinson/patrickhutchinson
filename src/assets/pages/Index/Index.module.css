@@ -1,16 +1,10 @@
 .project-container {
   text-transform: uppercase;
   margin-top: 15vh;
-
-  /* padding: 50px; */
-  /* box-sizing: border-box; */
-  /* margin-top: 15vh; */
-  /* padding-top: 0px; */
-  padding-left: 50px;
+  padding-left: var(--pagemargin);
 }
 .container-title {
   margin-bottom: 20px;
-  /* padding-left: 50px; */
 }
 .sectionHeading {
   margin-bottom: calc(var(--font-size-100) / 2);
@@ -40,4 +34,14 @@
   display: flex;
   flex-direction: row;
   gap: 4px;
+}
+
+@media screen and (max-width: 576px) {
+  .project {
+    display: flex;
+    flex-direction: row;
+  }
+  .categories {
+    display: none;
+  }
 }

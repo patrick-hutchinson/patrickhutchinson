@@ -1,5 +1,7 @@
 import styles from "../Project.module.css";
 
+import { motion } from "framer-motion";
+
 import { formatMonth } from "assets/utils/formatMonth";
 import { formatYear } from "assets/utils/formatYear";
 

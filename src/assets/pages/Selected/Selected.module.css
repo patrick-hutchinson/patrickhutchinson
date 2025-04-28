@@ -4,12 +4,19 @@
 }
 
 .project-info {
-  display: flex;
-  flex-direction: row;
+  /* display: flex; */
+  /* flex-direction: row; */
   width: 100%;
-  justify-content: space-between;
+  /* justify-content: space-between; */
   text-transform: uppercase;
-  margin-bottom: var(--margin);
+
+  display: grid;
+  grid-template-columns: 33vw auto auto auto;
+  /* justify-content: space-between; */
+  margin-bottom: 80px;
+}
+.project-info .categories {
+  justify-content: end;
 }
 
 .categories {
@@ -65,7 +72,7 @@
 
   mix-blend-mode: difference;
   position: sticky;
-  top: 10px;
+  top: var(--margin);
   margin-bottom: 300px;
 }
 
@@ -73,7 +80,6 @@
   width: 100%;
   display: grid;
   grid-template-columns: 33vw 1fr 20px;
-  /* gap: 10px; */
 }
 .menu-item {
   margin-right: 40px;
@@ -92,4 +98,87 @@
   display: flex;
   flex-direction: row;
   gap: 20px;
+}
+
+.index {
+  white-space: nowrap;
+}
+
+.menu-button {
+  position: relative;
+}
+.menu-button img {
+  position: relative;
+  width: 30px;
+  height: auto;
+  filter: invert();
+}
+
+.expandMenu {
+  width: 100vw;
+  height: 100dvh;
+  position: fixed;
+  top: 0;
+  transform: translateX(calc(-100% - var(--margin)));
+  background: red;
+  /* filter: invert(); */
+  transition: transform 0.2s ease-in-out;
+  z-index: 1000;
+  mix-blend-mode: normal !important;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  text-align: center;
+}
+
+.expandMenu h2 {
+  text-transform: none;
+  font-size: 20vw;
+}
+
+.expandMenu a {
+  text-decoration: none;
+}
+
+.expandMenu .menu-item {
+  margin-right: 0px;
+}
+
+.close {
+  position: absolute;
+  bottom: var(--margin);
+  right: var(--margin);
+}
+
+@media (max-width: 575.98px) {
+  .header-inner div:first-child {
+    /* display: flex; */
+    justify-content: start;
+  }
+
+  .expandMenu.expanded {
+    transform: translateX(calc(0% - var(--margin)));
+  }
+}
+
+@media (max-width: 575.98px) {
+  .project-info {
+    grid-template-columns: auto 1fr;
+    gap: var(--margin);
+    line-height: 0.9;
+    display: grid;
+    flex-direction: row;
+    margin-bottom: var(--margin);
+    align-items: center;
+  }
+  .project {
+    margin-bottom: 40px;
+  }
+
+  .year {
+    display: none;
+  }
+  .categories {
+    display: none;
+  }
 }

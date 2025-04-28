@@ -1,11 +1,14 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef, useContext } from "react";
 
-import styles from "../Selected.module.css";
+import styles from "../../Selected.module.css";
 import { Link } from "react-router-dom";
 
+import { GlobalStateContext } from "assets/context/GlobalStateContext";
+
 import FlipText from "assets/components/Animations/FlipText";
+import FauxHeaderSplit from "./components/FauxHeaderSplit";
 let colorModes = [
-  // { backgroundColor: "#DF0002", fontColor: "#121111" },
+  { backgroundColor: "#DF0002", fontColor: "#121111" },
   { backgroundColor: "#ffffff", fontColor: "#121111" },
   { backgroundColor: "#121111", fontColor: "#D9DAD9" },
 ];
@@ -15,31 +18,11 @@ const handleMode = (color) => {
   document.querySelector(":root").style.setProperty("--font-color", color.fontColor);
 };
 
-export default function FauxHeader() {
-  const fauxHeaderRef = useRef(null);
-
-  // useEffect(() => {
-  //   const handleScroll = () => {
-  //     if (fauxHeaderRef.current) {
-  //       const rect = fauxHeaderRef.current.getBoundingClientRect();
-
-  //       rect.top >= 11
-  //         ? (fauxHeaderRef.current.style.pointerEvents = "none")
-  //         : (fauxHeaderRef.current.style.pointerEvents = "auto");
-  //     }
-  //   };
-
-  //   window.addEventListener("scroll", handleScroll);
-
-  //   handleScroll();
-
-  //   return () => {
-  //     window.removeEventListener("scroll", handleScroll);
-  //   };
-  // }, []);
+export default function FauxHeaderDesktop() {
+  const { isMobile } = useContext(GlobalStateContext);
 
   return (
-    <div className={styles["faux-header"]} ref={fauxHeaderRef}>
+    <div className={styles["faux-header"]}>
       <div className={styles["header-inner"]}>
         <div>
           <Link to="/">
@@ -67,19 +50,19 @@ export default function FauxHeader() {
         <div>
           <div>
             <FlipText
-              string={`PATRICK HUTCHINSON (GER) IS A GRAPHIC DESIGNER AND FRONT-END DEVELOPER BASED IN AMSTERDAM (NED). HE SPECIALIZES ON WEB-, INTERACTION- AND TYPE DESIGN AND MOSTLY USES CODE, VISUAL PROGRAMMING AND ANIMATION-BASED TOOLS TO BUILD HIS WORK.`}
+              string={`Patrick Hutchinson (GER) is a graphic designer and front-end developer based in Amsterdam (NED). HE SPECIALIZES ON WEB-, INTERACTION- AND TYPE DESIGN AND MOSTLY USES CODE, VISUAL PROGRAMMING AND ANIMATION-BASED TOOLS TO BUILD HIS WORK.`}
             />
           </div>
           <br />
           <ul className={styles.socials}>
             <li className="link">
               <a href="mailto:hutchinsonpatrick@icloud.com" target="_blank">
-                <FlipText string="EMAIL" />
+                <FlipText string="EMAIl" />
               </a>
             </li>
             <li className="link">
               <a href="https://www.instagram.com/pa.hson/" target="_blank">
-                <FlipText string="INSTAGRAM" />
+                <FlipText string="EMAIl" />
               </a>
             </li>
             <li className="link">

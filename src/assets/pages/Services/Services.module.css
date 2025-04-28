@@ -4,7 +4,7 @@
 }
 
 .title {
-  font-size: 42px;
+  /* font-size: 42px; */
 
   display: grid;
   grid-template-columns: 80px auto;
@@ -26,7 +26,7 @@
 .competencies-container {
   display: flex;
   flex-direction: row;
-  gap: 40px;
+  gap: calc(var(--margin) * 2);
 }
 
 .service-section {
@@ -34,8 +34,26 @@
 }
 
 .content {
-  padding: 50px;
+  padding: var(--pagemargin);
   box-sizing: border-box;
   margin-top: 15vh;
   padding-top: 0px;
+}
+
+@media screen and (max-width: 579px) {
+  .competencies-container {
+    flex-direction: column;
+    gap: calc(var(--margin) * 2);
+  }
+  .competencies {
+    margin-left: 30px;
+  }
+  .count {
+    /* font-size: var(--font-size-100) !important; */
+  }
+  .title {
+    /* font-size: 42px; */
+    /* white-space: nowrap; */
+    grid-template-columns: 80px auto;
+  }
 }

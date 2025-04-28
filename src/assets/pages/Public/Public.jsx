@@ -1,22 +1,20 @@
 import React, { useEffect, useRef, useState, useContext } from "react";
 
 import { DataContext } from "assets/context/DataContext";
+import { GlobalStateContext } from "assets/context/GlobalStateContext";
 
 import styles from "./Public.module.css";
-import { motion } from "framer-motion";
-
-import { formatMonth } from "assets/utils/formatMonth";
-import { formatYear } from "assets/utils/formatYear";
-import { getFileSrc } from "assets/utils/getFileSrc";
 
 import FlipText from "assets/components/Animations/FlipText";
-import Thumbnail from "assets/components/Animations/Thumbnail";
 
 import { sortByDate } from "assets/utils/sortByDate";
+import DesktopListItem from "./components/DesktopListItem";
+import MobileListItem from "./components/MobileListItem";
 
 export default function Public() {
   const { experience } = useContext(DataContext);
   const { news } = useContext(DataContext);
+  const { isMobile } = useContext(GlobalStateContext);
 
   const data = [
     { title: "Public", items: news },
@@ -24,12 +22,6 @@ export default function Public() {
   ];
 
   if (!data) return;
-
-  const zIndex = useRef(100);
-
-  function handleZIndex() {
-    zIndex.current += 1;
-  }
 
   return (
     <main>
@@ -41,25 +33,15 @@ export default function Public() {
             </h2>
             <br />
 
-            {section.items.sort(sortByDate).map((item, itemIndex) => (
-              <motion.div
-                key={itemIndex}
-                className={styles.listItem}
-                initial="initialThumbnail"
-                whileHover="animateThumbnail"
-                exit="exitThumbnail"
-                onMouseEnter={() => handleZIndex()}
-              >
-                <div className={styles.date}>
-                  <FlipText string={`${formatMonth(item.month)}`} />
-                  <FlipText string={`${formatYear(item.year)}`} />
-                </div>
-                <div className={styles.name}>
-                  <FlipText string={item.name} />
-                  <Thumbnail source={getFileSrc(item.thumbnail, { width: 300 })} zIndex={zIndex.current} />
-                </div>
-              </motion.div>
-            ))}
+            {section.items
+              .sort(sortByDate)
+              .map((item, itemIndex) =>
+                isMobile ? (
+                  <MobileListItem key={itemIndex} item={item} itemIndex={itemIndex} />
+                ) : (
+                  <DesktopListItem key={itemIndex} item={item} itemIndex={itemIndex} />
+                )
+              )}
           </div>
         ))}
       </div>

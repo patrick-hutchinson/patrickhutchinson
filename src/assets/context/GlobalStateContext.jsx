@@ -9,7 +9,7 @@ export const GlobalStateProvider = ({ children }) => {
   // Detect if the screen is mobile size
   useEffect(() => {
     const handleResize = () => {
-      setIsMobile(window.innerWidth <= 768); // Mobile breakpoint
+      setIsMobile(window.innerWidth <= 576); // Mobile breakpoint
     };
 
     handleResize(); // Check on initial render

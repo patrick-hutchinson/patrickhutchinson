@@ -42,3 +42,42 @@ header .socials {
   flex-direction: row;
   gap: 20px;
 }
+
+.expandMenu {
+  width: 100vw;
+  height: 100dvh;
+  position: fixed;
+  top: 0;
+  transform: translateX(-100%);
+  background: red;
+  /* filter: invert(); */
+  transition: transform 0.2s ease-in-out;
+  z-index: 1000;
+  mix-blend-mode: normal !important;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  text-align: center;
+  padding: 40% 0;
+}
+
+.expandMenu .menu-item {
+  margin-right: 0px;
+}
+
+.close {
+  position: absolute;
+  bottom: var(--margin);
+  right: var(--margin);
+}
+
+@media (max-width: 575.98px) {
+  .header-inner div:first-child {
+    /* display: flex; */
+    justify-content: start;
+  }
+
+  .expandMenu.expanded {
+    transform: translateX(0%);
+  }
+}

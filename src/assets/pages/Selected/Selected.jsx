@@ -11,18 +11,24 @@ import FlipText from "assets/components/Animations/FlipText";
 import { Link } from "react-router-dom";
 import Categories from "assets/components/Categories/Categories";
 import ImageTrail from "assets/components/ImageTrail/ImageTrail";
-import FauxHeader from "./components/FauxHeader";
+import FauxHeaderDesktop from "./components/FauxHeader/FauxHeaderDesktop";
 import MaskSplitText from "assets/components/Animations/MaskSplitText";
+import { formatMonth } from "assets/utils/formatMonth";
+import { formatYear } from "assets/utils/formatYear";
+import Thumbnail from "assets/components/Animations/Thumbnail";
+
+import FauxHeaderMobile from "./components/FauxHeader/FauxHeaderMobile";
+import { GlobalStateContext } from "assets/context/GlobalStateContext";
 
 export default function Selected() {
   const { data } = useContext(DataContext);
+  const { isMobile } = useContext(GlobalStateContext);
   if (!data) return;
 
   return (
     <div className={styles.content}>
       <div className={styles["image-trail"]}>
         <div className={styles["splash-wrapper"]}>
-          {/* <img src="/assets/media/Hallo.svg" alt="Hallo!" /> */}
           <div className="splash">
             <MaskSplitText string="Hallo!" />
           </div>
@@ -32,33 +38,45 @@ export default function Selected() {
       </div>
 
       <main>
-        <FauxHeader />
+        {isMobile ? <FauxHeaderMobile /> : <FauxHeaderDesktop />}
 
-        {data.map((project, index) => {
-          return (
-            <Link to={`/work/${project.slug.current}`} key={index}>
+        <div>
+          {data.map((project, index) => {
+            return (
               <div key={index} className={styles.project}>
                 <div className={styles["project-info"]}>
-                  <h2>
+                  <h2 className={styles.index}>
                     <FlipText string={`0${index + 1}`} />
                   </h2>
-                  <h2>
+
+                  <span className={styles.name}>
                     <FlipText string={project.name} />
-                  </h2>
-                  <FlipText string={`${project.year}`} />
+                    <br />
+                    <span>
+                      <FlipText string={`${formatMonth(project.month)}`} />
+                      <FlipText string={`${formatYear(project.year)}`} />
+                    </span>
+                  </span>
+                  <span className={styles.year}>
+                    <FlipText string={`${project.year}`} />
+                  </span>
 
                   <ul className={styles.categories}>
                     <Categories project={project} />
                   </ul>
                 </div>
-
-                <div className={styles.coverimage}>
-                  {project.thumbnail && <MaskSplitImage source={getFileSrc(project.thumbnail)} />}
-                </div>
+                <Link to={`/work/${project.slug.current}`} key={index}>
+                  <div className={styles.coverimage}>
+                    {project.thumbnail && <MaskSplitImage source={getFileSrc(project.thumbnail)} />}
+                  </div>
+                </Link>
+                {project.imagegallery?.map((image, imageindex) => {
+                  return <Thumbnail source={getFileSrc(image, { width: 30 })} key={imageindex} />;
+                })}
               </div>
-            </Link>
-          );
-        })}
+            );
+          })}
+        </div>
       </main>
     </div>
   );

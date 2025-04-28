@@ -9,7 +9,7 @@
   /* transform: perspective(80px) rotateX(4deg) rotateY(-16deg) rotateZ(4deg); */
   /* box-shadow: 24px 16px 64px 0 rgba(0, 0, 0, 0.08); */
   /* border-radius: 2px; */
-  font-size: var(--font-size-text);
+
   font-family: NeueHaasDisplay;
   line-height: 1.1;
 }

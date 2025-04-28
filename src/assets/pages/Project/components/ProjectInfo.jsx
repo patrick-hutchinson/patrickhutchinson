@@ -3,8 +3,6 @@ import React from "react";
 import styles from "../Project.module.css";
 import Categories from "assets/components/Categories/Categories";
 
-import { formatMonth } from "assets/utils/formatMonth";
-import { formatYear } from "assets/utils/formatYear";
 import { creditsMapping } from "assets/utils/creditsMapping";
 
 import FlipText from "assets/components/Animations/FlipText";
@@ -12,21 +10,6 @@ import FlipText from "assets/components/Animations/FlipText";
 export default function ProjectInfo({ project }) {
   return (
     <div className={styles.projectText}>
-      {/* <div className={styles.projectHeader}>
-        <div>
-          <div className={styles["section-header"]}>
-            <FlipText string="Title" />
-          </div>
-          <h2>
-            <FlipText string={project.name} />
-          </h2>
-        </div>
-        <h2>
-          <FlipText string={`${formatMonth(project.month)}`} />
-          <FlipText string={`${formatYear(project.year)}`} />
-        </h2>
-      </div> */}
-
       <div className={styles.projectInfo}>
         <ul className={styles.categories}>
           <div className={styles["section-header"]}>

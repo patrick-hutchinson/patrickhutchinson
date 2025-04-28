@@ -2,6 +2,8 @@ import React from "react";
 import { useEffect, useState, useRef, useContext } from "react";
 import { useParams } from "react-router-dom";
 
+import { motion } from "framer-motion";
+
 import { DataContext } from "assets/context/DataContext";
 
 import styles from "./Project.module.css";
@@ -15,8 +17,7 @@ import ProjectHeader from "./components/ProjectHeader";
 
 import { getFileSrc } from "assets/utils/getFileSrc";
 import randomColorScheme from "assets/utils/colorSchemes";
-
-import { motion } from "framer-motion";
+import { AnimatePresence } from "framer-motion";
 
 export default function Project() {
   const { slug } = useParams();
@@ -26,24 +27,28 @@ export default function Project() {
 
   const project = data.find((projectfound) => projectfound.slug?.current === slug);
 
-  document.querySelector(":root").style.setProperty("--randomBackgroundColor", randomColorScheme().background);
-  document.querySelector(":root").style.setProperty("--randomFontColor", randomColorScheme().font);
+  useEffect(() => {
+    const root = document.documentElement;
+    const scheme = randomColorScheme();
+    root.style.setProperty("--randomBackgroundColor", scheme.background);
+    root.style.setProperty("--randomFontColor", scheme.font);
+  }, [slug]);
 
   return (
     <main>
-      <motion.div className={styles.projectContainer}>
+      <div className={styles.projectContainer}>
         <ProjectHeader project={project} />
 
         <MaskSplitImage source={getFileSrc(project.thumbnail)} />
 
-        <ProjectInfo project={project} />
+        {/* <ProjectInfo project={project} /> */}
 
-        {project.gridStructure && <Gallery project={project} />}
+        {/* {project.gridStructure && <Gallery project={project} />} */}
 
-        <StyledLink project={project} data={data} />
+        {/* <StyledLink project={project} data={data} /> */}
 
-        <MoreProjects projects={data} />
-      </motion.div>
+        {/* <MoreProjects projects={data} /> */}
+      </div>
     </main>
   );
 }

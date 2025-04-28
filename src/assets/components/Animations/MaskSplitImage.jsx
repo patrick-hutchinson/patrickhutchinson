@@ -16,7 +16,7 @@ export default function MaskSplitImage({ source }) {
   return (
     <motion.div
       initial="initial"
-      animate="animate"
+      whileInView="animate"
       exit="exit"
       viewport={{ margin: "-100px 0px -50px 0px" }}
       className="imagecontainer"

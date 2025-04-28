@@ -19,3 +19,11 @@ footer {
 footer div:last-child {
   text-align: right;
 }
+
+@media screen and (max-width: 579px) {
+  footer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+}
