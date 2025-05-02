@@ -27,6 +27,7 @@ export default function FlipText({ string }) {
         initial="initial"
         whileInView="animate"
         exit="exit"
+        viewport={{ once: true }}
         key={letterindex}
       >
         {letter}

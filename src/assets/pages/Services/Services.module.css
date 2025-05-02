@@ -7,8 +7,10 @@
   /* font-size: 42px; */
 
   display: grid;
-  grid-template-columns: 80px auto;
+  grid-template-columns: 120px auto;
   margin-bottom: 10px;
+  text-transform: none !important;
+  letter-spacing: 1px;
 }
 
 .competencies {
@@ -46,14 +48,16 @@
     gap: calc(var(--margin) * 2);
   }
   .competencies {
-    margin-left: 30px;
+    margin-left: 60px;
   }
-  .count {
-    /* font-size: var(--font-size-100) !important; */
-  }
+
   .title {
-    /* font-size: 42px; */
-    /* white-space: nowrap; */
-    grid-template-columns: 80px auto;
+    grid-template-columns: 60px auto;
+  }
+  .service-section {
+    margin-bottom: 40px;
+  }
+  .content {
+    padding: var(--pagemargin) 0px;
   }
 }

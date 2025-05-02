@@ -9,12 +9,12 @@ export default function FauxHeaderSplit({ string }) {
     animate: (i) => ({
       rotateX: 0,
       transition: { duration: 0.4, ease: "easeInOut", delay: i * 0.05 * Math.random() },
-      PointerEvent: "visible",
+      // PointerEvent: "visible",
     }),
     exit: (i) => ({
       rotateX: -90,
       transition: { duration: 0.4, ease: "easeInOut", delay: i * 0.05 * Math.random() },
-      PointerEvent: "none",
+      // PointerEvent: "none",
     }),
   };
 

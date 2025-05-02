@@ -13,16 +13,32 @@ export default function MaskSplitImage({ source }) {
     },
   };
 
+  const RenderFile = () => {
+    const extension = source.split(".").pop().split("?")[0].toLowerCase();
+
+    console.log(extension, "extension");
+    const imageExtensions = ["jpg", "jpeg", "png", "tif", "gif", "bmp", "webp", "svg"];
+    const videoExtensions = ["mp4", "mov", "avi", "mkv", "webm"];
+
+    return imageExtensions.includes(extension) ? (
+      <motion.img src={source} alt="Uploaded content" variants={variants} />
+    ) : videoExtensions.includes(extension) ? (
+      <motion.video autoPlay loop muted playsInline variants={variants}>
+        <source src={source} type={`video/${extension}`} />
+      </motion.video>
+    ) : null;
+  };
+
   return (
     <motion.div
       initial="initial"
-      whileInView="animate"
+      animate="animate"
       exit="exit"
       viewport={{ margin: "-100px 0px -50px 0px" }}
       className="imagecontainer"
     >
       {/* <picture> */}
-      <motion.img src={source} alt="" variants={variants} />
+      <RenderFile />
       {/* </picture> */}
     </motion.div>
   );

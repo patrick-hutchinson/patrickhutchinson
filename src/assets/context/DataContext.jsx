@@ -19,6 +19,11 @@ export const DataProvider = ({ children }) => {
     return cachedData ? JSON.parse(cachedData) : 0;
   });
 
+  const [home, setHome] = useState(() => {
+    const cachedData = localStorage.getItem("home");
+    return cachedData ? JSON.parse(cachedData) : 0;
+  });
+
   useEffect(() => {
     sanityClient
       .fetch(
@@ -27,6 +32,23 @@ export const DataProvider = ({ children }) => {
       .then((fetchedData) => {
         localStorage.setItem("projects", JSON.stringify(fetchedData));
         setData(fetchedData);
+      })
+      .catch(console.error);
+  }, []);
+
+  useEffect(() => {
+    sanityClient
+      .fetch(
+        `*[_type == "home"]{
+      _id,
+      featuredProjects[]->{
+        _id, name, coverimage, thumbnail, imagegallery, gridStructure, month, year, url, categories, projectType, credits, showOnHomepage, slug
+      }
+    }`
+      )
+      .then((fetchedData) => {
+        localStorage.setItem("home", JSON.stringify(fetchedData));
+        setHome(fetchedData);
       })
       .catch(console.error);
   }, []);
@@ -68,5 +90,5 @@ export const DataProvider = ({ children }) => {
     fetchData("experience", setExperience);
   }, []);
 
-  return <DataContext.Provider value={{ data, experience, news }}>{children}</DataContext.Provider>;
+  return <DataContext.Provider value={{ data, experience, news, home }}>{children}</DataContext.Provider>;
 };

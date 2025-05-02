@@ -47,8 +47,8 @@
   --font-size-100: 14px;
   --font-size-200: 28px;
   --font-size-300: 42px;
-  --font-size-400: 42px;
-  --font-size-500: clamp(1.675rem, 1.3393rem + 2.6786vi, 3rem);
+  --font-size-400: 70px;
+  --font-size-500: 200px;
   --h8: clamp(1.25rem, 0rem + 4vi, 8rem);
 
   --line-height-100: 1;
@@ -100,7 +100,7 @@ body {
 }
 
 .link:hover {
-  color: var(--hoverColor) !important;
+  color: #ccc;
 }
 
 .color-selection li {
@@ -129,6 +129,12 @@ h1 {
   line-height: var(--line-height-500);
   padding: 0;
   margin: 0;
+}
+
+h2 {
+  font-size: var(--font-size-300);
+  line-height: var(--font-size-300);
+  text-transform: uppercase;
 }
 
 a,
@@ -182,9 +188,16 @@ h2 {
   line-height: 0.9;
 }
 
+h2 .letter {
+  margin-right: -2px;
+}
+h2 .word {
+  margin-right: 18px;
+}
+
 .thumbnail {
   display: inline-block;
-  width: 15px;
+  width: calc(12px * 1.414);
   max-height: 12px;
   transform-origin: left center;
   position: relative;
@@ -200,7 +213,7 @@ h2 {
 .thumbnail .imagecontainer {
   /* transform: scale(3); */
   display: inline-block;
-  height: 15px;
+  height: 12px;
   width: fit-content;
 }
 
@@ -210,7 +223,7 @@ h2 {
   height: auto;
   object-fit: cover;
   object-position: center;
-  height: auto;
+  height: 12px;
   margin-left: 0.5px;
 }
 
@@ -218,6 +231,7 @@ h2 {
   display: inline-block;
   /* perspective: 100px; */
   position: relative;
+  overflow: visible;
 }
 .word {
   display: inline-block;
@@ -265,7 +279,7 @@ h2 {
     --font-size-200: 18px;
     --font-size-300: 24px;
     --font-size-400: 35px;
-    --font-size-500: 70px;
+    --font-size-500: 65px;
 
     --line-height-100: 14px;
     --line-height-200: 18px;
@@ -274,14 +288,14 @@ h2 {
     --line-height-500: calc(var(--font-size-500) / 1.25);
   }
 
-  .thumbnail {
+  /* .thumbnail {
     max-width: 50px;
     max-height: 30px;
     width: auto;
   }
   .thumbnail .imagecontainer {
     height: 30px;
-  }
+  } */
 }
 
 /* Small Devices (Phones, 576px and up) */

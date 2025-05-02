@@ -33,7 +33,7 @@ export default function Services() {
             <span className={styles.count}>
               <FlipText string="01" />
             </span>
-            <FlipText string="DESIGN" />
+            <FlipText string="Design" />
           </h2>
           <ul className={styles.competencies}>
             {designCompetencies.map((competency, index) => {
@@ -57,7 +57,7 @@ export default function Services() {
             <span className={styles.count}>
               <FlipText string="02" />
             </span>
-            <FlipText string="DEVELOPMENT" />
+            <FlipText string="Development" />
           </h2>
 
           <div className={styles["competencies-container"]}>
@@ -86,7 +86,7 @@ export default function Services() {
             <span className={styles.count}>
               <FlipText string="03" />
             </span>
-            <FlipText string="HOSTING AND PUBLISHING" />
+            <FlipText string="Hosting and Publishing" />
           </h2>
 
           <ul className={styles.competencies}>

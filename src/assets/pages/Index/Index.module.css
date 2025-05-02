@@ -1,10 +1,15 @@
 .project-container {
   text-transform: uppercase;
-  margin-top: 15vh;
+  margin-top: 10vh;
   padding-left: var(--pagemargin);
 }
 .container-title {
-  margin-bottom: 20px;
+  margin-bottom: -20px;
+  text-transform: none !important;
+  letter-spacing: -6px;
+}
+.container-title span:last-child {
+  margin-left: -10px;
 }
 .sectionHeading {
   margin-bottom: calc(var(--font-size-100) / 2);
@@ -17,11 +22,12 @@
 .thumbnail {
   width: 15px;
   max-height: 12px;
-
+  position: relative;
   object-fit: cover;
   object-position: center;
   height: auto;
   margin-left: 0.5px;
+  z-index: 100;
 }
 .thumbnail:first-child {
   margin-left: 5px;
@@ -30,6 +36,26 @@
   display: flex;
 }
 
+.project.hovered .title-container div {
+  position: relative;
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px,
+    rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+}
+.project.hovered .title-container div:nth-child(1) {
+  left: 0px;
+}
+.project.hovered .title-container div:nth-child(2) {
+  left: 100px;
+}
+.project.hovered .title-container div:nth-child(3) {
+  left: 200px;
+}
+.project.hovered .title-container div:nth-child(4) {
+  left: 300px;
+}
+.project.hovered .title-container div:nth-child(5) {
+  left: 400px;
+}
 .categories {
   display: flex;
   flex-direction: row;
@@ -38,10 +64,32 @@
 
 @media screen and (max-width: 576px) {
   .project {
+    width: 100%;
     display: flex;
     flex-direction: row;
   }
+  .year {
+    align-self: flex-end;
+    text-align: right;
+    justify-content: end;
+    position: absolute;
+    right: var(--pagemargin);
+  }
+
+  .project span:last-child {
+    justify-content: end;
+  }
+
   .categories {
     display: none;
+  }
+
+  .container-title {
+    letter-spacing: -1px;
+    padding: calc(var(--margin) * 2);
+    margin-bottom: 0px;
+  }
+  .container-title span:last-child {
+    margin-left: -5px;
   }
 }

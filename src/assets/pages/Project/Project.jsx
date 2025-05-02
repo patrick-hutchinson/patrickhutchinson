@@ -41,13 +41,13 @@ export default function Project() {
 
         <MaskSplitImage source={getFileSrc(project.thumbnail)} />
 
-        {/* <ProjectInfo project={project} /> */}
+        <ProjectInfo project={project} />
 
-        {/* {project.gridStructure && <Gallery project={project} />} */}
+        {project.gridStructure && <Gallery project={project} />}
 
-        {/* <StyledLink project={project} data={data} /> */}
+        <StyledLink project={project} data={data} />
 
-        {/* <MoreProjects projects={data} /> */}
+        <MoreProjects projects={data} />
       </div>
     </main>
   );

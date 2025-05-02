@@ -96,7 +96,7 @@ export default function FauxHeaderMobile() {
 
       <div ref={expandMenuRef} className={styles.expandMenu}>
         <div className={styles.close} onClick={() => closeMenu()}>
-          <h2>X</h2>
+          X
         </div>
 
         <Link to="/" onClick={() => closeMenu()}>

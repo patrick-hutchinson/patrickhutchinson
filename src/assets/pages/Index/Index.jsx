@@ -19,6 +19,12 @@ export default function Index() {
   const { data } = useContext(DataContext);
   if (!data) return null;
 
+  const zIndex = useRef(100);
+
+  function handleZIndex() {
+    zIndex.current += 1;
+  }
+
   console.log("page has loaded");
 
   const projectTypes = [...new Set(data.map((project) => project.projectType[0]))];
@@ -26,9 +32,9 @@ export default function Index() {
   return (
     <main>
       <div className={styles["project-container"]}>
-        <h2 className={styles["container-title"]}>
-          <FlipText string="INDEX" />
-        </h2>
+        <h1 className={styles["container-title"]}>
+          <FlipText string="Index" />
+        </h1>
         {projectTypes.map((type) => {
           const filteredProjects = data.filter((project) => project.projectType[0] === type);
 
@@ -40,18 +46,35 @@ export default function Index() {
 
               {filteredProjects.sort(sortByDate).map((project, index) => (
                 <Link to={`/work/${project.slug.current}`} key={index}>
-                  <motion.div className={`${styles.project} link`} key={index} animate="initial" whileHover="animate">
+                  <motion.div
+                    className={`${styles.project} link`}
+                    key={index}
+                    initial="initialThumbnail"
+                    whileHover="animateThumbnail"
+                    exit="exitThumbnail"
+                    onMouseEnter={() => handleZIndex()}
+                  >
                     <FlipText string={`0${index + 1}`} />
 
                     <div className={styles["title-container"]}>
                       <FlipText string={project.name} />
-                      {project.thumbnail && <Thumbnail source={getFileSrc(project.thumbnail, { width: 30 })} />}
+                      {project.thumbnail && (
+                        <Thumbnail source={getFileSrc(project.thumbnail, { width: 300 })} index={0} />
+                      )}
                       {project.imagegallery?.map((image, imageindex) => {
-                        return <Thumbnail source={getFileSrc(image, { width: 30 })} key={imageindex} />;
+                        return (
+                          <Thumbnail
+                            source={getFileSrc(image, { width: 300 })}
+                            key={imageindex}
+                            index={imageindex + 1}
+                          />
+                        );
                       })}
                     </div>
 
-                    <FlipText string={`${project.year}`} />
+                    <span className={styles.year}>
+                      <FlipText string={`${project.year}`} />
+                    </span>
 
                     <ul className={styles.categories}>
                       <Categories project={project} />

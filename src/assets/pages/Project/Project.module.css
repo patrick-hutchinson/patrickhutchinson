@@ -14,7 +14,7 @@
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  margin-bottom: 80px;
+  margin-bottom: var(--margin);
 }
 .projectInfo {
   display: grid;
@@ -35,7 +35,6 @@
 
 .gallery {
   width: 100%;
-  /* margin-bottom: calc(var(--margin) * 4); */
 }
 .galleryRow {
   display: grid;
@@ -52,7 +51,7 @@
 }
 
 .categories li {
-  font-size: var(--font-size-400);
+  font-size: var(--font-size-300);
 }
 
 .section-header {
@@ -61,19 +60,19 @@
 }
 
 .creditcontainer {
-  font-size: var(--font-size-400);
-  height: var(--font-size-400);
+  font-size: var(--font-size-300);
+  height: var(--font-size-300);
   overflow: hidden;
 }
 
 .creditcount_1 {
   white-space: nowrap;
-  transform: translateY(var(--font-size-400));
+  transform: translateY(var(--font-size-300));
   animation: flipcredits_1 8s ease infinite;
 }
 .creditcount_2 {
   white-space: nowrap;
-  transform: translateY(var(--font-size-400));
+  transform: translateY(var(--font-size-300));
   animation: flipcredits_2 8s ease infinite;
 }
 

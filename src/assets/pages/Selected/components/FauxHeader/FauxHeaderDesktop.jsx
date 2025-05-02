@@ -62,7 +62,7 @@ export default function FauxHeaderDesktop() {
             </li>
             <li className="link">
               <a href="https://www.instagram.com/pa.hson/" target="_blank">
-                <FlipText string="EMAIl" />
+                <FlipText string="INSTAGRAM" />
               </a>
             </li>
             <li className="link">

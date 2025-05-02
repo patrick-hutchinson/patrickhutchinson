@@ -63,22 +63,22 @@ export default function MobileHeader({ colorModes }) {
         </div>
         <Link to="/" onClick={() => closeMenu()}>
           <h2>
-            <span className={styles["menu-item"]}>SELECTED</span>
+            <span className={styles["menu-item"]}>Selected</span>
           </h2>
         </Link>
         <Link to="/index" onClick={() => closeMenu()}>
           <h2>
-            <span className={styles["menu-item"]}>INDEX</span>
+            <span className={styles["menu-item"]}>Index</span>
           </h2>
         </Link>
         <Link to="/services" onClick={() => closeMenu()}>
           <h2>
-            <span className={styles["menu-item"]}>SERVICES</span>
+            <span className={styles["menu-item"]}>Services</span>
           </h2>
         </Link>
         <Link to="/public" onClick={() => closeMenu()}>
           <h2>
-            <span className={styles["menu-item"]}>PUBLIC</span>
+            <span className={styles["menu-item"]}>Public</span>
           </h2>
         </Link>
       </div>

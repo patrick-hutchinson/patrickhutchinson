@@ -15,7 +15,8 @@ import FauxHeaderDesktop from "./components/FauxHeader/FauxHeaderDesktop";
 import MaskSplitText from "assets/components/Animations/MaskSplitText";
 import { formatMonth } from "assets/utils/formatMonth";
 import { formatYear } from "assets/utils/formatYear";
-import Thumbnail from "assets/components/Animations/Thumbnail";
+
+import SplashSplitText from "./components/SplashSplitText";
 
 import FauxHeaderMobile from "./components/FauxHeader/FauxHeaderMobile";
 import { GlobalStateContext } from "assets/context/GlobalStateContext";
@@ -23,28 +24,47 @@ import { GlobalStateContext } from "assets/context/GlobalStateContext";
 export default function Selected() {
   const { data } = useContext(DataContext);
   const { isMobile } = useContext(GlobalStateContext);
-  if (!data) return;
+  const { home } = useContext(DataContext);
+  if (!data || !home) return;
+
+  let thumbnails = data.map((project) => project.thumbnail);
+
+  let colorSchemes = [
+    { background: "#bfff31", font: "1c1e69" }, // vetted
+    { background: "#eeff5a", font: "#121111" }, // vetted
+    { background: "#BBBDD3", font: "#6EFF5E" }, // vetted
+    { background: "#5B7D36", font: "#4EF1EA" }, // vetted
+    { background: "#CBC5FF", font: "#BF770E" }, // vetted
+    { background: "#100F0F", font: "#FD3863" }, // vetted
+    { background: "#515054", font: "#BFBFBF" }, // vetted
+    { background: "#C0C4C1", font: "#D8F74D" }, // vetted
+    { background: "#DC3A2D", font: "#0C1F7E" }, // vetted
+  ];
 
   return (
     <div className={styles.content}>
-      <div className={styles["image-trail"]}>
-        <div className={styles["splash-wrapper"]}>
-          <div className="splash">
-            <MaskSplitText string="Hallo!" />
-          </div>
+      <div className={styles["splash-wrapper"]}>
+        <div className="splash">
+          <SplashSplitText string="Hallo!" thumbnails={thumbnails} />
         </div>
-
-        <ImageTrail />
       </div>
 
       <main>
         {isMobile ? <FauxHeaderMobile /> : <FauxHeaderDesktop />}
 
+        {/* <h1 className={styles["container-title"]}>
+          <FlipText string="Work" />
+        </h1> */}
+
         <div>
-          {data.map((project, index) => {
+          {home[0].featuredProjects.map((project, index) => {
+            const randomScheme = colorSchemes[Math.floor(Math.random() * colorSchemes.length)];
             return (
               <div key={index} className={styles.project}>
-                <div className={styles["project-info"]}>
+                {/* <div
+                  className={styles["project-info"]}
+                  style={{ background: randomScheme.background, color: randomScheme.font }}
+                >
                   <h2 className={styles.index}>
                     <FlipText string={`0${index + 1}`} />
                   </h2>
@@ -64,15 +84,12 @@ export default function Selected() {
                   <ul className={styles.categories}>
                     <Categories project={project} />
                   </ul>
-                </div>
+                </div> */}
                 <Link to={`/work/${project.slug.current}`} key={index}>
                   <div className={styles.coverimage}>
-                    {project.thumbnail && <MaskSplitImage source={getFileSrc(project.thumbnail)} />}
+                    {project.coverimage && <MaskSplitImage source={getFileSrc(project.coverimage)} />}
                   </div>
                 </Link>
-                {project.imagegallery?.map((image, imageindex) => {
-                  return <Thumbnail source={getFileSrc(image, { width: 30 })} key={imageindex} />;
-                })}
               </div>
             );
           })}

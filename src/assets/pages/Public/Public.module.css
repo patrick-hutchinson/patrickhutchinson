@@ -7,12 +7,18 @@
   box-sizing: border-box;
 
   box-sizing: border-box;
-  margin-top: 15vh;
+  margin-top: 10vh;
   padding-top: 0px;
 }
 
+.container-title {
+  margin-bottom: -20px;
+  text-transform: none !important;
+  letter-spacing: -6px;
+}
+
 .wrapper {
-  margin-bottom: calc(var(--font-size-400) * 1.1);
+  margin-bottom: var(--margin);
   line-height: 1;
   font-size: var(--font-size-100);
 }
@@ -30,6 +36,7 @@
 
 .date {
   font-size: var(--font-size-100);
+  align-self: center;
 }
 
 .alternatingImage {
@@ -66,8 +73,21 @@
     justify-content: center;
     /* gap: 5px; */
     margin-bottom: var(--margin);
+    align-items: center;
   }
-  img {
+  .container img {
     border-radius: 5px;
+    position: relative;
+  }
+
+  .wrapper {
+    margin-bottom: calc(var(--margin) * 2);
+  }
+
+  .container-title {
+    letter-spacing: -1px;
+    padding-top: calc(var(--margin) * 2);
+    margin-bottom: 0px;
+    white-space: nowrap;
   }
 }

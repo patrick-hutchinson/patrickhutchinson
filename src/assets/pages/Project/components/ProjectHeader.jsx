@@ -18,10 +18,16 @@ export default function ProjectHeader({ project }) {
           <FlipText string={project.name} />
         </h2>
       </div>
-      <h2>
-        <FlipText string={`${formatMonth(project.month)}`} />
-        <FlipText string={`${formatYear(project.year)}`} />
-      </h2>
+
+      <div>
+        <div className={styles["section-header"]}>
+          <FlipText string="Date" />
+        </div>
+        <h2>
+          <FlipText string={`${formatMonth(project.month)}`} />
+          <FlipText string={`${formatYear(project.year)}`} />
+        </h2>
+      </div>
     </div>
   );
 }

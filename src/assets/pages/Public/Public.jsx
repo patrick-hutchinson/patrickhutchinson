@@ -28,9 +28,9 @@ export default function Public() {
       <div className={styles.container}>
         {data.map((section, sectionIndex) => (
           <div className={styles.wrapper} key={sectionIndex}>
-            <h2>
+            <h1 className={styles["container-title"]}>
               <FlipText string={section.title} />
-            </h2>
+            </h1>
             <br />
 
             {section.items
