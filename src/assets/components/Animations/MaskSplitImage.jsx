@@ -16,7 +16,6 @@ export default function MaskSplitImage({ source }) {
   const RenderFile = () => {
     const extension = source.split(".").pop().split("?")[0].toLowerCase();
 
-    console.log(extension, "extension");
     const imageExtensions = ["jpg", "jpeg", "png", "tif", "gif", "bmp", "webp", "svg"];
     const videoExtensions = ["mp4", "mov", "avi", "mkv", "webm"];
 
@@ -37,9 +36,7 @@ export default function MaskSplitImage({ source }) {
       viewport={{ margin: "-100px 0px -50px 0px" }}
       className="imagecontainer"
     >
-      {/* <picture> */}
       <RenderFile />
-      {/* </picture> */}
     </motion.div>
   );
 }

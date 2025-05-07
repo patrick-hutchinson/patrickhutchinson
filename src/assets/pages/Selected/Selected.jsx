@@ -10,7 +10,7 @@ import FlipText from "assets/components/Animations/FlipText";
 
 import { Link } from "react-router-dom";
 import Categories from "assets/components/Categories/Categories";
-import ImageTrail from "assets/components/ImageTrail/ImageTrail";
+
 import FauxHeaderDesktop from "./components/FauxHeader/FauxHeaderDesktop";
 import MaskSplitText from "assets/components/Animations/MaskSplitText";
 import { formatMonth } from "assets/utils/formatMonth";
@@ -49,52 +49,64 @@ export default function Selected() {
         </div>
       </div>
 
-      <main>
-        {isMobile ? <FauxHeaderMobile /> : <FauxHeaderDesktop />}
+      {isMobile ? <FauxHeaderMobile /> : <FauxHeaderDesktop />}
 
-        {/* <h1 className={styles["container-title"]}>
+      {/* <h1 className={styles["container-title"]}>
           <FlipText string="Work" />
         </h1> */}
 
-        <div>
-          {home[0].featuredProjects.map((project, index) => {
-            const randomScheme = colorSchemes[Math.floor(Math.random() * colorSchemes.length)];
-            return (
-              <div key={index} className={styles.project}>
-                {/* <div
-                  className={styles["project-info"]}
-                  style={{ background: randomScheme.background, color: randomScheme.font }}
-                >
-                  <h2 className={styles.index}>
-                    <FlipText string={`0${index + 1}`} />
-                  </h2>
+      <div>
+        {home[0].featuredProjects.map((project, index) => {
+          const randomScheme = colorSchemes[Math.floor(Math.random() * colorSchemes.length)];
+          return (
+            <div key={index} className={styles.project}>
+              <Link to={`/${project.slug.current}`} key={index}>
+                <div className={styles.coverimage}>
+                  {!isMobile && project.coverimage && <MaskSplitImage source={getFileSrc(project.coverimage)} />}
+                  {isMobile && project.coverimage_mobile && (
+                    <MaskSplitImage source={getFileSrc(project.coverimage_mobile)} />
+                  )}
+                </div>
+              </Link>
+              <div className={styles["project-info"]} style={{ color: project.textcolor?.value }}>
+                <span className={styles.name}>
+                  <FlipText string={project.name} />
+                </span>
 
-                  <span className={styles.name}>
-                    <FlipText string={project.name} />
-                    <br />
-                    <span>
-                      <FlipText string={`${formatMonth(project.month)}`} />
-                      <FlipText string={`${formatYear(project.year)}`} />
-                    </span>
-                  </span>
-                  <span className={styles.year}>
-                    <FlipText string={`${project.year}`} />
-                  </span>
-
-                  <ul className={styles.categories}>
-                    <Categories project={project} />
-                  </ul>
-                </div> */}
-                <Link to={`/work/${project.slug.current}`} key={index}>
-                  <div className={styles.coverimage}>
-                    {project.coverimage && <MaskSplitImage source={getFileSrc(project.coverimage)} />}
-                  </div>
-                </Link>
+                <span>
+                  <FlipText string={`${formatMonth(project.month)}`} />
+                  <FlipText string={`${formatYear(project.year)}`} />
+                </span>
               </div>
-            );
-          })}
+            </div>
+          );
+        })}
+      </div>
+
+      <div className={styles["page-footer"]}>
+        <div className={styles.title}>Reach Out!</div>
+
+        <div className={styles["footer-wrapper"]}>
+          <ul className={styles["footer-menu"]}>
+            <Link to="selected">SELECTED</Link>
+            <Link to="index">INDEX</Link>
+            <Link to="services">SERVICES</Link>
+            <Link to="public">PUBLIC</Link>
+          </ul>
+
+          <p>For typeface inquiries, please contact me via email!</p>
+
+          <div>
+            Shout out:
+            <ul>
+              <li>samuelsalminen.com</li>
+              <li>laradautun.xyz</li>
+              <li>mariarivgonzalez.framer.website</li>
+              <li>ambermeekel.com</li>
+            </ul>
+          </div>
         </div>
-      </main>
+      </div>
     </div>
   );
 }

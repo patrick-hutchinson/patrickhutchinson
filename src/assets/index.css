@@ -44,7 +44,7 @@
 }
 
 :root {
-  --font-size-100: 14px;
+  --font-size-100: 11px;
   --font-size-200: 28px;
   --font-size-300: 42px;
   --font-size-400: 70px;
@@ -193,6 +193,10 @@ h2 .letter {
 }
 h2 .word {
   margin-right: 18px;
+}
+
+h1 .letter {
+  margin-right: -3px;
 }
 
 .thumbnail {

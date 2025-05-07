@@ -6,7 +6,7 @@
 .container-title {
   margin-bottom: -20px;
   text-transform: none !important;
-  letter-spacing: -6px;
+  /* letter-spacing: -6px; */
 }
 .container-title span:last-child {
   margin-left: -10px;
@@ -85,11 +85,11 @@
   }
 
   .container-title {
-    letter-spacing: -1px;
+    /* letter-spacing: -1px; */
     padding: calc(var(--margin) * 2);
     margin-bottom: 0px;
   }
   .container-title span:last-child {
-    margin-left: -5px;
+    margin-left: -4px;
   }
 }

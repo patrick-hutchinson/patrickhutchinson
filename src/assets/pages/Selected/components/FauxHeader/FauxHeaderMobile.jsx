@@ -60,24 +60,24 @@ export default function FauxHeaderMobile() {
             <br />
             <ul className={styles.socials}>
               <li className="link">
-                <a href="mailto:hutchinsonpatrick@icloud.com" target="_blank">
+                <Link href="mailto:hutchinsonpatrick@icloud.com" target="_blank">
                   <FauxHeaderSplit string="MAIL" />
-                </a>
+                </Link>
               </li>
               <li className="link">
-                <a href="https://www.instagram.com/pa.hson/" target="_blank">
+                <Link href="https://www.instagram.com/pa.hson/" target="_blank">
                   <FauxHeaderSplit string="IG" />
-                </a>
+                </Link>
               </li>
               <li className="link">
-                <a href="https://www.linkedin.com/in/patrick-hutchinson-839226220/">
+                <Link href="https://www.linkedin.com/in/patrick-hutchinson-839226220/">
                   <FauxHeaderSplit string="LINKEDIN" />
-                </a>
+                </Link>
               </li>
               <li className="link">
-                <a href="https://github.com/patrick-hutchinson">
+                <Link href="https://github.com/patrick-hutchinson">
                   <FauxHeaderSplit string="Git" />
-                </a>
+                </Link>
               </li>
             </ul>
           </div>

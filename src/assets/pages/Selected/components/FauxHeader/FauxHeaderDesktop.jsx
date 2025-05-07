@@ -56,24 +56,24 @@ export default function FauxHeaderDesktop() {
           <br />
           <ul className={styles.socials}>
             <li className="link">
-              <a href="mailto:hutchinsonpatrick@icloud.com" target="_blank">
+              <Link href="mailto:hutchinsonpatrick@icloud.com" target="_blank">
                 <FlipText string="EMAIl" />
-              </a>
+              </Link>
             </li>
             <li className="link">
-              <a href="https://www.instagram.com/pa.hson/" target="_blank">
+              <Link href="https://www.instagram.com/pa.hson/" target="_blank">
                 <FlipText string="INSTAGRAM" />
-              </a>
+              </Link>
             </li>
             <li className="link">
-              <a href="https://www.linkedin.com/in/patrick-hutchinson-839226220/">
+              <Link href="https://www.linkedin.com/in/patrick-hutchinson-839226220/">
                 <FlipText string="LINKEDIN" />
-              </a>
+              </Link>
             </li>
             <li className="link">
-              <a href="https://github.com/patrick-hutchinson">
+              <Link href="https://github.com/patrick-hutchinson">
                 <FlipText string="GITHUB" />
-              </a>
+              </Link>
             </li>
           </ul>
         </div>

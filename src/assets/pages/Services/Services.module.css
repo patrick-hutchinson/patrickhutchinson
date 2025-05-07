@@ -52,7 +52,7 @@
   }
 
   .title {
-    grid-template-columns: 60px auto;
+    grid-template-columns: 100px auto;
   }
   .service-section {
     margin-bottom: 40px;

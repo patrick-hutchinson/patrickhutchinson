@@ -35,12 +35,6 @@ export default function FlipText({ string }) {
     );
   };
 
-  useEffect(() => {
-    return () => {
-      console.log("unmounting FlipText");
-    };
-  }, []);
-
   return (
     <span>
       {string.split(" ").map((word, wordIndex) => (

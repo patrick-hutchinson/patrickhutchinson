@@ -27,7 +27,7 @@ export const DataProvider = ({ children }) => {
   useEffect(() => {
     sanityClient
       .fetch(
-        `*[_type == "project"]{ _id, name, coverimage, thumbnail, imagegallery, gridStructure, month, year, url, categories, projectType, credits, showOnHomepage, slug }`
+        `*[_type == "project"]{ _id, name, coverimage, coverimage_mobile, textcolor, thumbnail, imagegallery, gridStructure, month, year, url, categories, projectType, credits, showOnHomepage, slug }`
       )
       .then((fetchedData) => {
         localStorage.setItem("projects", JSON.stringify(fetchedData));
@@ -42,7 +42,7 @@ export const DataProvider = ({ children }) => {
         `*[_type == "home"]{
       _id,
       featuredProjects[]->{
-        _id, name, coverimage, thumbnail, imagegallery, gridStructure, month, year, url, categories, projectType, credits, showOnHomepage, slug
+        _id, name, coverimage, coverimage_mobile, thumbnail, textcolor, imagegallery, gridStructure, month, year, url, categories, projectType, credits, showOnHomepage, slug
       }
     }`
       )

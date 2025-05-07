@@ -25,69 +25,61 @@ export default function Index() {
     zIndex.current += 1;
   }
 
-  console.log("page has loaded");
-
   const projectTypes = [...new Set(data.map((project) => project.projectType[0]))];
 
   return (
-    <main>
-      <div className={styles["project-container"]}>
-        <h1 className={styles["container-title"]}>
-          <FlipText string="Index" />
-        </h1>
-        {projectTypes.map((type) => {
-          const filteredProjects = data.filter((project) => project.projectType[0] === type);
+    <div className={styles["project-container"]}>
+      <h1 className={styles["container-title"]}>
+        <FlipText string="Index" />
+      </h1>
+      {projectTypes.map((type) => {
+        const filteredProjects = data.filter((project) => project.projectType[0] === type);
 
-          return (
-            <section key={type}>
-              <div className={styles.sectionHeading}>
-                <FlipText string={type} />
-              </div>
+        return (
+          <section key={type}>
+            <div className={styles.sectionHeading}>
+              <FlipText string={type} />
+            </div>
 
-              {filteredProjects.sort(sortByDate).map((project, index) => (
-                <Link to={`/work/${project.slug.current}`} key={index}>
-                  <motion.div
-                    className={`${styles.project} link`}
-                    key={index}
-                    initial="initialThumbnail"
-                    whileHover="animateThumbnail"
-                    exit="exitThumbnail"
-                    onMouseEnter={() => handleZIndex()}
-                  >
-                    <FlipText string={`0${index + 1}`} />
+            {filteredProjects.sort(sortByDate).map((project, index) => (
+              <Link to={`/${project.slug.current}`} key={index}>
+                <motion.div
+                  className={`${styles.project} link`}
+                  key={index}
+                  initial="initialThumbnail"
+                  whileHover="animateThumbnail"
+                  exit="exitThumbnail"
+                  onMouseEnter={() => handleZIndex()}
+                >
+                  <FlipText string={`0${index + 1}`} />
 
-                    <div className={styles["title-container"]}>
-                      <FlipText string={project.name} />
-                      {project.thumbnail && (
-                        <Thumbnail source={getFileSrc(project.thumbnail, { width: 300 })} index={0} />
-                      )}
-                      {project.imagegallery?.map((image, imageindex) => {
-                        return (
-                          <Thumbnail
-                            source={getFileSrc(image, { width: 300 })}
-                            key={imageindex}
-                            index={imageindex + 1}
-                          />
-                        );
-                      })}
-                    </div>
+                  <div className={styles["title-container"]}>
+                    <FlipText string={project.name} />
+                    {project.thumbnail && (
+                      <Thumbnail source={getFileSrc(project.thumbnail, { width: 300 })} index={0} />
+                    )}
+                    {project.imagegallery?.map((image, imageindex) => {
+                      return (
+                        <Thumbnail source={getFileSrc(image, { width: 300 })} key={imageindex} index={imageindex + 1} />
+                      );
+                    })}
+                  </div>
 
-                    <span className={styles.year}>
-                      <FlipText string={`${project.year}`} />
-                    </span>
+                  <span className={styles.year}>
+                    <FlipText string={`${project.year}`} />
+                  </span>
 
-                    <ul className={styles.categories}>
-                      <Categories project={project} />
-                    </ul>
-                  </motion.div>
-                </Link>
-              ))}
-              <br />
-              <br />
-            </section>
-          );
-        })}
-      </div>
-    </main>
+                  <ul className={styles.categories}>
+                    <Categories project={project} />
+                  </ul>
+                </motion.div>
+              </Link>
+            ))}
+            <br />
+            <br />
+          </section>
+        );
+      })}
+    </div>
   );
 }

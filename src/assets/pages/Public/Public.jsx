@@ -24,27 +24,25 @@ export default function Public() {
   if (!data) return;
 
   return (
-    <main>
-      <div className={styles.container}>
-        {data.map((section, sectionIndex) => (
-          <div className={styles.wrapper} key={sectionIndex}>
-            <h1 className={styles["container-title"]}>
-              <FlipText string={section.title} />
-            </h1>
-            <br />
+    <div className={styles.container}>
+      {data.map((section, sectionIndex) => (
+        <div className={styles.wrapper} key={sectionIndex}>
+          <h1 className={styles["container-title"]}>
+            <FlipText string={section.title} />
+          </h1>
+          <br />
 
-            {section.items
-              .sort(sortByDate)
-              .map((item, itemIndex) =>
-                isMobile ? (
-                  <MobileListItem key={itemIndex} item={item} itemIndex={itemIndex} />
-                ) : (
-                  <DesktopListItem key={itemIndex} item={item} itemIndex={itemIndex} />
-                )
-              )}
-          </div>
-        ))}
-      </div>
-    </main>
+          {section.items
+            .sort(sortByDate)
+            .map((item, itemIndex) =>
+              isMobile ? (
+                <MobileListItem key={itemIndex} item={item} itemIndex={itemIndex} />
+              ) : (
+                <DesktopListItem key={itemIndex} item={item} itemIndex={itemIndex} />
+              )
+            )}
+        </div>
+      ))}
+    </div>
   );
 }

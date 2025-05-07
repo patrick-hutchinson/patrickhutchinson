@@ -37,7 +37,7 @@ export default function öMoreProjects({ projects }) {
       <div className={styles["moreprojects"]} ref={moreprojectsRef}>
         {projects.map((project, index) => {
           return (
-            <Link to={`/work/${project.slug.current}`} key={index}>
+            <Link to={`/${project.slug.current}`} key={index}>
               <Media project={project} />
             </Link>
           );

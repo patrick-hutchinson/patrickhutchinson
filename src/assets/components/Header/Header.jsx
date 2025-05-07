@@ -8,8 +8,6 @@ import { GlobalStateContext } from "assets/context/GlobalStateContext";
 export default function Header() {
   const { isMobile } = useContext(GlobalStateContext);
 
-  console.log(isMobile, "isMobile?");
-
   let colorModes = [
     { backgroundColor: "#DF0002", fontColor: "#121111" },
     { backgroundColor: "#ffffff", fontColor: "#121111" },
