@@ -6,7 +6,7 @@ import styles from "./Index.module.css";
 
 import { motion } from "framer-motion";
 
-import { Link } from "react-router-dom";
+import Link from "next/link";
 import { getFileSrc } from "assets/utils/getFileSrc";
 import { sortByDate } from "assets/utils/sortByDate";
 
@@ -27,6 +27,10 @@ export default function Index() {
 
   const projectTypes = [...new Set(data.map((project) => project.projectType[0]))];
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <div className={styles["project-container"]}>
       <h1 className={styles["container-title"]}>
@@ -37,12 +41,12 @@ export default function Index() {
 
         return (
           <section key={type}>
-            <div className={styles.sectionHeading}>
+            <h2 className={styles.sectionHeading}>
               <FlipText string={type} />
-            </div>
+            </h2>
 
             {filteredProjects.sort(sortByDate).map((project, index) => (
-              <Link to={`/${project.slug.current}`} key={index}>
+              <Link href={`/${project.slug.current}`} key={index}>
                 <motion.div
                   className={`${styles.project} link`}
                   key={index}
@@ -54,7 +58,9 @@ export default function Index() {
                   <FlipText string={`0${index + 1}`} />
 
                   <div className={styles["title-container"]}>
-                    <FlipText string={project.name} />
+                    <div className={styles.title}>
+                      <FlipText string={project.name} />
+                    </div>
                     {project.thumbnail && (
                       <Thumbnail source={getFileSrc(project.thumbnail, { width: 300 })} index={0} />
                     )}

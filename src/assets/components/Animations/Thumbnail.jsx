@@ -1,11 +1,11 @@
 import { motion } from "framer-motion";
 import MaskSplitImage from "./MaskSplitImage";
 
-import { GlobalStateContext } from "assets/context/GlobalStateContext";
+import { StateContext } from "assets/context/StateContext";
 import { useContext, useMemo } from "react";
 
 export default function Thumbnail({ source, zIndex, index }) {
-  const { isMobile } = useContext(GlobalStateContext);
+  const { isMobile } = useContext(StateContext);
 
   const randomScale = useMemo(() => Math.random() * (12 - 9) + 9, []);
   const randomRotation = useMemo(() => Math.random() * 20 - 10, []);

@@ -1,6 +1,6 @@
 import styles from "../Header.module.css";
 
-import { Link } from "react-router-dom";
+import Link from "next/link";
 
 export default function DesktopHeader({ colorModes }) {
   const handleMode = (color) => {
@@ -9,19 +9,19 @@ export default function DesktopHeader({ colorModes }) {
   };
 
   return (
-    <header>
+    <header id="header">
       <div className={styles["header-inner"]}>
         <div>
-          <Link to="/">
+          <Link href="/">
             <span className={styles["menu-item"]}>SELECTED</span>
           </Link>
-          <Link to="/index">
+          <Link href="/index">
             <span className={styles["menu-item"]}>INDEX</span>
           </Link>
-          <Link to="/services">
+          <Link href="/services">
             <span className={styles["menu-item"]}>SERVICES</span>
           </Link>
-          <Link to="/public">
+          <Link href="/public">
             <span className={styles["menu-item"]}>PUBLIC</span>
           </Link>
         </div>

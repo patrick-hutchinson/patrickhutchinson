@@ -1,4 +1,4 @@
-header {
+#header {
   height: 40px;
   width: 100%;
   padding: var(--margin);
@@ -30,12 +30,12 @@ header {
   justify-content: end;
 }
 
-header a,
-header a:visited {
+#header a,
+#header a:visited {
   color: #fff !important;
 }
 
-header .socials {
+#header .socials {
   display: flex;
   flex-direction: row;
   gap: 20px;

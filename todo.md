@@ -1,6 +1,4 @@
-Switch Data import to TanStack a la https://www.youtube.com/watch?v=MBlZ8Wzkbi4
-
-Fullscreen Media on Phone ()
+? Switch Data import to TanStack a la https://www.youtube.com/watch?v=MBlZ8Wzkbi4
 
 Hover anmimations; maybe shuffle
 

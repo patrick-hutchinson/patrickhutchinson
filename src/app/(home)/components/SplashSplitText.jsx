@@ -1,14 +1,14 @@
 import { motion } from "framer-motion";
 
-import styles from "../Selected.module.css";
+import styles from "../Home.module.css";
 import { coordinates } from "../utils/coordinates";
 import { useRef, useEffect, useContext } from "react";
 import { getFileSrc } from "assets/utils/getFileSrc";
 
-import { GlobalStateContext } from "assets/context/GlobalStateContext";
+import { StateContext } from "assets/context/StateContext";
 
 export default function SplashSplitText({ string, thumbnails }) {
-  const { isMobile } = useContext(GlobalStateContext);
+  const { isMobile } = useContext(StateContext);
 
   useEffect(() => {
     thumbnails.forEach((thumb) => {
@@ -42,6 +42,32 @@ export default function SplashSplitText({ string, thumbnails }) {
       });
     });
   };
+
+  // useEffect(() => {
+  //   const refKeys = Object.keys(imageRefs.current);
+  //   if (refKeys.length === 0) return;
+
+  //   let index = 0;
+  //   const interval = 20; // Time between triggers
+  //   const duration = 1000; // Time each pulse stays visible
+
+  //   const intervalId = setInterval(() => {
+  //     const el = imageRefs.current[refKeys[index]];
+  //     if (el) {
+  //       el.style.transition = "transform 0.3s ease-in-out";
+  //       el.style.transform = `scale(${Math.random() * 15 + 0.3}) rotate(${Math.random() * 20 - 10}deg)`;
+
+  //       // Reset after pulse duration
+  //       setTimeout(() => {
+  //         el.style.transform = "scale(0)";
+  //       }, duration);
+  //     }
+
+  //     index = (index + 1) % refKeys.length;
+  //   }, interval); // Fire every 100ms, regardless of previous one finishing
+
+  //   return () => clearInterval(intervalId);
+  // }, []);
 
   useEffect(() => {
     window.addEventListener("mousemove", handleMouseMove);
@@ -114,7 +140,7 @@ export default function SplashSplitText({ string, thumbnails }) {
           initial="initial"
           whileInView="animate"
           exit="exit"
-          viewport={{ margin: "-100px 0px -100px 0px" }}
+          // viewport={{ margin: "-100px 0px -100px 0px" }}
           className="textcontainer"
           key={letterindex}
         >

@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState, useContext } from "react";
 
 import { DataContext } from "assets/context/DataContext";
-import { GlobalStateContext } from "assets/context/GlobalStateContext";
+import { StateContext } from "assets/context/StateContext";
 
 import styles from "./Public.module.css";
 
@@ -14,7 +14,7 @@ import MobileListItem from "./components/MobileListItem";
 export default function Public() {
   const { experience } = useContext(DataContext);
   const { news } = useContext(DataContext);
-  const { isMobile } = useContext(GlobalStateContext);
+  const { isMobile } = useContext(StateContext);
 
   const data = [
     { title: "Public", items: news },
@@ -22,6 +22,10 @@ export default function Public() {
   ];
 
   if (!data) return;
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   return (
     <div className={styles.container}>

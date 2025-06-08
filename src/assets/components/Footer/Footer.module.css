@@ -1,4 +1,4 @@
-footer {
+#footer {
   position: fixed;
   bottom: 0px;
   width: 100%;
@@ -16,12 +16,12 @@ footer {
   mix-blend-mode: difference;
 }
 
-footer div:last-child {
+#footer div:last-child {
   text-align: right;
 }
 
 @media screen and (max-width: 579px) {
-  footer {
+  #footer {
     display: flex;
     flex-direction: row;
     justify-content: space-between;

@@ -1,12 +1,10 @@
 import React from "react";
 
 import { useEffect, useState, useRef } from "react";
-import { Link } from "react-router-dom";
+import Link from "next/link";
 
 import styles from "../Project.module.css";
 
-import { renderMedia } from "../../../utils/renderMedia";
-import FlipText from "assets/components/Animations/FlipText";
 import MaskSplitImage from "assets/components/Animations/MaskSplitImage";
 import { getFileSrc } from "assets/utils/getFileSrc";
 
@@ -37,7 +35,7 @@ export default function öMoreProjects({ projects }) {
       <div className={styles["moreprojects"]} ref={moreprojectsRef}>
         {projects.map((project, index) => {
           return (
-            <Link to={`/${project.slug.current}`} key={index}>
+            <Link href={`/${project.slug.current}`} key={index}>
               <Media project={project} />
             </Link>
           );
@@ -56,9 +54,6 @@ export default function öMoreProjects({ projects }) {
   );
   return (
     <section>
-      <h5 className={styles["section-header"]}>
-        <FlipText string="More Projects" />
-      </h5>
       <ProjectList />
     </section>
   );

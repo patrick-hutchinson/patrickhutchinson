@@ -1,9 +1,9 @@
 import React, { createContext, useState, useEffect } from "react";
 
 // Create the context
-export const GlobalStateContext = createContext();
+export const StateContext = createContext();
 
-export const GlobalStateProvider = ({ children }) => {
+export const StateProvider = ({ children }) => {
   const [isMobile, setIsMobile] = useState(false);
 
   // Detect if the screen is mobile size
@@ -18,5 +18,5 @@ export const GlobalStateProvider = ({ children }) => {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  return <GlobalStateContext.Provider value={{ isMobile }}>{children}</GlobalStateContext.Provider>;
+  return <StateContext.Provider value={{ isMobile }}>{children}</StateContext.Provider>;
 };

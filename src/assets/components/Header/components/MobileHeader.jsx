@@ -1,6 +1,6 @@
 import { useRef } from "react";
 import styles from "../Header.module.css";
-import { Link } from "react-router-dom";
+import Link from "next/link";
 
 import FlipText from "assets/components/Animations/FlipText";
 
@@ -21,7 +21,7 @@ export default function MobileHeader({ colorModes }) {
 
   return (
     <div>
-      <header>
+      <header id="header">
         <div className={styles["header-inner"]}>
           <div>
             <div
@@ -61,22 +61,22 @@ export default function MobileHeader({ colorModes }) {
         <div className={styles.close} onClick={() => closeMenu()}>
           <h2>X</h2>
         </div>
-        <Link to="/" onClick={() => closeMenu()}>
+        <Link href="/" onClick={() => closeMenu()}>
           <h2>
             <span className={styles["menu-item"]}>Selected</span>
           </h2>
         </Link>
-        <Link to="/index" onClick={() => closeMenu()}>
+        <Link href="/index" onClick={() => closeMenu()}>
           <h2>
             <span className={styles["menu-item"]}>Index</span>
           </h2>
         </Link>
-        <Link to="/services" onClick={() => closeMenu()}>
+        <Link href="/services" onClick={() => closeMenu()}>
           <h2>
             <span className={styles["menu-item"]}>Services</span>
           </h2>
         </Link>
-        <Link to="/public" onClick={() => closeMenu()}>
+        <Link href="/public" onClick={() => closeMenu()}>
           <h2>
             <span className={styles["menu-item"]}>Public</span>
           </h2>

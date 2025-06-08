@@ -3,9 +3,13 @@ import React, { useState, useEffect, useRef, useContext } from "react";
 import FlipText from "assets/components/Animations/FlipText";
 
 import styles from "./Services.module.css";
-import { GlobalStateContext } from "assets/context/GlobalStateContext";
+import { StateContext } from "assets/context/StateContext";
 
 export default function Services() {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   let designCompetencies = [
     "FIGMA",
     "XD",
@@ -26,10 +30,11 @@ export default function Services() {
 
   let hostingCompetencies = ["VERCEL", "DIGITALOCEAN / CLOUDWAYS"];
 
-  let { isMobile } = useContext(GlobalStateContext);
+  let { isMobile } = useContext(StateContext);
 
   return (
     <section className={styles.content}>
+      {/* <h1>Process</h1> */}
       <div className={styles["service-section"]}>
         {isMobile ? (
           <h1 className={styles.title}>

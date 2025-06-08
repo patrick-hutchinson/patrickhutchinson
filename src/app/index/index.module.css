@@ -19,19 +19,6 @@
   grid-template-columns: 5vw 22vw 6vw 33vw auto;
 }
 
-.thumbnail {
-  width: 15px;
-  max-height: 12px;
-  position: relative;
-  object-fit: cover;
-  object-position: center;
-  height: auto;
-  margin-left: 0.5px;
-  z-index: 100;
-}
-.thumbnail:first-child {
-  margin-left: 5px;
-}
 .title-container {
   display: flex;
 }

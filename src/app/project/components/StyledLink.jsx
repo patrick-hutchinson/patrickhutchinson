@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from "react";
 
 import styles from "../Project.module.css";
+import FlipText from "assets/components/Animations/FlipText";
 
 export default function StyledLink({ project, data }) {
   let linkRef = useRef(null);
@@ -29,10 +30,9 @@ export default function StyledLink({ project, data }) {
 
   return (
     <div>
-      {/* <h5 className={styles["section-header"]}>VIEW IT LIVE</h5> */}
       <div className={styles.link} ref={linkRef}>
         <a href={project.url} target="_blank">
-          {project.url}
+          <FlipText string={project.url} />
         </a>
       </div>
     </div>

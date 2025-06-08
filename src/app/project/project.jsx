@@ -1,6 +1,5 @@
 import React from "react";
 import { useEffect, useState, useRef, useContext } from "react";
-import { useParams } from "react-router-dom";
 
 import { DataContext } from "assets/context/DataContext";
 
@@ -26,17 +25,17 @@ export default function Project() {
 
   const project = data.find((projectfound) => projectfound.slug?.current === slug);
 
-  // useEffect(() => {
-  //   const root = document.documentElement;
-  //   const scheme = randomColorScheme();
-  //   root.style.setProperty("--randomBackgroundColor", scheme.background);
-  //   root.style.setProperty("--randomFontColor", scheme.font);
-  // }, [slug]);
+  useEffect(() => {
+    const container = document.querySelector(".projectContainer");
+    if (!container) return;
+
+    const scheme = randomColorScheme();
+    container.style.setProperty("--randomBackgroundColor", scheme.background);
+    container.style.setProperty("--randomFontColor", scheme.font);
+  }, [slug]);
 
   useEffect(() => {
-    return () => {
-      console.log("unmounted!");
-    };
+    window.scrollTo(0, 0);
   }, []);
 
   return (
@@ -50,7 +49,7 @@ export default function Project() {
 
         {project.gridStructure && <Gallery project={project} />}
 
-        <StyledLink project={project} data={data} />
+        {project.url && <StyledLink project={project} data={data} />}
 
         <MoreProjects projects={data} />
       </div>

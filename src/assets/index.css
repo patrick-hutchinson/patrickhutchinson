@@ -95,13 +95,16 @@ body {
   padding: 0;
 
   overflow-x: hidden !important;
-  min-height: 100vh;
+  /* min-height: 100vh; */
   width: 100vw;
 }
 
 .link:hover {
   color: #ccc;
 }
+/* .link span {
+  text-decoration: underline;
+} */
 
 .color-selection li {
   width: 10px;
@@ -199,6 +202,10 @@ h1 .letter {
   margin-right: -3px;
 }
 
+h1 .word {
+  margin-right: 50px;
+}
+
 .thumbnail {
   display: inline-block;
   width: calc(12px * 1.414);
@@ -239,7 +246,7 @@ h1 .letter {
 }
 .word {
   display: inline-block;
-  margin-right: 4px;
+  margin-right: 3px;
   /* perspective: 100px; */
   position: relative;
 }
@@ -252,8 +259,13 @@ h1 .letter {
 }
 
 .splash {
-  font-size: 39vw;
+  font-size: 40vw;
+  position: relative;
+  left: -1.3vw;
+  transform: scale(1.024);
+  transform-origin: top left;
 }
+
 .splash .word {
   display: flex;
   flex-direction: row;
