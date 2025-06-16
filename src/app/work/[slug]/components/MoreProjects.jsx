@@ -6,9 +6,8 @@ import Link from "next/link";
 import styles from "../Project.module.css";
 
 import MaskSplitImage from "assets/components/Animations/MaskSplitImage";
-import { getFileSrc } from "assets/utils/getFileSrc";
 
-export default function öMoreProjects({ projects }) {
+export default function MoreProjects({ projects }) {
   const moreprojectsRef = useRef(null);
 
   function handlePan(direction) {
@@ -27,7 +26,7 @@ export default function öMoreProjects({ projects }) {
   }
 
   let Media = ({ project }) => {
-    return project.coverimage && <MaskSplitImage source={getFileSrc(project.thumbnail)} />;
+    // return project.coverimage && <MaskSplitImage source={getFileSrc(project.thumbnail)} />;
   };
 
   const ProjectList = () => (

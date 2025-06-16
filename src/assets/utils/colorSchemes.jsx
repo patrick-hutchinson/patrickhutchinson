@@ -1,14 +1,14 @@
 export default function randomColorScheme() {
   let colorSchemes = [
-    { background: "#bfff31", font: "1c1e69" }, // vetted
-    { background: "#eeff5a", font: "#121111" }, // vetted
-    { background: "#BBBDD3", font: "#6EFF5E" }, // vetted
-    { background: "#5B7D36", font: "#4EF1EA" }, // vetted
-    { background: "#CBC5FF", font: "#BF770E" }, // vetted
-    { background: "#100F0F", font: "#FD3863" }, // vetted
-    { background: "#515054", font: "#BFBFBF" }, // vetted
-    { background: "#C0C4C1", font: "#D8F74D" }, // vetted
-    { background: "#DC3A2D", font: "#0C1F7E" }, // vetted
+    { background: "#FE1B1C", font: "#fff" }, // vetted
+    { background: "#00FE03", font: "#121111" }, // vetted
+    { background: "#03FFFF", font: "#012AFF" }, // vetted
+    { background: "#03FFFF", font: "#eeff5a" }, // vetted
+    { background: "#FE1B1C", font: "#00FE03" }, // vetted
+    { background: "##FFEF02", font: "#00FE03" }, // vetted
+    { background: "#00FE03", font: "#FE01FE" }, // vetted
+    { background: "#FE01FE", font: "##fff" }, // vetted
+    { background: "#012AFF", font: "#eeff5a" }, // vetted
   ];
 
   let randomNumber = Math.floor(Math.random() * colorSchemes.length);

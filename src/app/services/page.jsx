@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useState, useEffect, useRef, useContext } from "react";
 
 import FlipText from "assets/components/Animations/FlipText";

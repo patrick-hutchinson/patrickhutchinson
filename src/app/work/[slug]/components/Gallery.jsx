@@ -1,6 +1,6 @@
 import MaskSplitImage from "assets/components/Animations/MaskSplitImage";
 import styles from "../Project.module.css";
-import { getFileSrc } from "assets/utils/getFileSrc";
+import RenderMedia from "../../../../assets/utils/RenderMedia";
 
 export default function Gallery({ project }) {
   let index = 0;
@@ -19,9 +19,7 @@ export default function Gallery({ project }) {
         return (
           <div key={rowIndex} className={styles.galleryRow} style={rowStyles}>
             {rowImages.map((image, index) => (
-              <div key={index}>
-                <MaskSplitImage source={getFileSrc(image)} />
-              </div>
+              <div key={index}>{<RenderMedia medium={image} />}</div>
             ))}
           </div>
         );

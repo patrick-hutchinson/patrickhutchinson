@@ -1,4 +1,5 @@
-import React from "react";
+"use client";
+
 import { useEffect, useState, useRef, useContext } from "react";
 
 import { DataContext } from "assets/context/DataContext";
@@ -14,16 +15,10 @@ import ProjectHeader from "./components/ProjectHeader";
 
 import { motion } from "framer-motion";
 
-import { getFileSrc } from "assets/utils/getFileSrc";
 import randomColorScheme from "assets/utils/colorSchemes";
 
-export default function Project() {
-  const { slug } = useParams();
+export default function Project({ slug }) {
   const { data } = useContext(DataContext);
-
-  if (!data || !slug) return;
-
-  const project = data.find((projectfound) => projectfound.slug?.current === slug);
 
   useEffect(() => {
     const container = document.querySelector(".projectContainer");
@@ -38,12 +33,19 @@ export default function Project() {
     window.scrollTo(0, 0);
   }, []);
 
+  if (!data || !slug) return;
+  const project = data.find((projectfound) => projectfound.slug?.current === slug);
+
+  console.log("project:", project);
+
   return (
     <main>
       <div className={styles.projectContainer}>
         <ProjectHeader project={project} />
 
-        <MaskSplitImage source={getFileSrc(project.thumbnail)} />
+        {/* <MaskSplitImage source={getFileSrc(project.thumbnail)} /> */}
+
+        <RenderMedia medium={project.coverimage} />
 
         <ProjectInfo project={project} />
 

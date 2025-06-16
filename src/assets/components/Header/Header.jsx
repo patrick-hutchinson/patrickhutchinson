@@ -14,4 +14,5 @@ export default function Header() {
   ];
 
   return isMobile ? <MobileHeader colorModes={colorModes} /> : <DesktopHeader colorModes={colorModes} />;
+  return <></>;
 }

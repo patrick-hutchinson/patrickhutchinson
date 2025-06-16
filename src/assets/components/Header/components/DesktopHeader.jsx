@@ -1,72 +1,63 @@
+import { useEffect, useRef } from "react";
 import styles from "../Header.module.css";
 
 import Link from "next/link";
 
 export default function DesktopHeader({ colorModes }) {
+  let linkRef = useRef(null);
+
   const handleMode = (color) => {
     document.querySelector(":root").style.setProperty("--background-color", color.backgroundColor);
     document.querySelector(":root").style.setProperty("--font-color", color.fontColor);
   };
 
+  useEffect(() => {
+    const refElement = linkRef.current;
+    if (!refElement) return;
+
+    let scrollPos = 0;
+    const speed = 1; // pixels per frame
+    const interval = 20; // ms
+
+    const scroll = () => {
+      scrollPos += speed;
+      if (scrollPos >= refElement.scrollWidth / 2) {
+        scrollPos = 0;
+      }
+      refElement.scrollLeft = scrollPos;
+    };
+
+    const scrollInterval = setInterval(scroll, interval);
+
+    return () => clearInterval(scrollInterval);
+  }, []);
+
   return (
-    <header id="header">
-      <div className={styles["header-inner"]}>
-        <div>
-          <Link href="/">
-            <span className={styles["menu-item"]}>SELECTED</span>
-          </Link>
-          <Link href="/index">
-            <span className={styles["menu-item"]}>INDEX</span>
-          </Link>
+    <header id={styles.header}>
+      <div className={`${styles["header-inner"]} grid-12`}>
+        <div className="col-span-3">
           <Link href="/services">
-            <span className={styles["menu-item"]}>SERVICES</span>
-          </Link>
-          <Link href="/public">
-            <span className={styles["menu-item"]}>PUBLIC</span>
+            <span className={styles["menu-item"]}>Patrick Hutchinson</span>
           </Link>
         </div>
 
-        <div>
-          <div>
-            PATRICK HUTCHINSON (GER) IS A GRAPHIC DESIGNER AND FRONT-END DEVELOPER BASED IN AMSTERDAM (NED). HE
-            SPECIALIZES ON WEB-, INTERACTION- AND TYPE DESIGN AND MOSTLY USES CODE, VISUAL PROGRAMMING AND
-            ANIMATION-BASED TOOLS TO BUILD HIS WORK.
+        <div className="col-span-7">
+          <span className={styles["menu-item"]}>Selected, </span>
+
+          <span className={styles["menu-item"]}>Index, </span>
+          <Link href="/services">
+            <span className={styles["menu-item"]}>+ Services</span>
+          </Link>
+        </div>
+
+        <div className={`${styles["email-button"]} col-span-2`} ref={linkRef}>
+          <div className={styles["scroll-text"]}>
+            <span>HutchinsonPatrick@icloud.com&nbsp;&nbsp;&nbsp;</span>
+            <span>HutchinsonPatrick@icloud.com&nbsp;&nbsp;&nbsp;</span>
           </div>
-          <br />
-          <ul className={styles.socials}>
-            <li className="link">
-              <a href="mailto:hutchinsonpatrick@icloud.com" target="_blank">
-                Email
-              </a>
-            </li>
-            <li className="link">
-              <a href="https://www.instagram.com/pa.hson/" target="_blank">
-                Instagram
-              </a>
-            </li>
-            <li className="link">
-              <a href="https://www.linkedin.com/in/patrick-hutchinson-839226220/">LinkedIn</a>
-            </li>
-            <li className="link">
-              <a href="https://github.com/patrick-hutchinson">GitHub</a>
-            </li>
-          </ul>
-        </div>
-
-        <div>
-          <ul className="color-selection">
-            {colorModes.map((color, index) => {
-              return (
-                <li
-                  onClick={() => handleMode(color)}
-                  style={{ background: color.backgroundColor, border: `0.5px solid ${color.fontColor}` }}
-                  key={index}
-                ></li>
-              );
-            })}
-          </ul>
         </div>
       </div>
+      <div className={`${styles["header-announcement"]} col-span-12`}></div>
     </header>
   );
 }

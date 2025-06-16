@@ -1,5 +1,7 @@
 import ClientLayout from "./ClientLayout";
 
+import "./index.css";
+
 export const metadata = {
   title: "PH",
   description: "Portfolio Website of Patrick Hutchinson",

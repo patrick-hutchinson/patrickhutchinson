@@ -7,12 +7,12 @@ const docEl = document.documentElement;
  * @param {string} [selector='img'] - CSS selector for target images.
  * @returns {Promise} - Resolves when all specified images are loaded.
  */
-const preloadImages = (selector = "img") => {
-  return new Promise((resolve) => {
-    // The imagesLoaded library is used to ensure all images (including backgrounds) are fully loaded.
-    imagesLoaded(document.querySelectorAll(selector), { background: true }, resolve);
-  });
-};
+// const preloadImages = (selector = "img") => {
+//   return new Promise((resolve) => {
+//     // The imagesLoaded library is used to ensure all images (including backgrounds) are fully loaded.
+//     imagesLoaded(document.querySelectorAll(selector), { background: true }, resolve);
+//   });
+// };
 
 /**
  * Performs linear interpolation between two numbers.
@@ -133,4 +133,4 @@ const setClipPath = (clipInnerElements, numRows, numCols) => {
 };
 
 // Exporting utility functions for use in other modules.
-export { preloadImages, lerp, distance, getPointerPos, getMouseDistance, getNewPosition, setClipPath };
+export { lerp, distance, getPointerPos, getMouseDistance, getNewPosition, setClipPath };

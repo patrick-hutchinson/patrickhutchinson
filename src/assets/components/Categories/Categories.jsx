@@ -11,14 +11,17 @@ export default function Categories({ project }) {
     { key: "Editorial", title: "Editorial" },
   ];
   return (
-    project.categories &&
-    categoriesMapping.map(
-      ({ key, title }) =>
-        project.categories.includes(key) && (
-          <li key={key} className="category">
-            <FlipText string={title} />
-          </li>
-        )
+    project.categories && (
+      <div className="category-container">
+        {categoriesMapping.map(
+          ({ key, title }) =>
+            project.categories.includes(key) && (
+              <li key={key} className="category">
+                {title}
+              </li>
+            )
+        )}
+      </div>
     )
   );
 }

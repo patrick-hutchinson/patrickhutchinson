@@ -3,7 +3,7 @@ import React, { useEffect, useRef } from "react";
 import styles from "../Project.module.css";
 import FlipText from "assets/components/Animations/FlipText";
 
-export default function StyledLink({ project, data }) {
+export default function StyledLink({ string, link }) {
   let linkRef = useRef(null);
 
   // Scroll Link from left to right
@@ -26,13 +26,13 @@ export default function StyledLink({ project, data }) {
     }, interval);
 
     return () => clearInterval(scrollInterval); // Clean up on component unmount
-  }, [data]);
+  }, [string]);
 
   return (
     <div>
       <div className={styles.link} ref={linkRef}>
-        <a href={project.url} target="_blank">
-          <FlipText string={project.url} />
+        <a href={link} target="_blank">
+          {string}
         </a>
       </div>
     </div>
