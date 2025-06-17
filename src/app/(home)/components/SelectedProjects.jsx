@@ -20,12 +20,16 @@ function getRandomProjects(arr, count) {
   return shuffled.slice(0, count);
 }
 
-const scheme = randomColorScheme();
-
 const SelectedProjects = ({ home, data }) => {
   const [selectedProjects, setSelectedProjects] = useState([]);
   const [pausedSlots, setPausedSlots] = useState([false, false]);
   const timeoutsRef = useRef([]);
+
+  const [colorScheme, setColorScheme] = useState({ background: "#000", font: "#fff" });
+
+  useEffect(() => {
+    setColorScheme(randomColorScheme());
+  }, []);
 
   const containerRef = useRef(null);
 
@@ -86,17 +90,53 @@ const SelectedProjects = ({ home, data }) => {
     });
   };
 
-  //   containerRef.current.style.setProperty("--randomBackgroundColor", scheme.background);
-  //   containerRef.current.style.setProperty("--randomFontColor", scheme.font);
+  const BlurVideo = ({ medium }) => {
+    return (
+      <Image
+        src={`https://image.mux.com/${medium.playbackId}/thumbnail.jpg?width=500`}
+        fill
+        alt="placeholder image"
+        unoptimized
+        style={{
+          objectFit: "cover",
+          filter: "blur(13px)",
+          zIndex: 0,
+          position: "absolute",
+          transform: "scale(1.5)",
+        }}
+      />
+    );
+  };
+
+  const BlurImage = ({ medium }) => {
+    return (
+      <Image
+        unoptimized
+        src={medium.url}
+        alt="image"
+        // width={medium.width ? medium.width : 800}
+        // height={medium.height ? medium.height : 800}
+        fill
+        // fill
+        placeholder="blur"
+        blurDataURL={medium.lqip}
+        style={{
+          objectFit: "cover",
+          filter: "blur(13px)",
+          zIndex: 0,
+          position: "absolute",
+          transform: "scale(1.5)",
+        }}
+      />
+    );
+  };
 
   return (
     <div className={`${styles["section"]} ${styles["selected-projects-container"]}`} ref={containerRef}>
-      <div className={`grid-12`}>
-        <div className="col-span-6 grid-6" style={{ background: "#000", color: "#fff", padding: "5px" }}>
-          <div className="col-span-2">Selected Projects</div>
-          <div className="col-span-4" style={{ opacity: 0.8 }}>
-            {`(${home[0].featuredProjects.length} Projects)`}
-          </div>
+      <div className="col-span-6 grid-6" style={{ background: "#000", color: "#fff", padding: "5px", width: "50%" }}>
+        <div className="col-span-2">Selected Projects</div>
+        <div className="col-span-4" style={{ opacity: 0.8 }}>
+          {`(${home[0].featuredProjects.length} Projects)`}
         </div>
       </div>
 
@@ -106,8 +146,8 @@ const SelectedProjects = ({ home, data }) => {
             <span
               key={index}
               style={{
-                background: selectedIndexes.includes(index) ? scheme.background : "#fff",
-                color: selectedIndexes.includes(index) ? scheme.font : "#000",
+                background: colorScheme.background,
+                color: colorScheme.font,
               }}
               // className={`col-span-${12 / home[0].featuredProjects?.length}`}
             >
@@ -136,19 +176,11 @@ const SelectedProjects = ({ home, data }) => {
                 className={styles["blur-container"]}
                 style={{ height: "680px", position: "relative", overflow: "hidden" }}
               >
-                <Image
-                  src={`https://image.mux.com/${project.coverimage.playbackId}/thumbnail.jpg?width=500`}
-                  fill
-                  alt="placeholder image"
-                  unoptimized
-                  style={{
-                    objectFit: "cover",
-                    filter: "blur(13px)",
-                    zIndex: 0,
-                    position: "absolute",
-                    transform: "scale(1.5)",
-                  }}
-                />
+                {project.coverimage.type === "video" ? (
+                  <BlurVideo medium={project.coverimage} />
+                ) : (
+                  <BlurImage medium={project.coverimage} />
+                )}
                 <div
                   style={{
                     height: (window.innerWidth / 2) * 0.56 + "px",

@@ -15,34 +15,25 @@
   height: auto;
   position: relative;
   line-height: 1;
-  margin-bottom: 320px;
+  margin-bottom: 300px;
   color: var(--font-color);
   font-family: NeueHaasDisplay;
 }
 
 .availability--container {
   font-size: var(--font-size-150);
-  border-radius: var(--border-radius);
-  background: var(--lightgreen);
-  color: var(--darkgreen);
-  display: inline-block;
-  position: absolute;
-  top: calc(-1 * (var(--margin) * 2));
-  right: var(--margin);
-  padding: calc(var(--margin) / 2) var(--margin);
-  animation: flash 2s infinite;
-}
 
-@keyframes flash {
-  0% {
-    background: var(--lightgreen);
-  }
-  50% {
-    background: #7cd700;
-  }
-  100% {
-    background: var(--lightgreen);
-  }
+  padding: calc(var(--margin) / 2) var(--margin);
+
+  width: 100vw;
+
+  line-height: 1;
+
+  white-space: nowrap;
+  overflow-x: scroll;
+  display: inline-flex;
+  align-items: center;
+  align-self: center;
 }
 
 .notice > p {
@@ -58,7 +49,6 @@
 
 .upcoming {
   background: var(--background-color);
-  padding: 20px;
   border-radius: var(--border-radius);
   margin-top: 20px;
   width: fit-content;
@@ -66,7 +56,7 @@
 .upcoming > li {
   margin-bottom: calc(var(--margin) / 2);
   display: grid;
-  grid-template-columns: max-content max-content max-content;
+  grid-template-columns: max-content max-content max-content max-content;
 }
 
 .upcoming > li:last-child {
@@ -139,7 +129,6 @@
 }
 .selected-projects-indextracker > span {
   display: inline-block;
-  background: #ff0;
   width: 100%;
   text-align: center;
   padding: 5px 0px;
@@ -217,16 +206,15 @@
 .project-type-label {
   text-align: center;
   text-transform: capitalize;
+  height: 30px;
 }
 .item-index {
   font-size: var(--font-size-100);
 }
 .filtering-container {
-  padding: var(--margin);
-  background: var(--background-color);
-  border-radius: var(--border-radius);
+  padding: calc(var(--margin) * 2) var(--margin);
+  padding-bottom: 5px;
   opacity: 0.3;
-  margin-left: var(--margin);
   display: inline-flex;
   transition: opacity 0.2s;
   align-items: center;
@@ -254,6 +242,7 @@
   display: grid;
   grid-template-columns: 30px 50px auto 400px 100px 100px;
   width: 100%;
+  max-height: 30px;
 }
 
 .section-item-content span:last-child,
@@ -270,20 +259,8 @@
 
 .announcement .section-label,
 .experience .section-label {
-  background: var(--background-color);
+  background: #f0f0f0;
   color: var(--font-color);
-}
-
-.announcement:hover .section-label,
-.announcement.section-label {
-  background: var(--pink);
-  color: var(--purple);
-}
-
-.experience:hover .section-label,
-.experience.section-label {
-  background: var(--lightgreen);
-  color: var(--darkgreen);
 }
 
 .email-slider {
@@ -291,14 +268,12 @@
   white-space: nowrap;
   overflow-x: scroll;
   letter-spacing: calc((var(--font-size-500) * 0.025) * -1);
-  background: var(--font-color);
-  color: var(--background-color);
-  border-radius: var(--border-radius);
 }
 
 .index {
   padding: var(--margin);
   margin-bottom: 20vh;
+  font-family: NeueHaasDisplay;
 }
 
 .footer-inner {
@@ -306,10 +281,6 @@
   flex-direction: row;
   justify-content: space-between;
   width: 100%;
-}
-
-.section {
-  margin-top: var(--margin);
 }
 
 .filtering-container li {
@@ -340,4 +311,5 @@
   background: var(--pink);
   margin-top: var(--margin);
   justify-content: center;
+  padding: 5px;
 }

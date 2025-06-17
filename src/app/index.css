@@ -57,7 +57,7 @@
   --line-height-400: 1.15;
   --line-height-500: 1;
 
-  --font-weight-text: NeueHaasBold;
+  --font-weight-text: NeueHaasDisplay;
 
   --font-color: #000;
   --background-color: #fff;
@@ -299,7 +299,12 @@ mux-player {
 }
 
 .grid > div {
-  border: 1px solid plum;
+  border: 1px solid #ccc;
+}
+
+.scroll-text {
+  display: inline-block;
+  white-space: nowrap;
 }
 
 .thumbnail {

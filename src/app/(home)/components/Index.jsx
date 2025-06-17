@@ -55,7 +55,7 @@ export default function Index({ mergedContent }) {
                 className={`${styles["section-label"]} ${styles[`${type}`]} ${isActive ? styles["active"] : ""}`}
                 onClick={() => handleFiltering(type)}
               >
-                {type}
+                {type.charAt(0).toUpperCase() + type.slice(1)}
               </li>
             );
           })}
@@ -105,9 +105,15 @@ export default function Index({ mergedContent }) {
 
   return (
     <div className={styles["section-container"]}>
-      <div className={styles["section-header"]}>
+      {/* <div className={styles["section-header"]}>
         <span>Project Index</span>
         <span>{`${mergedContent.length} Projects`}</span>
+      </div> */}
+      <div className="col-span-6 grid-6" style={{ background: "#000", color: "#fff", padding: "5px", width: "50%" }}>
+        <div className="col-span-2">Project Index</div>
+        <div className="col-span-4" style={{ opacity: 0.8 }}>
+          {`${mergedContent.length} Projects`}
+        </div>
       </div>
       <div className={`${styles.section}`}>
         <Filtering />

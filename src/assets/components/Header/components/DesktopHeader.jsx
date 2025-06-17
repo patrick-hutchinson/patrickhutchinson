@@ -51,9 +51,9 @@ export default function DesktopHeader({ colorModes }) {
         </div>
 
         <div className={`${styles["email-button"]} col-span-2`} ref={linkRef}>
-          <div className={styles["scroll-text"]}>
-            <span>HutchinsonPatrick@icloud.com&nbsp;&nbsp;&nbsp;</span>
-            <span>HutchinsonPatrick@icloud.com&nbsp;&nbsp;&nbsp;</span>
+          <div className="scroll-text">
+            <span>HutchinsonPatrick@icloud.com&nbsp;</span>
+            <span>HutchinsonPatrick@icloud.com&nbsp;</span>
           </div>
         </div>
       </div>

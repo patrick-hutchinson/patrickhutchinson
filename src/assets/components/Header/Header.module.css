@@ -27,19 +27,14 @@
   align-self: center;
 }
 
-.scroll-text {
-  display: inline-block;
-  white-space: nowrap;
-}
-
 .header-announcement {
   background: #ccc;
   height: 30px;
 }
 
-.header-inner {
+.header-inner div:nth-child(1),
+.header-inner div:nth-child(2) {
   padding: 5px !important;
-  /* padding-right: 0px; */
 }
 
 .expandMenu {
