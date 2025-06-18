@@ -6,12 +6,12 @@ import { DataContext } from "@context/DataContext";
 
 import styles from "./project.module.css";
 
-import ProjectInfo from "@components/ProjectInfo";
-import Gallery from "@components/Gallery";
-import StyledLink from "@components/StyledLink";
-import MoreProjects from "@components/MoreProjects";
+import ProjectInfo from "./components/ProjectInfo";
+import Gallery from "./components/Gallery";
+import StyledLink from "./components/StyledLink";
+import MoreProjects from "./components/MoreProjects";
 import MaskSplitImage from "@animations/MaskSplitImage";
-import ProjectHeader from "@components/ProjectHeader";
+import ProjectHeader from "./components/ProjectHeader";
 
 import RenderMedia from "@utils/renderMedia";
 import { motion } from "framer-motion";
