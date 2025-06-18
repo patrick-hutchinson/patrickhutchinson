@@ -8,7 +8,7 @@ import MuxPlayer from "@mux/mux-player-react";
 
 import { useState } from "react";
 
-const RenderMedia = React.memo(function RenderMedia({ medium }) {
+const renderMedia = React.memo(function renderMedia({ medium }) {
   let [isLoaded, setIsLoaded] = useState(false);
 
   if (!medium) return; // Handle early return
@@ -79,4 +79,4 @@ const RenderMedia = React.memo(function RenderMedia({ medium }) {
   }
 });
 
-export default RenderMedia;
+export default renderMedia;

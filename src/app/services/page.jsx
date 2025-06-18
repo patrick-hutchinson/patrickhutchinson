@@ -2,10 +2,10 @@
 
 import React, { useState, useEffect, useRef, useContext } from "react";
 
-import FlipText from "assets/components/Animations/FlipText";
+import FlipText from "@animations/FlipText";
 
 import styles from "./services.module.css";
-import { StateContext } from "assets/context/StateContext";
+import { StateContext } from "@context/StateContext";
 
 export default function Services() {
   useEffect(() => {
