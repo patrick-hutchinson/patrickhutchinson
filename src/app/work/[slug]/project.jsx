@@ -13,8 +13,7 @@ import MoreProjects from "./components/MoreProjects";
 import MaskSplitImage from "assets/components/Animations/MaskSplitImage";
 import ProjectHeader from "./components/ProjectHeader";
 
-import RenderMedia from "../../../assets/utils/RenderMedia.jsx";
-
+import RenderMedia from "@utils/RenderMedia";
 import { motion } from "framer-motion";
 
 import randomColorScheme from "assets/utils/colorSchemes";

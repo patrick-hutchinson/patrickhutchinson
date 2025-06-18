@@ -1,6 +1,6 @@
 import MaskSplitImage from "assets/components/Animations/MaskSplitImage";
 import styles from "../project.module.css";
-import RenderMedia from "../../../../assets/utils/RenderMedia.jsx";
+import RenderMedia from "@utils/RenderMedia";
 
 export default function Gallery({ project }) {
   let index = 0;

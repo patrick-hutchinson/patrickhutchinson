@@ -2,7 +2,7 @@ import { useRef } from "react";
 import styles from "../Header.module.css";
 import Link from "next/link";
 
-import MaskSplitText from "assets/components/Animations/MaskSplitText";
+import MaskSplitText from "@animations/MaskSplitText";
 
 export default function MobileHeader() {
   let expandMenuRef = useRef(null);

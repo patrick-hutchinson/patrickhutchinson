@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 
 import styles from "./Footer.module.css";
 
-import { StateContext } from "assets/context/StateContext";
+import { StateContext } from "@context/StateContext";
 
 export default function Footer() {
   const { isMobile } = useContext(StateContext);

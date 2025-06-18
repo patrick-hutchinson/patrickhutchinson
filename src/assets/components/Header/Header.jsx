@@ -3,7 +3,7 @@ import React, { useContext } from "react";
 import DesktopHeader from "./components/DesktopHeader";
 import MobileHeader from "./components/MobileHeader";
 
-import { StateContext } from "assets/context/StateContext";
+import { StateContext } from "@context/StateContext";
 
 export default function Header() {
   const { isMobile } = useContext(StateContext);

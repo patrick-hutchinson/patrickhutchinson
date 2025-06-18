@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useRef, useContext } from "react";
 
-import { DataContext } from "assets/context/DataContext";
+import { DataContext } from "@context/DataContext";
 
 import styles from "./home.module.css";
 

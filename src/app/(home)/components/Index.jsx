@@ -5,8 +5,8 @@ import styles from "../home.module.css";
 import { formatMonth } from "../../../assets/utils/formatMonth";
 import { formatYear } from "../../../assets/utils/formatYear";
 
-import Categories from "assets/components/Categories/Categories";
-import RenderThumbnail from "assets/components/Animations/RenderThumbnail";
+import Categories from "src/assets/components/Categories/Categories";
+import RenderThumbnail from "@animations/RenderThumbnail";
 
 import { motion, AnimatePresence } from "framer-motion";
 import MaskSplitContainer from "../../../assets/components/Animations/MaskSplitContainer";

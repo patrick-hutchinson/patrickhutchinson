@@ -4,14 +4,14 @@ import React, { useRef, useEffect } from "react";
 import { usePathname } from "next/navigation";
 import { ReactLenis } from "@studio-freight/react-lenis";
 
-import Header from "assets/components/Header/Header";
-import Footer from "assets/components/Footer/Footer";
-import Grid from "assets/components/Grid";
+import Header from "@components/Header/Header";
+import Footer from "@components/Footer/Footer";
+import Grid from "@components/Grid";
 
 import { AnimatePresence } from "framer-motion";
 
-import { StateProvider } from "assets/context/StateContext";
-import { DataProvider } from "assets/context/DataContext";
+import { StateProvider } from "@context/StateContext";
+import { DataProvider } from "@context/DataContext";
 
 export default function ClientLayout({ children }) {
   const pathname = usePathname();

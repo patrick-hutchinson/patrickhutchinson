@@ -3,8 +3,8 @@ import { motion, AnimatePresence } from "framer-motion";
 import styles from "./ImageTrail.module.css";
 import { getPointerPos, getMouseDistance, lerp, getNewPosition } from "./utils/utils";
 
-import { DataContext } from "assets/context/DataContext";
-import RenderMedia from "../../utils/RenderMedia.jsx";
+import { DataContext } from "@context/DataContext";
+import RenderMedia from "@utils/RenderMedia";
 
 const ImageTrail = () => {
   const { data } = useContext(DataContext);
