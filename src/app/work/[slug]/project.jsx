@@ -13,20 +13,22 @@ import MoreProjects from "./components/MoreProjects";
 import MaskSplitImage from "assets/components/Animations/MaskSplitImage";
 import ProjectHeader from "./components/ProjectHeader";
 
+import RenderMedia from "../../../assets/utils/RenderMedia";
+
 import { motion } from "framer-motion";
 
 import randomColorScheme from "assets/utils/colorSchemes";
 
 export default function Project({ slug }) {
+  const containerRef = useRef(null);
   const { data } = useContext(DataContext);
 
   useEffect(() => {
-    const container = document.querySelector(".projectContainer");
-    if (!container) return;
+    if (!containerRef.current) return;
 
     const scheme = randomColorScheme();
-    container.style.setProperty("--randomBackgroundColor", scheme.background);
-    container.style.setProperty("--randomFontColor", scheme.font);
+    containerRef.current.style.setProperty("--randomBackgroundColor", scheme.background);
+    containerRef.current.style.setProperty("--randomFontColor", scheme.font);
   }, [slug]);
 
   useEffect(() => {
@@ -40,7 +42,7 @@ export default function Project({ slug }) {
 
   return (
     <main>
-      <div className={styles.projectContainer}>
+      <div className={styles.projectContainer} ref={containerRef}>
         <ProjectHeader project={project} />
 
         {/* <MaskSplitImage source={getFileSrc(project.thumbnail)} /> */}

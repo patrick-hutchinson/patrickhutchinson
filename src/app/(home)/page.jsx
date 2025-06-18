@@ -3,7 +3,6 @@
 import React, { useState, useEffect, useRef, useContext } from "react";
 
 import { DataContext } from "assets/context/DataContext";
-import { StateContext } from "assets/context/StateContext";
 
 import styles from "./home.module.css";
 
@@ -13,7 +12,11 @@ import StyledLink from "../work/[slug]/components/StyledLink";
 import SelectedProjects from "./components/SelectedProjects";
 import Introduction from "./components/Introduction";
 import Current from "./components/Current";
+import ImageGallery from "./components/ImageGallery";
+import ServiceNotice from "./components/ServiceNotice";
+
 import randomColorScheme from "../../assets/utils/colorSchemes";
+import MaskSplitContainer from "../../assets/components/Animations/MaskSplitContainer";
 
 export default function Home() {
   const { data } = useContext(DataContext);
@@ -53,37 +56,25 @@ export default function Home() {
 
       <SelectedProjects home={home} data={data} />
 
-      {/* <ImageGallery /> */}
+      <ImageGallery />
 
       <Current ongoing={ongoing} />
 
       <Index mergedContent={mergedContent} />
 
-      <div>
-        <div className="col-span-6 grid-6" style={{ background: "#000", color: "#fff", padding: "5px", width: "50%" }}>
-          <div className="col-span-2">Approach and Services</div>
-          {/* <div className="col-span-4" style={{ opacity: 0.8 }}>
-            {`(${ongoing.length} Projects)`}
-          </div> */}
-        </div>
-        <div className={styles["running-notice"]}>
-          <p>
-            Looking for details about tools, workflow, or included services? <br />
-            This <a href="#">roadmap</a> outlines each step, including relevant competencies and software used. For any
-            further inquiries, feel free to reach out via email.
-          </p>
-        </div>
-      </div>
+      <ServiceNotice />
 
-      <div
-        className={styles["email-slider"]}
-        style={{
-          background: colorScheme.background,
-          color: colorScheme.font,
-        }}
-      >
-        <StyledLink string="HutchinsonPatrick@icloud.com" link="mailto:hutchinsonpatrick@icloud.com" />
-      </div>
+      <MaskSplitContainer>
+        <div
+          className={styles["email-slider"]}
+          style={{
+            background: colorScheme.background,
+            color: colorScheme.font,
+          }}
+        >
+          <StyledLink string="HutchinsonPatrick@icloud.com" link="mailto:hutchinsonpatrick@icloud.com" />
+        </div>
+      </MaskSplitContainer>
     </div>
   );
 }

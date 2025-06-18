@@ -2,6 +2,9 @@ import { useRef, useEffect, useState } from "react";
 import styles from "../home.module.css";
 import randomColorScheme from "../../../assets/utils/colorSchemes";
 
+import MaskSplitContainer from "../../../assets/components/Animations/MaskSplitContainer";
+import MaskSplitText from "../../../assets/components/Animations/MaskSplitText";
+
 export default function Current({ ongoing }) {
   const linkRef = useRef();
   const [colorScheme, setColorScheme] = useState({ background: "#000", font: "#fff" });
@@ -34,46 +37,56 @@ export default function Current({ ongoing }) {
   return (
     <div className={styles["section-container"]}>
       <div className={styles["section"]} style={{ marginTop: "30px" }}>
-        <div className="col-span-6 grid-6" style={{ background: "#000", color: "#fff", padding: "5px", width: "50%" }}>
-          <div className="col-span-2">Ongoing Projects</div>
-          <div className="col-span-4" style={{ opacity: 0.8 }}>
-            {`(${ongoing.length} Projects)`}
+        <MaskSplitContainer>
+          <div
+            className="col-span-6 grid-6"
+            style={{ background: "#000", color: "#fff", padding: "5px", width: "50%" }}
+          >
+            <div className="col-span-2">Ongoing Projects</div>
+            <div className="col-span-4" style={{ opacity: 0.8 }}>
+              {`(${ongoing.length} Projects)`}
+            </div>
           </div>
-        </div>
+        </MaskSplitContainer>
 
-        <div
-          className={styles["availability--container"]}
-          ref={linkRef}
-          style={{
-            background: colorScheme.background,
-            color: colorScheme.font,
-          }}
-        >
-          <div className="scroll-text">
-            {Array(16)
-              .fill("Currently open for commissions! ")
-              .map((msg, i) => (
-                <span key={i}>{msg}</span>
-              ))}
+        <MaskSplitContainer>
+          <div
+            className={styles["availability--container"]}
+            ref={linkRef}
+            style={{
+              background: colorScheme.background,
+              color: colorScheme.font,
+            }}
+          >
+            <div className="scroll-text">
+              {Array(16)
+                .fill("Currently open for commissions! ")
+                .map((msg, i) => (
+                  <span key={i}>{msg}</span>
+                ))}
+            </div>
           </div>
-        </div>
+        </MaskSplitContainer>
 
         <div className={styles["running-notice"]}>
-          <p>
-            Current collaborations and clients include small to medium-scale artists and studios, local production, and
-            cultural institutions. <br />
-            Here’s what’s on the agenda.
-          </p>
+          <MaskSplitText>
+            <h2>
+              Current collaborations and clients include small to medium-scale artists and studios, local production,
+              and cultural institutions. Here’s what’s on the agenda.
+            </h2>
+          </MaskSplitText>
 
           <div className={styles["upcoming-container"]}>
             <ul className={styles["upcoming"]}>
-              {ongoing.map((ongoingProject) => (
-                <li key={ongoingProject.name}>
-                  <span>Project</span>
-                  <span>{ongoingProject.projectType}</span>
-                  <span>{ongoingProject.name}</span>
-                  <span>{ongoingProject.location}</span>
-                </li>
+              {ongoing.map((ongoingProject, index) => (
+                <MaskSplitContainer key={index}>
+                  <li key={ongoingProject.name}>
+                    <span>Project</span>
+                    <span>{ongoingProject.projectType}</span>
+                    <span>{ongoingProject.name}</span>
+                    <span>{ongoingProject.location}</span>
+                  </li>
+                </MaskSplitContainer>
               ))}
             </ul>
           </div>

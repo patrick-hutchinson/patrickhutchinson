@@ -1,6 +1,3 @@
-const body = document.body;
-const docEl = document.documentElement;
-
 /**
  * Preloads images specified by the CSS selector.
  * @function
@@ -45,19 +42,19 @@ const getPointerPos = (ev) => {
   let posx = 0;
   let posy = 0;
 
-  // If the event is not provided, use the global window event object.
+  if (typeof window === "undefined" || typeof document === "undefined") {
+    return { x: 0, y: 0 };
+  }
+
+  const body = document.body;
+  const docEl = document.documentElement;
+
   if (!ev) ev = window.event;
 
-  // Handle touch events
-  if (ev.touches) {
-    if (ev.touches.length > 0) {
-      // Check if there are any touches available
-      posx = ev.touches[0].pageX;
-      posy = ev.touches[0].pageY;
-    }
-  }
-  // Handle mouse events
-  else if (ev.pageX || ev.pageY) {
+  if (ev.touches?.length > 0) {
+    posx = ev.touches[0].pageX;
+    posy = ev.touches[0].pageY;
+  } else if (ev.pageX || ev.pageY) {
     posx = ev.pageX;
     posy = ev.pageY;
   } else if (ev.clientX || ev.clientY) {
@@ -65,7 +62,6 @@ const getPointerPos = (ev) => {
     posy = ev.clientY + body.scrollTop + docEl.scrollTop;
   }
 
-  // Return the position.
   return { x: posx, y: posy };
 };
 

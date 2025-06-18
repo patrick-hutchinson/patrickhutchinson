@@ -3,13 +3,8 @@ import styles from "../Header.module.css";
 
 import Link from "next/link";
 
-export default function DesktopHeader({ colorModes }) {
+export default function DesktopHeader() {
   let linkRef = useRef(null);
-
-  const handleMode = (color) => {
-    document.querySelector(":root").style.setProperty("--background-color", color.backgroundColor);
-    document.querySelector(":root").style.setProperty("--font-color", color.fontColor);
-  };
 
   useEffect(() => {
     const refElement = linkRef.current;

@@ -2,15 +2,10 @@ import { useRef } from "react";
 import styles from "../Header.module.css";
 import Link from "next/link";
 
-import FlipText from "assets/components/Animations/FlipText";
+import MaskSplitText from "assets/components/Animations/MaskSplitText";
 
-export default function MobileHeader({ colorModes }) {
+export default function MobileHeader() {
   let expandMenuRef = useRef(null);
-
-  const handleMode = (color) => {
-    document.querySelector(":root").style.setProperty("--background-color", color.backgroundColor);
-    document.querySelector(":root").style.setProperty("--font-color", color.fontColor);
-  };
 
   function toggleMenu() {
     expandMenuRef.current.classList.add(`${styles.expanded}`);
@@ -35,24 +30,10 @@ export default function MobileHeader({ colorModes }) {
 
           <div>
             <div>
-              <FlipText
-                string={`PATRICK HUTCHINSON (GER) IS A GRAPHIC DESIGNER AND FRONT-END DEVELOPER BASED IN AMSTERDAM (NED). `}
-              />
+              <MaskSplitText>
+                <p>PATRICK HUTCHINSON (GER) IS A GRAPHIC DESIGNER AND FRONT-END DEVELOPER BASED IN AMSTERDAM (NED).</p>
+              </MaskSplitText>
             </div>
-          </div>
-
-          <div>
-            <ul className="color-selection">
-              {colorModes.map((color, index) => {
-                return (
-                  <li
-                    onClick={() => handleMode(color)}
-                    style={{ background: color.backgroundColor, border: `0.5px solid ${color.fontColor}` }}
-                    key={index}
-                  ></li>
-                );
-              })}
-            </ul>
           </div>
         </div>
       </header>

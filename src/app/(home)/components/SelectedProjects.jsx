@@ -3,7 +3,7 @@ import Link from "next/link";
 
 import styles from "../home.module.css";
 
-import RenderMedia from "../../../assets/utils/renderMedia";
+import RenderMedia from "../../../assets/utils/RenderMedia";
 
 import { formatMonth } from "../../../assets/utils/formatMonth";
 import { formatYear } from "../../../assets/utils/formatYear";
@@ -11,6 +11,8 @@ import { formatYear } from "../../../assets/utils/formatYear";
 import Image from "next/image";
 
 import randomColorScheme from "../../../assets/utils/colorSchemes";
+
+import MaskSplitContainer from "../../../assets/components/Animations/MaskSplitContainer";
 
 const projectTimer = 4000;
 const selectedProjectsCount = 2;
@@ -29,6 +31,19 @@ const SelectedProjects = ({ home, data }) => {
 
   useEffect(() => {
     setColorScheme(randomColorScheme());
+  }, []);
+
+  const [videoHeight, setVideoHeight] = useState(0);
+
+  useEffect(() => {
+    const updateHeight = () => {
+      setVideoHeight((window.innerWidth / 2) * 0.56);
+    };
+
+    updateHeight(); // set initial value
+    window.addEventListener("resize", updateHeight);
+
+    return () => window.removeEventListener("resize", updateHeight);
   }, []);
 
   const containerRef = useRef(null);
@@ -133,26 +148,29 @@ const SelectedProjects = ({ home, data }) => {
 
   return (
     <div className={`${styles["section"]} ${styles["selected-projects-container"]}`} ref={containerRef}>
-      <div className="col-span-6 grid-6" style={{ background: "#000", color: "#fff", padding: "5px", width: "50%" }}>
-        <div className="col-span-2">Selected Projects</div>
-        <div className="col-span-4" style={{ opacity: 0.8 }}>
-          {`(${home[0].featuredProjects.length} Projects)`}
+      <MaskSplitContainer>
+        <div className="col-span-6 grid-6" style={{ background: "#000", color: "#fff", padding: "5px", width: "50%" }}>
+          <div className="col-span-2">Selected Projects</div>
+          <div className="col-span-4" style={{ opacity: 0.8 }}>
+            {`(${home[0].featuredProjects.length} Projects)`}
+          </div>
         </div>
-      </div>
+      </MaskSplitContainer>
 
       <div className="grid-12">
         <div className={`${styles["selected-projects-indextracker"]} col-span-12`}>
           {home[0].featuredProjects?.map((_, index) => (
-            <span
-              key={index}
-              style={{
-                background: colorScheme.background,
-                color: colorScheme.font,
-              }}
-              // className={`col-span-${12 / home[0].featuredProjects?.length}`}
-            >
-              {index + 1}
-            </span>
+            <MaskSplitContainer key={index}>
+              <span
+                key={index}
+                style={{
+                  background: selectedIndexes.includes(index) ? colorScheme.background : "#fff",
+                  color: selectedIndexes.includes(index) ? colorScheme.font : "#000",
+                }}
+              >
+                {index + 1}
+              </span>
+            </MaskSplitContainer>
           ))}
         </div>
       </div>
@@ -165,40 +183,49 @@ const SelectedProjects = ({ home, data }) => {
             onMouseLeave={() => handleMouseLeave(index)}
           >
             <div className={styles["selected-project-header"]}>
-              <div>{project.name}</div>
-              <div>
-                <span>{formatMonth(project.month)}</span>
-                <span>{formatYear(project.year)}</span>
-              </div>
+              <MaskSplitContainer>
+                <div className={styles["selected-project-header-inner"]}>{project.name}</div>
+              </MaskSplitContainer>
+              <MaskSplitContainer>
+                <div className={styles["selected-project-header-inner"]}>
+                  <span>{formatMonth(project.month)}</span>
+                  <span>{formatYear(project.year)}</span>
+                </div>
+              </MaskSplitContainer>
             </div>
             <Link href={`/work/${project.slug.current}`}>
-              <div
-                className={styles["blur-container"]}
-                style={{ height: "680px", position: "relative", overflow: "hidden" }}
-              >
-                {project.coverimage.type === "video" ? (
-                  <BlurVideo medium={project.coverimage} />
-                ) : (
-                  <BlurImage medium={project.coverimage} />
-                )}
+              <MaskSplitContainer>
                 <div
-                  style={{
-                    height: (window.innerWidth / 2) * 0.56 + "px",
-                    position: "relative",
-                    top: "50%",
-                    transform: "translateY(-50%) ",
-                  }}
+                  className={styles["blur-container"]}
+                  style={{ height: "680px", position: "relative", overflow: "hidden" }}
                 >
-                  <RenderMedia medium={project.coverimage} />
+                  {project.coverimage.type === "video" ? (
+                    <BlurVideo medium={project.coverimage} />
+                  ) : (
+                    <BlurImage medium={project.coverimage} />
+                  )}
+                  <div
+                    style={{
+                      height: videoHeight + "px",
+                      position: "relative",
+                      top: "50%",
+                      transform: "translateY(-50%) ",
+                    }}
+                  >
+                    <RenderMedia medium={project.coverimage} />
+                  </div>
                 </div>
-              </div>
+              </MaskSplitContainer>
             </Link>
           </li>
         ))}
       </ul>
-      <div className={styles["selected-projects-footer"]} style={{ background: "#ccc" }}>
-        {home[0].featuredProjects.length} of {data.length} projects shown. View all Projects in the <a href="">Index</a>
-      </div>
+      <MaskSplitContainer>
+        <div className={styles["selected-projects-footer"]} style={{ background: "#ccc" }}>
+          {home[0].featuredProjects.length} of {data.length} projects shown. View all Projects in the{" "}
+          <a href="">Index</a>
+        </div>
+      </MaskSplitContainer>
     </div>
   );
 };

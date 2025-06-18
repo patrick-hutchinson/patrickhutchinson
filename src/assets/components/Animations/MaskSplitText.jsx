@@ -1,15 +1,16 @@
+import React from "react";
 import { motion } from "framer-motion";
 
-export default function MaskSplitText({ string }) {
-  let stagger = 0.05;
+export default function MaskSplitText({ children }) {
+  const stagger = 0.0;
 
-  let variants = {
+  const variants = {
     initial: { y: "100%" },
     animate: (i) => ({
       y: 0,
       transition: {
         duration: 0.8,
-        delay: i * stagger, // delay based on letter index
+        delay: i * stagger,
         ease: [0.6, -0.05, 0.01, 0.99],
       },
     }),
@@ -17,40 +18,50 @@ export default function MaskSplitText({ string }) {
       y: "100%",
       transition: {
         duration: 0.8,
-        delay: i * stagger, // match delay on exit
+        delay: i * stagger,
         ease: [0.6, -0.05, 0.01, 0.99],
       },
     }),
   };
 
-  let Word = ({ children }) => {
-    return <span className="word">{children}</span>;
+  let renderText = (node, wordIndex = 0) => {
+    if (typeof node === "string") {
+      return node.split(" ").map((word, wIdx) => (
+        <span className="word" key={`${wordIndex}-${wIdx}`}>
+          {word.split("").map((letter, lIdx) => (
+            <motion.span
+              key={`${wordIndex}-${wIdx}-${lIdx}`}
+              initial="initial"
+              whileInView="animate"
+              exit="exit"
+              viewport={{ margin: "-10px 0px -10px 0px", once: true }}
+              className="textcontainer"
+              custom={lIdx}
+              variants={variants}
+            >
+              <motion.div variants={variants}>
+                <span className="letter">{letter}</span>
+              </motion.div>
+            </motion.span>
+          ))}
+        </span>
+      ));
+    }
+
+    if (React.isValidElement(node)) {
+      if (node.type === "br") {
+        return <br key={`br-${wordIndex}`} />;
+      }
+
+      return React.cloneElement(node, {
+        key: `jsx-${wordIndex}`,
+        children: React.Children.map(node.props.children, (child) => renderText(child, wordIndex + 1)),
+      });
+    }
+
+    // If it's something else (like null, boolean, number), just return it
+    return node;
   };
 
-  let Letter = ({ letter, letterindex }) => {
-    return (
-      <span className="letter" key={letterindex}>
-        {letter}
-      </span>
-    );
-  };
-
-  return string.split(" ").map((word, wordIndex) => (
-    <Word key={wordIndex}>
-      {word.split("").map((letter, letterindex) => (
-        <motion.div
-          initial="initial"
-          whileInView="animate"
-          exit="exit"
-          viewport={{ margin: "-100px 0px -100px 0px" }}
-          className="textcontainer"
-          key={letterindex}
-        >
-          <motion.div variants={variants} custom={letterindex}>
-            <Letter key={`letter-${wordIndex}-${letterindex}`} letter={letter} letterindex={letterindex} />
-          </motion.div>
-        </motion.div>
-      ))}
-    </Word>
-  ));
+  return <div>{React.Children.map(children, (child) => renderText(child))}</div>;
 }
