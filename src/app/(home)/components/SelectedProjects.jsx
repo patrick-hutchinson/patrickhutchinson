@@ -3,7 +3,7 @@ import Link from "next/link";
 
 import styles from "../home.module.css";
 
-import RenderMedia from "@utils/renderMedia";
+import RenderMedia from "@utils/RenderMedia";
 
 import { formatMonth } from "@utils/formatMonth";
 import { formatYear } from "@utils/formatYear";
