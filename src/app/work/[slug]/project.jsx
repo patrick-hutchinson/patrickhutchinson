@@ -2,21 +2,21 @@
 
 import { useEffect, useState, useRef, useContext } from "react";
 
-import { DataContext } from "assets/context/DataContext";
+import { DataContext } from "@context/DataContext";
 
 import styles from "./project.module.css";
 
-import ProjectInfo from "./components/ProjectInfo";
-import Gallery from "./components/Gallery";
-import StyledLink from "./components/StyledLink";
-import MoreProjects from "./components/MoreProjects";
-import MaskSplitImage from "assets/components/Animations/MaskSplitImage";
-import ProjectHeader from "./components/ProjectHeader";
+import ProjectInfo from "@components/ProjectInfo";
+import Gallery from "@components/Gallery";
+import StyledLink from "@components/StyledLink";
+import MoreProjects from "@components/MoreProjects";
+import MaskSplitImage from "@animations/MaskSplitImage";
+import ProjectHeader from "@components/ProjectHeader";
 
 import RenderMedia from "@utils/renderMedia";
 import { motion } from "framer-motion";
 
-import randomColorScheme from "assets/utils/colorSchemes";
+import randomColorScheme from "@utils/colorSchemes";
 
 export default function Project({ slug }) {
   const containerRef = useRef(null);
