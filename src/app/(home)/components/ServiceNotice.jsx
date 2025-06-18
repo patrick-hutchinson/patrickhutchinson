@@ -1,6 +1,6 @@
 import styles from "../home.module.css";
-import MaskSplitContainer from "../../../assets/components/Animations/MaskSplitContainer";
-import MaskSplitText from "../../../assets/components/Animations/MaskSplitText";
+import MaskSplitContainer from "@animtaions/MaskSplitContainer";
+import MaskSplitText from "@animations/MaskSplitText";
 
 const ServiceNotice = () => (
   <div>

@@ -5,14 +5,14 @@ import styles from "../home.module.css";
 
 import RenderMedia from "@utils/renderMedia";
 
-import { formatMonth } from "../../../assets/utils/formatMonth";
-import { formatYear } from "../../../assets/utils/formatYear";
+import { formatMonth } from "@utils/formatMonth";
+import { formatYear } from "@utils/formatYear";
 
 import Image from "next/image";
 
-import randomColorScheme from "../../../assets/utils/colorSchemes";
+import randomColorScheme from "@utils/colorSchemes";
 
-import MaskSplitContainer from "../../../assets/components/Animations/MaskSplitContainer";
+import MaskSplitContainer from "@animations/MaskSplitContainer";
 
 const projectTimer = 4000;
 const selectedProjectsCount = 2;

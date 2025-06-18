@@ -2,14 +2,14 @@ import React, { useEffect, useState } from "react";
 
 import styles from "../home.module.css";
 
-import { formatMonth } from "../../../assets/utils/formatMonth";
-import { formatYear } from "../../../assets/utils/formatYear";
+import { formatMonth } from "@utils/formatMonth";
+import { formatYear } from "@utils/formatYear";
 
-import Categories from "src/assets/components/Categories/Categories";
+import Categories from "@components/Categories/Categories";
 import RenderThumbnail from "@animations/RenderThumbnail";
 
 import { motion, AnimatePresence } from "framer-motion";
-import MaskSplitContainer from "../../../assets/components/Animations/MaskSplitContainer";
+import MaskSplitContainer from "@animations/MaskSplitContainer";
 
 export default function Index({ mergedContent }) {
   const [showAll, setShowAll] = useState(false);

@@ -1,9 +1,9 @@
 import { useRef, useEffect, useState } from "react";
 import styles from "../home.module.css";
-import randomColorScheme from "../../../assets/utils/colorSchemes";
+import randomColorScheme from "@utils/colorSchemes";
 
-import MaskSplitContainer from "../../../assets/components/Animations/MaskSplitContainer";
-import MaskSplitText from "../../../assets/components/Animations/MaskSplitText";
+import MaskSplitContainer from "@animations/MaskSplitContainer";
+import MaskSplitText from "@animations/MaskSplitText";
 
 export default function Current({ ongoing }) {
   const linkRef = useRef();

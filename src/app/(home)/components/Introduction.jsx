@@ -1,7 +1,7 @@
 import styles from "../home.module.css";
-import ImageTrail from "../../../assets/components/ImageTrail/ImageTrail";
+import ImageTrail from "@components/ImageTrail/ImageTrail";
 
-import MaskSplitText from "../../../assets/components/Animations/MaskSplitText";
+import MaskSplitText from "@animations/MaskSplitText";
 
 export default function Introduction() {
   return (

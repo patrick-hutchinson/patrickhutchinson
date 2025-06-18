@@ -15,8 +15,8 @@ import Current from "./components/Current";
 import ImageGallery from "./components/ImageGallery";
 import ServiceNotice from "./components/ServiceNotice";
 
-import randomColorScheme from "../../assets/utils/colorSchemes";
-import MaskSplitContainer from "../../assets/components/Animations/MaskSplitContainer";
+import randomColorScheme from "@utils/colorSchemes";
+import MaskSplitContainer from "@animations/MaskSplitContainer";
 
 export default function Home() {
   const { data } = useContext(DataContext);

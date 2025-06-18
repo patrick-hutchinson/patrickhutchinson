@@ -1,6 +1,6 @@
 import styles from "../home.module.css";
 
-import ImageTrail from "../../../assets/components/ImageTrail/ImageTrail";
+import ImageTrail from "@components/ImageTrail/ImageTrail";
 
 export default function ImageGallery() {
   return (
