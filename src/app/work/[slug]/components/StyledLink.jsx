@@ -1,7 +1,6 @@
 import React, { useEffect, useRef } from "react";
 
-import styles from "../Project.module.css";
-import FlipText from "assets/components/Animations/FlipText";
+import styles from "../project.module.css";
 
 export default function StyledLink({ string, link }) {
   let linkRef = useRef(null);

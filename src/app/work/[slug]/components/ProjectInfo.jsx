@@ -1,6 +1,6 @@
 import React from "react";
 
-import styles from "../Project.module.css";
+import styles from "../project.module.css";
 import Categories from "assets/components/Categories/Categories";
 
 import { creditsMapping } from "assets/utils/creditsMapping";

@@ -1,4 +1,4 @@
-import styles from "../Project.module.css";
+import styles from "../project.module.css";
 
 import { motion } from "framer-motion";
 

@@ -3,7 +3,7 @@ import React from "react";
 import { useEffect, useState, useRef } from "react";
 import Link from "next/link";
 
-import styles from "../Project.module.css";
+import styles from "../project.module.css";
 
 import MaskSplitImage from "assets/components/Animations/MaskSplitImage";
 

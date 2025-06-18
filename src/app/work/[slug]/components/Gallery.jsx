@@ -1,5 +1,5 @@
 import MaskSplitImage from "assets/components/Animations/MaskSplitImage";
-import styles from "../Project.module.css";
+import styles from "../project.module.css";
 import RenderMedia from "../../../../assets/utils/RenderMedia";
 
 export default function Gallery({ project }) {
