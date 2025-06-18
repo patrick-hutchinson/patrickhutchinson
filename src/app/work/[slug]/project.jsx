@@ -4,7 +4,7 @@ import { useEffect, useState, useRef, useContext } from "react";
 
 import { DataContext } from "assets/context/DataContext";
 
-import styles from "./Project.module.css";
+import styles from "./project.module.css";
 
 import ProjectInfo from "./components/ProjectInfo";
 import Gallery from "./components/Gallery";

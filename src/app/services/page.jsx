@@ -4,7 +4,7 @@ import React, { useState, useEffect, useRef, useContext } from "react";
 
 import FlipText from "assets/components/Animations/FlipText";
 
-import styles from "./Services.module.css";
+import styles from "./services.module.css";
 import { StateContext } from "assets/context/StateContext";
 
 export default function Services() {
