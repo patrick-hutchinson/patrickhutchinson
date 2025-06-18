@@ -1,11 +1,11 @@
 import React from "react";
 
 import styles from "../project.module.css";
-import Categories from "assets/components/Categories/Categories";
+import Categories from "@components/Categories/Categories";
 
-import { creditsMapping } from "assets/utils/creditsMapping";
+import { creditsMapping } from "@utils/creditsMapping";
 
-import FlipText from "assets/components/Animations/FlipText";
+import FlipText from "@components/Animations/FlipText";
 
 export default function ProjectInfo({ project }) {
   return (

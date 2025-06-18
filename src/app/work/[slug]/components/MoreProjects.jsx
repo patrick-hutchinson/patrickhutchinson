@@ -5,7 +5,7 @@ import Link from "next/link";
 
 import styles from "../project.module.css";
 
-import MaskSplitImage from "assets/components/Animations/MaskSplitImage";
+import MaskSplitImage from "@animations/MaskSplitImage";
 
 export default function MoreProjects({ projects }) {
   const moreprojectsRef = useRef(null);

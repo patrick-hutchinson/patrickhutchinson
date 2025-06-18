@@ -2,10 +2,10 @@ import styles from "../project.module.css";
 
 import { motion } from "framer-motion";
 
-import { formatMonth } from "assets/utils/formatMonth";
-import { formatYear } from "assets/utils/formatYear";
+import { formatMonth } from "@utils/formatMonth";
+import { formatYear } from "@utils/formatYear";
 
-import FlipText from "assets/components/Animations/FlipText";
+import FlipText from "@animations/FlipText";
 
 export default function ProjectHeader({ project }) {
   return (
