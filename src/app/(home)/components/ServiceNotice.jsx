@@ -1,5 +1,5 @@
 import styles from "../home.module.css";
-import MaskSplitContainer from "@animtaions/MaskSplitContainer";
+import MaskSplitContainer from "@animations/MaskSplitContainer";
 import MaskSplitText from "@animations/MaskSplitText";
 
 const ServiceNotice = () => (
