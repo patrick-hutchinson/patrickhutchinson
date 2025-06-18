@@ -4,7 +4,7 @@ import styles from "./ImageTrail.module.css";
 import { getPointerPos, getMouseDistance, lerp, getNewPosition } from "./utils/utils";
 
 import { DataContext } from "assets/context/DataContext";
-import RenderMedia from "../../utils/RenderMedia";
+import RenderMedia from "../../utils/RenderMedia.jsx";
 
 const ImageTrail = () => {
   const { data } = useContext(DataContext);

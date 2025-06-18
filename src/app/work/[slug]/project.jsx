@@ -13,7 +13,7 @@ import MoreProjects from "./components/MoreProjects";
 import MaskSplitImage from "assets/components/Animations/MaskSplitImage";
 import ProjectHeader from "./components/ProjectHeader";
 
-import RenderMedia from "../../../assets/utils/RenderMedia";
+import RenderMedia from "../../../assets/utils/RenderMedia.jsx";
 
 import { motion } from "framer-motion";
 
