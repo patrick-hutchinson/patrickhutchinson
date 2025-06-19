@@ -27,6 +27,12 @@
   align-self: center;
 }
 
+.email-button a,
+.email-button a:visited,
+.email-button a:hover {
+  color: #fff;
+}
+
 .header-announcement {
   background: #ccc;
   height: 30px;

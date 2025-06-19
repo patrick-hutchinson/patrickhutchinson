@@ -5,6 +5,8 @@ import { motion } from "framer-motion";
 import { formatMonth } from "@utils/formatMonth";
 import { formatYear } from "@utils/formatYear";
 
+import MaskSplitContainer from "@animations/MaskSplitContainer";
+
 import FlipText from "@animations/FlipText";
 
 export default function ProjectHeader({ project }) {

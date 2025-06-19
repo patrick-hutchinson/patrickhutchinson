@@ -42,6 +42,7 @@ export default function Home() {
       categories: item.categories,
       thumbnail: item[image],
       original: item,
+      slug: item.slug,
     }));
 
   const mergedContent = [
@@ -56,7 +57,9 @@ export default function Home() {
 
       <SelectedProjects home={home} data={data} />
 
-      <ImageGallery />
+      <MaskSplitContainer>
+        <ImageGallery />
+      </MaskSplitContainer>
 
       <Current ongoing={ongoing} />
 
@@ -65,15 +68,7 @@ export default function Home() {
       <ServiceNotice />
 
       <MaskSplitContainer>
-        <div
-          className={styles["email-slider"]}
-          style={{
-            background: colorScheme.background,
-            color: colorScheme.font,
-          }}
-        >
-          <StyledLink string="HutchinsonPatrick@icloud.com" link="mailto:hutchinsonpatrick@icloud.com" />
-        </div>
+        <StyledLink string="HutchinsonPatrick@icloud.com" link="mailto:hutchinsonpatrick@icloud.com" />
       </MaskSplitContainer>
     </div>
   );

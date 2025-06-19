@@ -158,7 +158,13 @@ a,
 a:visited,
 a:hover {
   color: var(--font-color);
-  text-decoration: underline;
+  text-decoration: none;
+}
+
+a .linkcontainer *,
+a:visited .linkcontainer *,
+a:hover .linkcontainer * {
+  text-decoration: none;
 }
 
 button {
@@ -237,7 +243,7 @@ mux-player {
   --captions-button: none;
   --airplay-button: none;
   --pip-button: none;
-  /* --fullscreen-button: none; */
+  --fullscreen-button: none;
   --cast-button: none;
   --playback-rate-button: none;
   --volume-range: none;
@@ -245,6 +251,9 @@ mux-player {
   --time-display: none;
   --duration-display: none;
   --rendition-menu-button: none;
+  pointer-events: none;
+}
+mux-player:hover {
 }
 
 .grid {
@@ -317,6 +326,22 @@ mux-player {
   border: 1px solid #ccc;
 }
 
+.scroll-text-container {
+  font-size: var(--font-size-500);
+
+  padding: calc(var(--margin) / 2) var(--margin);
+
+  width: 100vw;
+
+  line-height: 1;
+
+  white-space: nowrap;
+  overflow-x: scroll;
+  display: inline-flex;
+  align-items: center;
+  align-self: center;
+}
+
 .scroll-text {
   display: inline-block;
   white-space: nowrap;
@@ -385,12 +410,27 @@ mux-player {
   flex-direction: row;
 }
 
+.section-item .category {
+  position: relative;
+  top: -1px;
+  opacity: 0.5;
+  transition: 0.2s ease;
+}
+
+.section-item:hover .category {
+  opacity: 1;
+}
+
+.hoverlink {
+  transition: 0.2s ease;
+}
+
 .category {
-  background: #4b4b4b;
-  color: #fff;
+  background: #e0e0e0;
+  color: #000;
   font-size: var(--font-size-100);
   border-radius: 5px;
-  padding: calc(var(--margin) / 2);
+  padding: 2px calc(var(--margin) / 2);
   height: fit-content;
   margin-right: 3px;
   width: fit-content;
@@ -407,18 +447,27 @@ mux-player {
 }
 
 .live {
-  background: var(--purple);
-  color: var(--pink);
+  background: #00ee7d;
+  color: #367000;
   font-size: var(--font-size-100);
   border-radius: 5px;
-  padding: calc(var(--margin) / 2);
+  padding: calc(var(--margin) / 2) 20px;
   height: fit-content;
-  margin-right: 3px;
+
   width: fit-content;
 }
 .category-container {
   display: flex;
   flex-direction: row;
+}
+
+.projectpage-container .category-container {
+  flex-direction: column !important;
+  line-height: 0.8;
+}
+.projectpage-container .category {
+  background: transparent;
+  color: #000;
 }
 
 @keyframes spin {

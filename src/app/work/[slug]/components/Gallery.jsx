@@ -1,4 +1,4 @@
-import MaskSplitImage from "@animations/MaskSplitImage";
+import MaskSplitContainer from "@animations/MaskSplitContainer";
 import styles from "../project.module.css";
 import RenderMedia from "@components/RenderMedia";
 
@@ -7,7 +7,8 @@ export default function Gallery({ project }) {
 
   return (
     <div className={styles.gallery}>
-      <h5 className={styles["section-header"]}>More Images</h5>
+      <div style={{ background: "#000", width: "50%", padding: "5px", color: "#fff" }}>Gallery</div>
+      {/* <h5 className={styles["section-header"]}>More Images</h5> */}
       {project.gridStructure.map((columnsInRow, rowIndex) => {
         const rowImages = project.imagegallery.slice(index, index + columnsInRow);
         index += columnsInRow;
@@ -19,7 +20,7 @@ export default function Gallery({ project }) {
         return (
           <div key={rowIndex} className={styles.galleryRow} style={rowStyles}>
             {rowImages.map((image, index) => (
-              <div key={index}>{<RenderMedia medium={image} />}</div>
+              <MaskSplitContainer key={index}>{<RenderMedia medium={image} />}</MaskSplitContainer>
             ))}
           </div>
         );

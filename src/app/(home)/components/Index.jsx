@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 
 import styles from "../home.module.css";
 
+import Link from "next/link";
+
 import { formatMonth } from "@utils/formatMonth";
 import { formatYear } from "@utils/formatYear";
 
@@ -11,12 +13,16 @@ import RenderThumbnail from "@animations/RenderThumbnail";
 import { motion, AnimatePresence } from "framer-motion";
 import MaskSplitContainer from "@animations/MaskSplitContainer";
 
+import ScrollText from "@components/ScrollText";
+import HoverLink from "./HoverLink";
+
 export default function Index({ mergedContent }) {
   const [showAll, setShowAll] = useState(false);
 
   const [zIndex, setZIndex] = useState(10);
   const [rotation, setRotation] = useState(3);
   const [scale, setScale] = useState(10);
+  const maxProjects = 15;
 
   const types = [...new Set(mergedContent.map((item) => item.type))];
 
@@ -29,7 +35,7 @@ export default function Index({ mergedContent }) {
 
   const sortedContent = withDate.sort((a, b) => b.date - a.date);
   const filteredContent = sortedContent.filter((item) => activeFilters.includes(item.type));
-  const visibleContent = showAll ? filteredContent : filteredContent.slice(0, 10);
+  const visibleContent = showAll ? filteredContent : filteredContent.slice(0, maxProjects);
 
   function handleFiltering(type) {
     setActiveFilters(
@@ -92,14 +98,17 @@ export default function Index({ mergedContent }) {
 
   return (
     <div className={styles["section-container"]}>
-      <MaskSplitContainer>
+      {/* <MaskSplitContainer>
         <div className="col-span-6 grid-6" style={{ background: "#000", color: "#fff", padding: "5px", width: "50%" }}>
           <div className="col-span-2">Project Index</div>
           <div className="col-span-4" style={{ opacity: 0.8 }}>
             {`${mergedContent.length} Projects`}
           </div>
         </div>
-      </MaskSplitContainer>
+      </MaskSplitContainer> */}
+      {/* <MaskSplitContainer>
+        <ScrollText string="Project Index" fontSize="400" />
+      </MaskSplitContainer> */}
       <div className={`${styles.section}`}>
         <MaskSplitContainer>
           <Filtering />
@@ -107,49 +116,61 @@ export default function Index({ mergedContent }) {
         <motion.div className={`${styles.index}`}>
           <AnimatePresence mode="popLayout">
             {visibleContent.map((item, index) => {
-              let isProject = item.type === "project";
+              const isProject = item.type === "project";
+
+              const content = (
+                <motion.div
+                  key={index}
+                  className={`${styles["section-item"]} ${styles[item.type]} section-item`}
+                  initial="initial"
+                  animate="animate"
+                  exit="exit"
+                  whileHover="hover"
+                  // variants={listItemVariants}
+                  onMouseEnter={() => generateRandomValues()}
+                >
+                  <div className={`${styles["section-label"]} ${styles["project-type-label"]} hoverlink`}>
+                    {item.type}
+                  </div>
+
+                  <div
+                    className={`${styles["section-item-content"]} ${
+                      isProject && styles["section-item-content-project"]
+                    } ${styles["section-label"]} hoverlink`}
+                  >
+                    <span className={styles["item-index"]}>{index < 9 ? `0${index + 1}` : index + 1}</span>
+                    {item.thumbnail ? (
+                      <motion.div variants={thumbnailVariants}>
+                        <RenderThumbnail medium={item.thumbnail} />
+                      </motion.div>
+                    ) : (
+                      <span />
+                    )}
+                    <span>{item.name}</span>
+                    {isProject && <Categories project={item} />}
+                    {isProject && <span className="live">live!</span>}
+                    <span>
+                      {formatYear(item.year)} {formatMonth(item.month)}
+                    </span>
+                  </div>
+                </motion.div>
+              );
 
               return (
                 <MaskSplitContainer key={index}>
-                  <motion.div
-                    key={index}
-                    className={`${styles["section-item"]} ${styles[item.type]}`}
-                    initial="initial"
-                    animate="animate"
-                    exit="exit"
-                    whileHover="hover"
-                    variants={listItemVariants}
-                    onMouseEnter={() => generateRandomValues()}
-                  >
-                    <div className={`${styles["section-label"]} ${styles["project-type-label"]}`}>{item.type}</div>
-
-                    <div
-                      className={`${styles["section-item-content"]} ${
-                        isProject && styles["section-item-content-project"]
-                      } ${styles["section-label"]}`}
-                    >
-                      <span className={styles["item-index"]}>{index < 9 ? `0${index + 1}` : index + 1}</span>
-                      {item.thumbnail ? (
-                        <motion.div variants={thumbnailVariants}>
-                          <RenderThumbnail medium={item.thumbnail} />
-                        </motion.div>
-                      ) : (
-                        <span />
-                      )}
-                      <span>{item.name}</span>
-                      {isProject && <Categories project={item} />}
-                      {isProject && <span className="live">live!</span>}
-                      <span>
-                        {formatYear(item.year)} {formatMonth(item.month)}
-                      </span>
-                    </div>
-                  </motion.div>
+                  {isProject && item.slug ? (
+                    <Link href={`/work/${item.slug.current}`}>
+                      <HoverLink>{content}</HoverLink>
+                    </Link>
+                  ) : (
+                    content
+                  )}
                 </MaskSplitContainer>
               );
             })}
           </AnimatePresence>
 
-          {sortedContent.length > 10 && (
+          {sortedContent.length > maxProjects && (
             <MaskSplitContainer>
               <div className={styles["view-all-button"]} onClick={() => setShowAll(!showAll)}>
                 {showAll ? "Show Less" : "View All"}
@@ -158,7 +179,6 @@ export default function Index({ mergedContent }) {
           )}
         </motion.div>
       </div>
-      {/* <div style={{ background: "#ccc", width: "100vw", height: "30px" }}></div> */}
     </div>
   );
 }

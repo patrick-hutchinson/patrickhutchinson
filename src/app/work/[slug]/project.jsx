@@ -10,7 +10,7 @@ import ProjectInfo from "./components/ProjectInfo";
 import Gallery from "./components/Gallery";
 import StyledLink from "./components/StyledLink";
 import MoreProjects from "./components/MoreProjects";
-import MaskSplitImage from "@animations/MaskSplitImage";
+import MaskSplitContainer from "@animations/MaskSplitContainer";
 import ProjectHeader from "./components/ProjectHeader";
 
 import RenderMedia from "@components/RenderMedia";
@@ -40,22 +40,24 @@ export default function Project({ slug }) {
   console.log("project:", project);
 
   return (
-    <main>
-      <div className={styles.projectContainer} ref={containerRef}>
+    <div className={styles.projectContainer} ref={containerRef}>
+      <MaskSplitContainer>
         <ProjectHeader project={project} />
+      </MaskSplitContainer>
 
-        {/* <MaskSplitImage source={getFileSrc(project.thumbnail)} /> */}
-
+      <MaskSplitContainer>
         <RenderMedia medium={project.coverimage} />
+      </MaskSplitContainer>
 
+      <MaskSplitContainer>
         <ProjectInfo project={project} />
+      </MaskSplitContainer>
 
-        {project.gridStructure && <Gallery project={project} />}
+      {project.gridStructure && <Gallery project={project} />}
 
-        {project.url && <StyledLink project={project} data={data} />}
+      <MaskSplitContainer>{project.url && <StyledLink string={project.url} link={project.url} />}</MaskSplitContainer>
 
-        <MoreProjects projects={data} />
-      </div>
-    </main>
+      <MoreProjects projects={data} />
+    </div>
   );
 }

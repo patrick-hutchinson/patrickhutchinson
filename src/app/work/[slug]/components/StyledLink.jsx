@@ -1,9 +1,17 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useState, useRef } from "react";
 
 import styles from "../project.module.css";
 
+import randomColorScheme from "@utils/colorSchemes";
+
 export default function StyledLink({ string, link }) {
   let linkRef = useRef(null);
+
+  const [colorScheme, setColorScheme] = useState({ background: "#000", font: "#fff" });
+
+  useEffect(() => {
+    setColorScheme(randomColorScheme());
+  }, []);
 
   // Scroll Link from left to right
   useEffect(() => {
@@ -28,12 +36,17 @@ export default function StyledLink({ string, link }) {
   }, [string]);
 
   return (
-    <div>
-      <div className={styles.link} ref={linkRef}>
-        <a href={link} target="_blank">
-          {string}
-        </a>
-      </div>
+    <div className={styles.link} ref={linkRef}>
+      <a
+        href={link}
+        target="_blank"
+        style={{
+          background: colorScheme.background,
+          color: colorScheme.font,
+        }}
+      >
+        {string}
+      </a>
     </div>
   );
 }

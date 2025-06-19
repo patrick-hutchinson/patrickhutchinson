@@ -13,6 +13,7 @@ import Image from "next/image";
 import randomColorScheme from "@utils/colorSchemes";
 
 import MaskSplitContainer from "@animations/MaskSplitContainer";
+import HoverLink from "./HoverLink";
 
 const projectTimer = 4000;
 const selectedProjectsCount = 2;
@@ -164,8 +165,8 @@ const SelectedProjects = ({ home, data }) => {
               <span
                 key={index}
                 style={{
-                  background: selectedIndexes.includes(index) ? colorScheme.background : "#fff",
-                  color: selectedIndexes.includes(index) ? colorScheme.font : "#000",
+                  background: selectedIndexes.includes(index) ? "#eee" : "#fff",
+                  color: selectedIndexes.includes(index) ? "#000" : "#000",
                 }}
               >
                 {index + 1}
@@ -182,41 +183,40 @@ const SelectedProjects = ({ home, data }) => {
             onMouseEnter={() => handleMouseEnter(index)}
             onMouseLeave={() => handleMouseLeave(index)}
           >
-            <div className={styles["selected-project-header"]}>
-              <MaskSplitContainer>
-                <div className={styles["selected-project-header-inner"]}>{project.name}</div>
-              </MaskSplitContainer>
-              <MaskSplitContainer>
-                <div className={styles["selected-project-header-inner"]}>
-                  <span>{formatMonth(project.month)}</span>
-                  <span>{formatYear(project.year)}</span>
-                </div>
-              </MaskSplitContainer>
-            </div>
-            <Link href={`/work/${project.slug.current}`}>
-              <MaskSplitContainer>
-                <div
-                  className={styles["blur-container"]}
-                  style={{ height: "680px", position: "relative", overflow: "hidden" }}
-                >
-                  {project.coverimage.type === "video" ? (
-                    <BlurVideo medium={project.coverimage} />
-                  ) : (
-                    <BlurImage medium={project.coverimage} />
-                  )}
-                  <div
-                    style={{
-                      height: videoHeight + "px",
-                      position: "relative",
-                      top: "50%",
-                      transform: "translateY(-50%) ",
-                    }}
-                  >
-                    <RenderMedia medium={project.coverimage} />
+            <HoverLink>
+              <div className={styles["selected-project-header"]}>
+                <MaskSplitContainer>
+                  <div className={`${styles["selected-project-header-inner"]} hoverlink`}>{project.name}</div>
+                </MaskSplitContainer>
+                <MaskSplitContainer>
+                  <div className={styles["selected-project-header-inner"]}>
+                    <span>{formatMonth(project.month)}</span>
+                    <span>{formatYear(project.year)}</span>
                   </div>
-                </div>
-              </MaskSplitContainer>
-            </Link>
+                </MaskSplitContainer>
+              </div>
+              <Link href={`/work/${project.slug.current}`}>
+                <MaskSplitContainer>
+                  <div style={{ height: "680px", position: "relative", overflow: "hidden" }}>
+                    {project.coverimage.type === "video" ? (
+                      <BlurVideo medium={project.coverimage} />
+                    ) : (
+                      <BlurImage medium={project.coverimage} />
+                    )}
+                    <div
+                      style={{
+                        height: videoHeight + "px",
+                        position: "relative",
+                        top: "50%",
+                        transform: "translateY(-50%) ",
+                      }}
+                    >
+                      <RenderMedia medium={project.coverimage} />
+                    </div>
+                  </div>
+                </MaskSplitContainer>
+              </Link>
+            </HoverLink>
           </li>
         ))}
       </ul>

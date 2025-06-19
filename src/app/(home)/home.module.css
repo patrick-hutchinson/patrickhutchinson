@@ -15,25 +15,12 @@
   height: auto;
   position: relative;
   line-height: 1;
-  margin-bottom: 300px;
   color: var(--font-color);
   font-family: NeueHaasDisplay;
 }
 
-.availability--container {
-  font-size: var(--font-size-150);
-
-  padding: calc(var(--margin) / 2) var(--margin);
-
-  width: 100vw;
-
-  line-height: 1;
-
-  white-space: nowrap;
-  overflow-x: scroll;
-  display: inline-flex;
-  align-items: center;
-  align-self: center;
+.index-header {
+  font-size: var(--font-size-300);
 }
 
 .notice p {
@@ -45,6 +32,7 @@
   position: relative;
   width: fit-content;
   margin-top: 30px;
+  margin-bottom: 150px;
 }
 
 .upcoming {
@@ -195,10 +183,10 @@
 
 .section-label {
   font-size: var(--font-size-150);
-  background: var(--font-color);
+  /* background: var(--font-color); */
   /* margin-bottom: calc(var(--margin) / 2); */
-  padding: calc(var(--margin) / 2) var(--margin);
-  color: var(--background-color);
+  padding: calc(var(--margin) / 2) calc(var(--margin) * 2);
+  /* color: var(--background-color); */
   border-radius: var(--border-radius);
   white-space: nowrap;
   align-items: center;
@@ -237,6 +225,7 @@
   display: grid;
   grid-template-columns: 30px 50px auto auto;
   width: 100%;
+  max-height: 30px;
 }
 .section-item-content-project {
   display: grid;
@@ -255,6 +244,7 @@
   display: grid;
   grid-template-columns: 150px 1fr;
   align-items: center;
+  margin-bottom: 2px;
 }
 
 .announcement .section-label,
@@ -263,16 +253,16 @@
   color: var(--font-color);
 }
 
-.email-slider {
+/* .email-slider {
   font-size: var(--font-size-500);
   white-space: nowrap;
   overflow-x: scroll;
   letter-spacing: calc((var(--font-size-500) * 0.025) * -1);
-}
+} */
 
 .index {
   padding: var(--margin);
-  margin-bottom: 20vh;
+  height: 85vh;
   font-family: NeueHaasDisplay;
 }
 
@@ -288,15 +278,18 @@
 }
 
 .imagetrail-container {
-  min-height: 80vh;
+  height: 90vh;
   width: auto;
   position: relative;
-  background: #fff;
-  border-radius: 0px 0px var(--border-radius) var(--border-radius);
+  /* background: #fff; */
 }
 
 .imagetrail-container .running-notice {
   color: #eee;
+}
+
+.introduction-container {
+  height: 75vh;
 }
 
 .introduction-container p {
@@ -311,7 +304,8 @@
   border-radius: var(--border-radius);
   width: 20%;
   text-align: center;
-  background: var(--pink);
+  background: #333;
+  color: #fff;
   margin-top: var(--margin);
   justify-content: center;
   padding: 5px;

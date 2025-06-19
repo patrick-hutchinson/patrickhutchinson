@@ -3,12 +3,28 @@ import React from "react";
 import { useEffect, useState, useRef } from "react";
 import Link from "next/link";
 
+import MaskSplitContainer from "@animations/MaskSplitContainer";
 import styles from "../project.module.css";
 
-import MaskSplitImage from "@animations/MaskSplitImage";
+import RenderMedia from "@components/RenderMedia";
+
+import Image from "next/image";
 
 export default function MoreProjects({ projects }) {
   const moreprojectsRef = useRef(null);
+
+  const [videoHeight, setVideoHeight] = useState(0);
+
+  useEffect(() => {
+    const updateHeight = () => {
+      setVideoHeight(300 * 0.56);
+    };
+
+    updateHeight(); // set initial value
+    window.addEventListener("resize", updateHeight);
+
+    return () => window.removeEventListener("resize", updateHeight);
+  }, []);
 
   function handlePan(direction) {
     if (direction === "left") {
@@ -25,8 +41,45 @@ export default function MoreProjects({ projects }) {
     }
   }
 
-  let Media = ({ project }) => {
-    // return project.coverimage && <MaskSplitImage source={getFileSrc(project.thumbnail)} />;
+  const BlurVideo = ({ medium }) => {
+    return (
+      <Image
+        src={`https://image.mux.com/${medium.playbackId}/thumbnail.jpg?width=500`}
+        fill
+        alt="placeholder image"
+        unoptimized
+        style={{
+          objectFit: "cover",
+          filter: "blur(13px)",
+          zIndex: 0,
+          position: "absolute",
+          transform: "scale(1.5)",
+        }}
+      />
+    );
+  };
+
+  const BlurImage = ({ medium }) => {
+    return (
+      <Image
+        unoptimized
+        src={medium.url}
+        alt="image"
+        // width={medium.width ? medium.width : 800}
+        // height={medium.height ? medium.height : 800}
+        fill
+        // fill
+        placeholder="blur"
+        blurDataURL={medium.lqip}
+        style={{
+          objectFit: "cover",
+          filter: "blur(13px)",
+          zIndex: 0,
+          position: "absolute",
+          transform: "scale(1.5)",
+        }}
+      />
+    );
   };
 
   const ProjectList = () => (
@@ -34,8 +87,31 @@ export default function MoreProjects({ projects }) {
       <div className={styles["moreprojects"]} ref={moreprojectsRef}>
         {projects.map((project, index) => {
           return (
-            <Link href={`/${project.slug.current}`} key={index}>
-              <Media project={project} />
+            <Link href={`/work/${project.slug.current}`} key={index}>
+              <MaskSplitContainer>
+                <div
+                  style={{
+                    height: "400px",
+                    position: "relative",
+                    overflow: "hidden",
+                    minWidth: project.coverimage ? "300px" : 0,
+                  }}
+                >
+                  {project?.coverimage?.type === "video"
+                    ? project.coverimage && <BlurVideo medium={project.coverimage} />
+                    : project.coverimage && <BlurImage medium={project.coverimage} />}
+                  <div
+                    style={{
+                      height: videoHeight + "px",
+                      position: "relative",
+                      top: "50%",
+                      transform: "translateY(-50%) ",
+                    }}
+                  >
+                    {project.coverimage && <RenderMedia medium={project.coverimage} />}
+                  </div>
+                </div>
+              </MaskSplitContainer>
             </Link>
           );
         })}
@@ -46,7 +122,7 @@ export default function MoreProjects({ projects }) {
           <img src="/assets/images/arrow-left.svg" alt="arrow-left" />
         </div>
         <div className={`${styles.panButton}`} onClick={() => handlePan("right")}>
-          <img src="/assets/images/arrow-right.svg" alt="arrow-left" />
+          <img src="/assets/images/arrow-right.svg" alt="arrow-right" />
         </div>
       </div>
     </div>

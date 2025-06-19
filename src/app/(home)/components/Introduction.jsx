@@ -6,7 +6,7 @@ import MaskSplitText from "@animations/MaskSplitText";
 export default function Introduction() {
   return (
     <div>
-      <div style={{ background: "#000", width: "50%", padding: "5px", color: "#fff" }}>Introduction:</div>
+      {/* <div style={{ background: "#000", width: "50%", padding: "5px", color: "#fff" }}>Introduction:</div> */}
       <div className={`grid-12 ${styles["introduction-container"]}`}>
         {/* <ImageTrail /> */}
         <div className={`${styles["running-notice"]} col-span-10`}>

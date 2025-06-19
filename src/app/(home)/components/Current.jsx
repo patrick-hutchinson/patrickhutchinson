@@ -5,6 +5,8 @@ import randomColorScheme from "@utils/colorSchemes";
 import MaskSplitContainer from "@animations/MaskSplitContainer";
 import MaskSplitText from "@animations/MaskSplitText";
 
+import ScrollText from "@components/ScrollText";
+
 export default function Current({ ongoing }) {
   const linkRef = useRef();
   const [colorScheme, setColorScheme] = useState({ background: "#000", font: "#fff" });
@@ -19,7 +21,7 @@ export default function Current({ ongoing }) {
 
     const scrollWidth = container.scrollWidth / 2;
     let scrollPos = 0;
-    const speed = 1;
+    const speed = 5;
     const interval = 20;
 
     const scroll = () => {
@@ -36,7 +38,7 @@ export default function Current({ ongoing }) {
 
   return (
     <div className={styles["section-container"]}>
-      <div className={styles["section"]} style={{ marginTop: "30px" }}>
+      <div className={styles["section"]}>
         <MaskSplitContainer>
           <div
             className="col-span-6 grid-6"
@@ -45,25 +47,6 @@ export default function Current({ ongoing }) {
             <div className="col-span-2">Ongoing Projects</div>
             <div className="col-span-4" style={{ opacity: 0.8 }}>
               {`(${ongoing.length} Projects)`}
-            </div>
-          </div>
-        </MaskSplitContainer>
-
-        <MaskSplitContainer>
-          <div
-            className={styles["availability--container"]}
-            ref={linkRef}
-            style={{
-              background: colorScheme.background,
-              color: colorScheme.font,
-            }}
-          >
-            <div className="scroll-text">
-              {Array(16)
-                .fill("Currently open for commissions! ")
-                .map((msg, i) => (
-                  <span key={i}>{msg}</span>
-                ))}
             </div>
           </div>
         </MaskSplitContainer>
@@ -91,8 +74,11 @@ export default function Current({ ongoing }) {
             </ul>
           </div>
         </div>
+
+        <MaskSplitContainer>
+          <ScrollText string="Currently Open for Commissions! " fontSize="500" />
+        </MaskSplitContainer>
       </div>
-      <div style={{ background: "#ccc", width: "100vw", height: "30px" }}></div>
     </div>
   );
 }

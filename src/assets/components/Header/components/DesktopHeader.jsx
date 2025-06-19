@@ -31,7 +31,7 @@ export default function DesktopHeader() {
     <header id={styles.header}>
       <div className={`${styles["header-inner"]} grid-12`}>
         <div className="col-span-3">
-          <Link href="/services">
+          <Link href="/">
             <span className={styles["menu-item"]}>Patrick Hutchinson</span>
           </Link>
         </div>
@@ -46,10 +46,12 @@ export default function DesktopHeader() {
         </div>
 
         <div className={`${styles["email-button"]} col-span-2`} ref={linkRef}>
-          <div className="scroll-text">
-            <span>HutchinsonPatrick@icloud.com&nbsp;</span>
-            <span>HutchinsonPatrick@icloud.com&nbsp;</span>
-          </div>
+          <a href="mailto:hutchinsonpatrick@icloud.com">
+            <div className="scroll-text">
+              <span>HutchinsonPatrick@icloud.com&nbsp;</span>
+              <span>HutchinsonPatrick@icloud.com&nbsp;</span>
+            </div>
+          </a>
         </div>
       </div>
       <div className={`${styles["header-announcement"]} col-span-12`}></div>

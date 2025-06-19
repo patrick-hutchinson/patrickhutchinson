@@ -18,7 +18,7 @@ const RenderMedia = React.memo(function RenderMedia({ medium }) {
   // Handle Sanity Image
   if (medium.type === "image") {
     return (
-      <div style={{ position: "relative", width: "100%", height: "auto" }}>
+      <div style={{ position: "relative", width: "auto", height: "100%", maxWidth: "100%" }}>
         <Image
           unoptimized
           src={medium.url}
